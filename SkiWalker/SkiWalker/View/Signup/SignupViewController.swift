@@ -51,7 +51,7 @@ final class SignupViewController: UIViewController {
     private let pageTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Register"
+        label.text = NSLocalizedString("Register", comment: "")
         label.textColor = .label
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 32, weight: .bold)
@@ -61,7 +61,7 @@ final class SignupViewController: UIViewController {
     private let pageSubTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Create an account to continue!"
+        label.text = NSLocalizedString("Create an account to continue!", comment: "")
         label.font = .systemFont(ofSize: 12, weight: .medium)
         label.textAlignment = .left
         label.textColor = .secondaryLabel
@@ -69,7 +69,7 @@ final class SignupViewController: UIViewController {
     }()
     
     private let segmentControl: UISegmentedControl = {
-        let segmentControl = UISegmentedControl(items: ["Customer", "Vendor"])
+        let segmentControl = UISegmentedControl(items: [NSLocalizedString("Customer", comment: ""), NSLocalizedString("Vendor", comment: "")])
         segmentControl.selectedSegmentIndex = 0
         segmentControl.translatesAutoresizingMaskIntoConstraints = false
         return segmentControl
@@ -83,17 +83,17 @@ final class SignupViewController: UIViewController {
         return stackView
     }()
     
-    private let firstNameField = LabeledTextField(labelText: "First Name", placeholderText: "Enter your first name")
-    private let lastNameField = LabeledTextField(labelText: "Last Name", placeholderText: "Enter your last name")
-
-    private let companyNameField = LabeledTextField(labelText: "Company Name", placeholderText: "Enter your company name")
-    private let companyIDField = LabeledTextField(labelText: "Company ID", placeholderText: "Enter your company ID")
+    private let firstNameField = LabeledTextField(labelText: NSLocalizedString("First Name", comment: ""), placeholderText: NSLocalizedString("Enter your first name", comment: ""))
+    private let lastNameField = LabeledTextField(labelText: NSLocalizedString("Last Name", comment: ""), placeholderText: NSLocalizedString("Enter your last name", comment: ""))
     
-    private let emailField = LabeledTextField(labelText: "Email", placeholderText: "Enter your email", isEmail: true)
-    private let passwordField = LabeledTextField(labelText: "Password", placeholderText: "Enter your password", isSecure: true)
-    private let confirmPasswordField = LabeledTextField(labelText: "Confirm Password", placeholderText: "Repeat the password", isSecure: true)
+    private let companyNameField = LabeledTextField(labelText: NSLocalizedString("Company Name", comment: ""), placeholderText: NSLocalizedString("Enter your company name", comment: ""))
+    private let companyIDField = LabeledTextField(labelText: NSLocalizedString("Company ID", comment: ""), placeholderText: NSLocalizedString("Enter your company ID", comment: ""))
     
-    private let registerButton = CustomButton(buttonText: "Register")
+    private let emailField = LabeledTextField(labelText: NSLocalizedString("Email", comment: ""), placeholderText: "Enter your email", isEmail: true)
+    private let passwordField = LabeledTextField(labelText: NSLocalizedString("Password", comment: ""), placeholderText: NSLocalizedString("Enter your password", comment: ""), isSecure: true)
+    private let confirmPasswordField = LabeledTextField(labelText: NSLocalizedString("Confirm Password", comment: ""), placeholderText: NSLocalizedString("Repeat the password", comment: ""), isSecure: true)
+    
+    private let registerButton = CustomButton(buttonText: NSLocalizedString("Register", comment: ""))
     
     private let alreadyHaveAccLabel: UILabel = {
         let label = UILabel()

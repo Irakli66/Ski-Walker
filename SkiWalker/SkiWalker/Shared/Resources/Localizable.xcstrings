@@ -7,6 +7,39 @@
     "Cart View" : {
 
     },
+    "Company ID" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კომპანიის ID"
+          }
+        }
+      }
+    },
+    "Company Name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კომპანიის სახელი"
+          }
+        }
+      }
+    },
+    "Confirm Password" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაადასტურე პაროლი"
+          }
+        }
+      }
+    },
     "Continue with Google" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -14,6 +47,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Google-ით შესვლა"
+          }
+        }
+      }
+    },
+    "Create an account to continue!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შექმენი ანგარიში"
+          }
+        }
+      }
+    },
+    "Customer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფიზიკური პირი"
           }
         }
       }
@@ -40,6 +95,28 @@
         }
       }
     },
+    "Enter your company ID" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეიყვანე კომპანიის ID"
+          }
+        }
+      }
+    },
+    "Enter your company name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეიყვანე კომპანიის სახელი"
+          }
+        }
+      }
+    },
     "Enter your email and password to log in" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -47,6 +124,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შესასვლელად შეიყვანე მეილი და პაროლი"
+          }
+        }
+      }
+    },
+    "Enter your first name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეიყვანე სახელი"
+          }
+        }
+      }
+    },
+    "Enter your last name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეიყვანე გვარი"
+          }
+        }
+      }
+    },
+    "Enter your password" : {
+
+    },
+    "First Name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სახელი"
           }
         }
       }
@@ -65,11 +178,18 @@
     "Hello, world!" : {
 
     },
-    "Log in" : {
-
-    },
-    "Login" : {
+    "Last Name" : {
       "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გვარი"
+          }
+        }
+      }
+    },
+    "Log in" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -92,6 +212,28 @@
     },
     "Profile View" : {
 
+    },
+    "Register" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეგისტრაცია"
+          }
+        }
+      }
+    },
+    "Repeat the password" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაიმეორე პაროლი"
+          }
+        }
+      }
     },
     "Sign in to your Account" : {
       "extractionState" : "manual",
@@ -117,6 +259,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დარეგისტრირდი"
+          }
+        }
+      }
+    },
+    "Vendor" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბიზნესი"
           }
         }
       }

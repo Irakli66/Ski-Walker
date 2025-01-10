@@ -37,7 +37,7 @@ final class LoginViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .label
-        label.font = .systemFont(ofSize: 32, weight: .bold)
+        label.font = .systemFont(ofSize: 24, weight: .bold)
         label.textAlignment = .left
         label.text = NSLocalizedString("Sign in to your Account", comment: "")
         return label
@@ -81,7 +81,7 @@ final class LoginViewController: UIViewController {
         return stackView
     }()
     
-    private let loginButton = CustomButton(buttonText: NSLocalizedString("Login", comment: ""))
+    private let loginButton = CustomButton(buttonText: NSLocalizedString("Log in", comment: ""))
     
     private let googleButton: UIButton = {
         var configuration = UIButton.Configuration.filled()
