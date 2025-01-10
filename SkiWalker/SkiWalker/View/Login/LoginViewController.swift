@@ -7,6 +7,8 @@
 import SwiftUI
 
 final class LoginViewController: UIViewController {
+    private let viewModel = LoginViewModel()
+    
     private let pageWrapperStakView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -116,7 +118,7 @@ final class LoginViewController: UIViewController {
     }()
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
         setupUI()
     }
     
@@ -162,7 +164,7 @@ final class LoginViewController: UIViewController {
         dontHaveAccountStackView.translatesAutoresizingMaskIntoConstraints = false
         dontHaveAccountStackView.axis = .horizontal
         dontHaveAccountStackView.distribution = .equalSpacing
-
+        
         [dontHaveAccountLabel, signUpButton].forEach { dontHaveAccountStackView.addArrangedSubview($0) }
         [loginButton, googleButton, dontHaveAccountStackView].forEach { contentStackView.addArrangedSubview($0) }
         
@@ -171,8 +173,23 @@ final class LoginViewController: UIViewController {
             footerStackView.rightAnchor.constraint(equalTo: pageWrapperStakView.rightAnchor),
             googleButton.heightAnchor.constraint(equalToConstant: 50),
         ])
+        
+        loginButton.addAction(UIAction(handler: { [weak self] action in
+            self?.login()
+        }), for: .touchUpInside)
     }
     
+    private func login() {
+        Task {
+            do {
+                let _ =  try await viewModel.login(email: emailField.getText() ?? "", password: passwordField.getText() ?? "")
+            } catch LoginError.invalidEmail {
+                AlertManager.showAlert(message: "Invalid email, it should contain @")
+            } catch LoginError.invalidPassword {
+                AlertManager.showAlert(message: "Fill Password Field")
+            }
+        }
+    }
 }
 
 struct LoginView: UIViewControllerRepresentable {
