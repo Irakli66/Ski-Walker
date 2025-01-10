@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LabeledTextField: UIView {
+final class LabeledTextField: UIView, UITextFieldDelegate {
     
     private let label: UILabel = {
         let label = UILabel()
@@ -39,9 +39,11 @@ final class LabeledTextField: UIView {
     }()
     
     private var isSecureEntry: Bool
+    private var isEmail: Bool
     
-    init(labelText: String, placeholderText: String, isSecure: Bool = false) {
+    init(labelText: String, placeholderText: String, isSecure: Bool = false, isEmail: Bool = false) {
         self.isSecureEntry = isSecure
+        self.isEmail = isEmail
         super.init(frame: .zero)
         setupView(labelText: labelText, placeholderText: placeholderText)
     }
@@ -54,6 +56,7 @@ final class LabeledTextField: UIView {
         label.text = labelText
         textField.placeholder = placeholderText
         textField.isSecureTextEntry = isSecureEntry
+        textField.keyboardType = isEmail ? .emailAddress : .default
         
         addSubview(label)
         addSubview(textField)
