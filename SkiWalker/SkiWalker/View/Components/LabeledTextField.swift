@@ -98,7 +98,11 @@ final class LabeledTextField: UIView, UITextFieldDelegate {
         toggleButton.setImage(UIImage(systemName: imageName), for: .normal)
     }
     
-    func getText() -> String? {
-        return textField.text
+    func getText() -> String {
+        return textField.text ?? ""
+    }
+    
+    func clearText() {
+        textField.text = ""
     }
 }

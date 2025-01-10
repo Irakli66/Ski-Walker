@@ -7,7 +7,7 @@
 import SwiftUI
 
 final class SignupViewController: UIViewController {
-    
+    private let signupViewModel = SignupViewModel()
     private var currentCategory: UserRole = .customer
     
     private let scrollView: UIScrollView = {
@@ -83,11 +83,9 @@ final class SignupViewController: UIViewController {
         return stackView
     }()
     
-    // Customer Fields
     private let firstNameField = LabeledTextField(labelText: "First Name", placeholderText: "Enter your first name")
     private let lastNameField = LabeledTextField(labelText: "Last Name", placeholderText: "Enter your last name")
-    
-    // Vendor Fields
+
     private let companyNameField = LabeledTextField(labelText: "Company Name", placeholderText: "Enter your company name")
     private let companyIDField = LabeledTextField(labelText: "Company ID", placeholderText: "Enter your company ID")
     
@@ -119,6 +117,9 @@ final class SignupViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         segmentControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
+        registerButton.addAction(UIAction(handler: { [weak self] action in
+            self?.register()
+        }), for: .touchUpInside)
         updateFormFields()
     }
     
@@ -188,6 +189,56 @@ final class SignupViewController: UIViewController {
         [emailField, passwordField, confirmPasswordField, registerButton, alreadyHaveAccStackView].forEach { contentStackView.addArrangedSubview($0) }
     }
     
+    private func register() {
+        registerButton.isEnabled = false
+        Task {
+            do {
+                if currentCategory == .customer {
+                    try await signupViewModel.register(
+                        firstName: firstNameField.getText(),
+                        lastName: lastNameField.getText(),
+                        email: emailField.getText(),
+                        password: passwordField.getText(),
+                        confirmPassword: confirmPasswordField.getText(),
+                        userRole: .customer
+                    )
+                } else {
+                    try await signupViewModel.register(
+                        companyName: companyNameField.getText(),
+                        companyID: companyIDField.getText(),
+                        email: emailField.getText(),
+                        password: passwordField.getText(),
+                        confirmPassword: confirmPasswordField.getText(),
+                        userRole: .vendor
+                    )
+                }
+                resetFields()
+                AlertManager.showAlert(title: "Success", message: "Registration successful!")
+            } catch {
+                handleSignupError(error)
+            }
+            registerButton.isEnabled = true
+        }
+    }
+    
+    private func resetFields() {
+        firstNameField.clearText()
+        lastNameField.clearText()
+        companyNameField.clearText()
+        companyIDField.clearText()
+        emailField.clearText()
+        passwordField.clearText()
+        confirmPasswordField.clearText()
+    }
+    
+    private func handleSignupError(_ error: Error) {
+        if let signupError = error as? SignupErrors {
+            AlertManager.showAlert(message: signupError.localizedDescription)
+        } else {
+            AlertManager.showAlert(message: "An unexpected error occurred. Please try again.")
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -200,9 +251,4 @@ struct SignupView: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: SignupViewController, context: Context) {}
-}
-
-enum UserRole: String, Hashable {
-    case customer = "Customer"
-    case vendor = "Vendor"
 }

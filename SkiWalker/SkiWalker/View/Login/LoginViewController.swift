@@ -199,7 +199,7 @@ final class LoginViewController: UIViewController {
     private func login() {
         Task {
             do {
-                let _ =  try await viewModel.login(email: emailField.getText() ?? "", password: passwordField.getText() ?? "")
+                let _ =  try await viewModel.login(email: emailField.getText(), password: passwordField.getText())
             } catch LoginError.invalidEmail {
                 AlertManager.showAlert(message: "Invalid email, it should contain @")
             } catch LoginError.invalidPassword {
