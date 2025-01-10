@@ -39,7 +39,7 @@ final class LoginViewController: UIViewController {
         label.textColor = .label
         label.font = .systemFont(ofSize: 32, weight: .bold)
         label.textAlignment = .left
-        label.text = "Sign in to your Account"
+        label.text = NSLocalizedString("Sign in to your Account", comment: "")
         return label
     }()
     
@@ -49,7 +49,7 @@ final class LoginViewController: UIViewController {
         label.textColor = .customGrey
         label.font = .systemFont(ofSize: 12, weight: .medium)
         label.textAlignment = .left
-        label.text = "Enter your email and password to log in"
+        label.text =  NSLocalizedString("Enter your email and password to log in", comment: "")
         return label
     }()
     
@@ -61,13 +61,13 @@ final class LoginViewController: UIViewController {
         return stackView
     }()
     
-    private let emailField = LabeledTextField(labelText: "Email", placeholderText: "Enter your email", isEmail: true)
-    private let passwordField = LabeledTextField(labelText: "Password", placeholderText: "Enter your password", isSecure: true)
+    private let emailField = LabeledTextField(labelText: NSLocalizedString("Email", comment: ""), placeholderText: "Enter your email", isEmail: true)
+    private let passwordField = LabeledTextField(labelText: NSLocalizedString("Password", comment: ""), placeholderText: "Enter your password", isSecure: true)
     
     private let forgotPasswordButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Forgot Password ?", for: .normal)
+        button.setTitle(NSLocalizedString("Forgot Password ?", comment: ""), for: .normal)
         button.setTitleColor(.customPurple, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
         return button
@@ -81,12 +81,12 @@ final class LoginViewController: UIViewController {
         return stackView
     }()
     
-    private let loginButton = CustomButton(buttonText: "Login")
+    private let loginButton = CustomButton(buttonText: NSLocalizedString("Login", comment: ""))
     
     private let googleButton: UIButton = {
         var configuration = UIButton.Configuration.filled()
         configuration.image = UIImage(named: "google")
-        configuration.title = "Continue with Google"
+        configuration.title = NSLocalizedString("Continue with Google", comment: "")
         configuration.baseBackgroundColor = .white
         configuration.baseForegroundColor = .label
         configuration.imagePadding = 10
@@ -108,7 +108,7 @@ final class LoginViewController: UIViewController {
     private let dontHaveAccountLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Don't have an account ?"
+        label.text = NSLocalizedString("Don't have an account ?", comment: "")
         label.textColor = .customGrey
         return label
     }()
@@ -116,7 +116,7 @@ final class LoginViewController: UIViewController {
     private let signUpButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Sign Up", for: .normal)
+        button.setTitle(NSLocalizedString("Sign Up", comment: ""), for: .normal)
         button.setTitleColor(.customPurple, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
         return button
