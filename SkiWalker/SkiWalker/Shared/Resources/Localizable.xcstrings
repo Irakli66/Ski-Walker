@@ -7,6 +7,9 @@
     "Cart View" : {
 
     },
+    "Check your mail for a code" : {
+
+    },
     "Company ID" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -95,6 +98,9 @@
         }
       }
     },
+    "Enter email to recover your password" : {
+      "extractionState" : "manual"
+    },
     "Enter your company ID" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -178,6 +184,9 @@
     "Hello, world!" : {
 
     },
+    "Key" : {
+      "extractionState" : "manual"
+    },
     "Last Name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -199,6 +208,9 @@
         }
       }
     },
+    "Mail Code" : {
+
+    },
     "Password" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -212,6 +224,9 @@
     },
     "Profile View" : {
 
+    },
+    "Recover Password" : {
+      "extractionState" : "manual"
     },
     "Register" : {
       "extractionState" : "manual",
@@ -234,6 +249,23 @@
           }
         }
       }
+    },
+    "Save" : {
+
+    },
+    "Send" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგზავნა"
+          }
+        }
+      }
+    },
+    "Set New Password" : {
+      "extractionState" : "manual"
     },
     "Sign in to your Account" : {
       "extractionState" : "manual",

@@ -170,6 +170,10 @@ final class LoginViewController: UIViewController {
             contentStackView.leftAnchor.constraint(equalTo: pageWrapperStakView.leftAnchor),
             contentStackView.rightAnchor.constraint(equalTo: pageWrapperStakView.rightAnchor),
         ])
+        
+        forgotPasswordButton.addAction(UIAction(handler: { [weak self] action in
+            self?.navigationController?.pushViewController(ForgotPasswordViewController(), animated: true)
+        }), for: .touchUpInside)
     }
     
     private func setupFooterStackView() {
