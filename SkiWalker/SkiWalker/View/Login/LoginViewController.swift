@@ -37,7 +37,7 @@ final class LoginViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .label
-        label.font = .systemFont(ofSize: 32, weight: .bold)
+        label.font = .systemFont(ofSize: 24, weight: .bold)
         label.textAlignment = .left
         label.text = NSLocalizedString("Sign in to your Account", comment: "")
         return label
@@ -81,7 +81,7 @@ final class LoginViewController: UIViewController {
         return stackView
     }()
     
-    private let loginButton = CustomButton(buttonText: NSLocalizedString("Login", comment: ""))
+    private let loginButton = CustomButton(buttonText: NSLocalizedString("Log in", comment: ""))
     
     private let googleButton: UIButton = {
         var configuration = UIButton.Configuration.filled()
@@ -108,7 +108,8 @@ final class LoginViewController: UIViewController {
     private let dontHaveAccountLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = NSLocalizedString("Don't have an account ?", comment: "")
+        label.text = NSLocalizedString("Don't have an account?", comment: "")
+        label.font = .systemFont(ofSize: 12, weight: .medium)
         label.textColor = .customGrey
         return label
     }()
@@ -189,12 +190,16 @@ final class LoginViewController: UIViewController {
         loginButton.addAction(UIAction(handler: { [weak self] action in
             self?.login()
         }), for: .touchUpInside)
+        
+        signUpButton.addAction(UIAction(handler: { [weak self] action in
+            self?.didTapSignup()
+        }), for: .touchUpInside)
     }
     
     private func login() {
         Task {
             do {
-                let _ =  try await viewModel.login(email: emailField.getText() ?? "", password: passwordField.getText() ?? "")
+                let _ =  try await viewModel.login(email: emailField.getText(), password: passwordField.getText())
             } catch LoginError.invalidEmail {
                 AlertManager.showAlert(message: "Invalid email, it should contain @")
             } catch LoginError.invalidPassword {
@@ -202,14 +207,21 @@ final class LoginViewController: UIViewController {
             }
         }
     }
+    
+    private func didTapSignup() {
+        let signupVC = SignupViewController()
+        self.navigationController?.pushViewController(signupVC, animated: true)
+    }
 }
 
+
 struct LoginView: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> LoginViewController {
-        return LoginViewController()
+    func makeUIViewController(context: Context) -> UINavigationController {
+        let loginVC = LoginViewController()
+        return UINavigationController(rootViewController: loginVC)
     }
     
-    func updateUIViewController(_ uiViewController: LoginViewController, context: Context) {
-        // empty for now
+    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
+        // Empty for now
     }
 }
