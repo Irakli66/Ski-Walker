@@ -64,14 +64,13 @@ final class LoginViewController: UIViewController {
     private let emailField = LabeledTextField(labelText: "Email", placeholderText: "Enter your email", isEmail: true)
     private let passwordField = LabeledTextField(labelText: "Password", placeholderText: "Enter your password", isSecure: true)
     
-    private let forgotPasswordLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .right
-        label.text = "Forgot Password ?"
-        label.textColor = .customBlue
-        label.font = .systemFont(ofSize: 12, weight: .semibold)
-        return label
+    private let forgotPasswordButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Forgot Password ?", for: .normal)
+        button.setTitleColor(.customPurple, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
+        return button
     }()
     
     private let footerStackView: UIStackView = {
@@ -96,7 +95,13 @@ final class LoginViewController: UIViewController {
         let button = UIButton(configuration: configuration)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 10
-        button.clipsToBounds = true
+        
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.2
+        button.layer.shadowOffset = CGSize(width: 0, height: 4)
+        button.layer.shadowRadius = 6
+        button.layer.masksToBounds = false
+        
         return button
     }()
     
@@ -151,7 +156,14 @@ final class LoginViewController: UIViewController {
     }
     
     private func setupContentStackView() {
-        [emailField, passwordField, forgotPasswordLabel].forEach { contentStackView.addArrangedSubview($0) }
+        let forgotPasswordStackView = UIStackView()
+        forgotPasswordStackView.translatesAutoresizingMaskIntoConstraints = false
+        forgotPasswordStackView.axis = .horizontal
+        forgotPasswordStackView.alignment = .fill
+        forgotPasswordStackView.distribution = .fill
+        
+        [ UIView(), forgotPasswordButton].forEach { forgotPasswordStackView.addArrangedSubview($0) }
+        [emailField, passwordField, forgotPasswordStackView].forEach { contentStackView.addArrangedSubview($0) }
         
         NSLayoutConstraint.activate([
             contentStackView.leftAnchor.constraint(equalTo: pageWrapperStakView.leftAnchor),

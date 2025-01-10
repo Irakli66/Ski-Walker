@@ -27,6 +27,12 @@ final class LabeledTextField: UIView, UITextFieldDelegate {
         textField.leftView = spacer
         textField.leftViewMode = .always
         
+        textField.layer.shadowColor = UIColor.gray.cgColor
+        textField.layer.shadowOpacity = 0.2
+        textField.layer.shadowOffset = CGSize(width: 0, height: 2)
+        textField.layer.shadowRadius = 6
+        textField.layer.masksToBounds = false
+        
         return textField
     }()
     
