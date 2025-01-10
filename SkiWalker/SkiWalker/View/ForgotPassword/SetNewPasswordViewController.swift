@@ -7,6 +7,8 @@
 import UIKit
 
 final class SetNewPasswordViewController: UIViewController {
+    private let forgotPasswordViewModel = ForgotPasswordViewModel()
+    var email: String?
     private let pageWrapperStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -75,8 +77,19 @@ final class SetNewPasswordViewController: UIViewController {
         }), for: .touchUpInside)
         
         saveButton.addAction(UIAction(handler: { [weak self] action in
-            self?.navigationController?.popToRootViewController(animated: true)
+            self?.updatePassword()
         }), for: .touchUpInside)
+    }
+    
+    private func updatePassword() {
+        Task {
+            do {
+                let _ = try await forgotPasswordViewModel.updatePassword(email: email ?? "", mailCode: mailCodeField.getText(), password: passwordField.getText(), confirmPassword: confirmPasswordField.getText())
+            } catch {
+                AlertManager.showAlert(message: error.localizedDescription)
+            }
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
