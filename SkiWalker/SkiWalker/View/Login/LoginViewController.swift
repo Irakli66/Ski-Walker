@@ -108,7 +108,8 @@ final class LoginViewController: UIViewController {
     private let dontHaveAccountLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = NSLocalizedString("Don't have an account ?", comment: "")
+        label.text = NSLocalizedString("Don't have an account?", comment: "")
+        label.font = .systemFont(ofSize: 12, weight: .medium)
         label.textColor = .customGrey
         return label
     }()
@@ -189,6 +190,10 @@ final class LoginViewController: UIViewController {
         loginButton.addAction(UIAction(handler: { [weak self] action in
             self?.login()
         }), for: .touchUpInside)
+        
+        signUpButton.addAction(UIAction(handler: { [weak self] action in
+            self?.didTapSignup()
+        }), for: .touchUpInside)
     }
     
     private func login() {
@@ -202,14 +207,21 @@ final class LoginViewController: UIViewController {
             }
         }
     }
+    
+    private func didTapSignup() {
+        let signupVC = SignupViewController()
+        self.navigationController?.pushViewController(signupVC, animated: true)
+    }
 }
 
+
 struct LoginView: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> LoginViewController {
-        return LoginViewController()
+    func makeUIViewController(context: Context) -> UINavigationController {
+        let loginVC = LoginViewController()
+        return UINavigationController(rootViewController: loginVC)
     }
     
-    func updateUIViewController(_ uiViewController: LoginViewController, context: Context) {
-        // empty for now
+    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
+        // Empty for now
     }
 }

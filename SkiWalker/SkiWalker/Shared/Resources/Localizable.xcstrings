@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Already have an account?" : {
+
+    },
     "Cart View" : {
 
     },
@@ -15,7 +18,7 @@
         }
       }
     },
-    "Don't have an account ?" : {
+    "Don't have an account?" : {
       "extractionState" : "manual",
       "localizations" : {
         "ka" : {
@@ -60,6 +63,9 @@
       }
     },
     "Hello, world!" : {
+
+    },
+    "Log in" : {
 
     },
     "Login" : {
