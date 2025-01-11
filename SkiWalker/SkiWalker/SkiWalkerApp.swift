@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct SkiWalkerApp: App {
-    @State private var isLoggedIn: Bool = false
+    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
     @AppStorage("selectedLanguage") private var selectedLanguage: String = "en"
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
     

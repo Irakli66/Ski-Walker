@@ -9,6 +9,7 @@ import SwiftUI
 struct ProfileView: View {
     @AppStorage("selectedLanguage") private var selectedLanguage: String = "en"
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
+    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
     
     private let tabs: [ProfileTabItem] = [
         ProfileTabItem(icon: "list.bullet.rectangle.portrait", title: "Order History", destination: AnyView(OrderHistoryView())),
@@ -26,6 +27,14 @@ struct ProfileView: View {
                     languageToggle
                     themeToggle
                     tabNavigationList
+                    Button("logout") {
+                        isLoggedIn = false
+                    }
+                    .frame(maxWidth: .infinity)
+                    .foregroundStyle(.white)
+                    .padding()
+                    .background(.red)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
                 .padding(20)
             }

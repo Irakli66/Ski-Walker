@@ -8,6 +8,7 @@ import SwiftUI
 
 final class LoginViewController: UIViewController {
     private let viewModel = LoginViewModel()
+    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
     
     private let pageWrapperStakView: UIStackView = {
         let stackView = UIStackView()
@@ -204,6 +205,7 @@ final class LoginViewController: UIViewController {
         Task {
             do {
                 let _ =  try await viewModel.login(email: emailField.getText(), password: passwordField.getText())
+                isLoggedIn = true
             } catch LoginError.invalidEmail {
                 AlertManager.showAlert(message: "Invalid email, it should contain @")
             } catch LoginError.invalidPassword {

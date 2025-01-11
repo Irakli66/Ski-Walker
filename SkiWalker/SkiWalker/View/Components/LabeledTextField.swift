@@ -32,6 +32,7 @@ final class LabeledTextField: UIView, UITextFieldDelegate {
         textField.layer.shadowOffset = CGSize(width: 0, height: 2)
         textField.layer.shadowRadius = 6
         textField.layer.masksToBounds = false
+        textField.autocorrectionType = .no
         
         return textField
     }()
