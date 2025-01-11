@@ -87,7 +87,7 @@ final class LoginViewController: UIViewController {
         var configuration = UIButton.Configuration.filled()
         configuration.image = UIImage(named: "google")
         configuration.title = NSLocalizedString("Continue with Google", comment: "")
-        configuration.baseBackgroundColor = .white
+        configuration.baseBackgroundColor = .customWhite
         configuration.baseForegroundColor = .label
         configuration.imagePadding = 10
         configuration.cornerStyle = .medium
