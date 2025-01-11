@@ -244,11 +244,3 @@ final class SignupViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 }
-
-struct SignupView: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> SignupViewController {
-        SignupViewController()
-    }
-    
-    func updateUIViewController(_ uiViewController: SignupViewController, context: Context) {}
-}

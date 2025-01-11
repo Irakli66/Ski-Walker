@@ -20,7 +20,7 @@ final class LabeledTextField: UIView, UITextFieldDelegate {
     private let textField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = .white
+        textField.backgroundColor = .customWhite
         textField.layer.cornerRadius = 10
         
         let spacer = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 0))

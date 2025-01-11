@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct SkiWalkerApp: App {
-    @State private var isLoggedIn: Bool = true
+    @State private var isLoggedIn: Bool = false
     @State private var currentLocale = Locale(identifier: "en")
     var body: some Scene {
         WindowGroup {

@@ -2,10 +2,27 @@
   "sourceLanguage" : "en",
   "strings" : {
     "Already have an account?" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაქვს ანგარიში?"
+          }
+        }
+      }
     },
     "Cart View" : {
 
+    },
+    "Check your mail for a code" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეამოწმე კოდი მეილზე"
+          }
+        }
+      }
     },
     "Company ID" : {
       "extractionState" : "manual",
@@ -95,6 +112,17 @@
         }
       }
     },
+    "Enter email to recover your password" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეიყვანე რეგისტრირებული მეილი"
+          }
+        }
+      }
+    },
     "Enter your company ID" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -151,7 +179,14 @@
       }
     },
     "Enter your password" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეიყვანე პაროლი"
+          }
+        }
+      }
     },
     "First Name" : {
       "extractionState" : "manual",
@@ -199,6 +234,16 @@
         }
       }
     },
+    "Mail Code" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კოდი მეილიდან"
+          }
+        }
+      }
+    },
     "Password" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -212,6 +257,17 @@
     },
     "Profile View" : {
 
+    },
+    "Recover Password" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პაროლის აღდგენა"
+          }
+        }
+      }
     },
     "Register" : {
       "extractionState" : "manual",
@@ -231,6 +287,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "გაიმეორე პაროლი"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენახვა"
+          }
+        }
+      }
+    },
+    "Send" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგზავნა"
+          }
+        }
+      }
+    },
+    "Set New Password" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახალი პაროლი"
           }
         }
       }

@@ -87,7 +87,7 @@ final class LoginViewController: UIViewController {
         var configuration = UIButton.Configuration.filled()
         configuration.image = UIImage(named: "google")
         configuration.title = NSLocalizedString("Continue with Google", comment: "")
-        configuration.baseBackgroundColor = .white
+        configuration.baseBackgroundColor = .customWhite
         configuration.baseForegroundColor = .label
         configuration.imagePadding = 10
         configuration.cornerStyle = .medium
@@ -170,6 +170,10 @@ final class LoginViewController: UIViewController {
             contentStackView.leftAnchor.constraint(equalTo: pageWrapperStakView.leftAnchor),
             contentStackView.rightAnchor.constraint(equalTo: pageWrapperStakView.rightAnchor),
         ])
+        
+        forgotPasswordButton.addAction(UIAction(handler: { [weak self] action in
+            self?.navigationController?.pushViewController(ForgotPasswordViewController(), animated: true)
+        }), for: .touchUpInside)
     }
     
     private func setupFooterStackView() {
