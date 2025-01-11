@@ -121,7 +121,7 @@ struct ProfileView: View {
                         Image(systemName: tab.icon)
                             .frame(width: 24, height: 24)
                             .foregroundColor(.customPurple)
-                        Text(tab.title)
+                        Text(LocalizedStringKey(tab.title))
                             .font(.system(size: 16, weight: .medium))
                         Spacer()
                         Image(systemName: "chevron.right")
