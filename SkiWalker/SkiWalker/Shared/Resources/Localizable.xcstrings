@@ -1,12 +1,56 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "+ Add Funds" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ შევსება"
+          }
+        }
+      }
+    },
+    "0 ₾" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0 ₾"
+          }
+        }
+      }
+    },
+    "Addresses" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მისამართები"
+          }
+        }
+      }
+    },
+    "Addresses View" : {
+
+    },
     "Already have an account?" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "გაქვს ანგარიში?"
+          }
+        }
+      }
+    },
+    "Balance:" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბალანსი:"
           }
         }
       }
@@ -90,6 +134,16 @@
         }
       }
     },
+    "Dark Mode" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მუქი ფონი"
+          }
+        }
+      }
+    },
     "Don't have an account?" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -108,6 +162,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მეილი"
+          }
+        }
+      }
+    },
+    "English" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "English"
           }
         }
       }
@@ -213,6 +277,22 @@
     "Hello, world!" : {
 
     },
+    "ID: 6578" : {
+
+    },
+    "John Doe" : {
+
+    },
+    "Language" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ენა"
+          }
+        }
+      }
+    },
     "Last Name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -244,6 +324,17 @@
         }
       }
     },
+    "Order History" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეკვეთების ისტორია"
+          }
+        }
+      }
+    },
     "Password" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -255,8 +346,29 @@
         }
       }
     },
-    "Profile View" : {
+    "Payment Methods" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადახდის მეთოდები"
+          }
+        }
+      }
+    },
+    "Payment Methods View" : {
 
+    },
+    "Profile" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროფილი"
+          }
+        }
+      }
     },
     "Recover Password" : {
       "extractionState" : "manual",
@@ -323,6 +435,20 @@
         }
       }
     },
+    "Settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პარამეტრები"
+          }
+        }
+      }
+    },
+    "Settings View" : {
+
+    },
     "Sign in to your Account" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -361,6 +487,9 @@
           }
         }
       }
+    },
+    "ქართული" : {
+
     }
   },
   "version" : "1.0"
