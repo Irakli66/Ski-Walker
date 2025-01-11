@@ -4,10 +4,12 @@
 //
 //  Created by irakli kharshiladze on 10.01.25.
 //
-
 import SwiftUI
 
 struct ProfileView: View {
+    @AppStorage("selectedLanguage") private var selectedLanguage: String = "en"
+    @AppStorage("isDarkMode") private var isDarkMode: Bool = false
+    
     private let tabs: [ProfileTabItem] = [
         ProfileTabItem(icon: "list.bullet.rectangle.portrait", title: "Order History", destination: AnyView(OrderHistoryView())),
         ProfileTabItem(icon: "creditcard.fill", title: "Payment Methods", destination: AnyView(PaymentMethodsView())),
@@ -21,11 +23,13 @@ struct ProfileView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     profileHeader
                     balanceSection
+                    languageToggle
+                    themeToggle
                     tabNavigationList
                 }
                 .padding(20)
             }
-            .background(Color(.systemGroupedBackground))
+            .background(Color.customBackground)
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -66,13 +70,45 @@ struct ProfileView: View {
                     .font(.system(size: 14, weight: .medium))
                     .padding(.horizontal, 12)
                     .padding(.vertical, 6)
-                    .background(Color.customPurple)
+                    .background(Color.customBlue)
                     .foregroundColor(.white)
                     .clipShape(Capsule())
             }
         }
         .padding()
-        .background(Color.white)
+        .background(Color.customWhite)
+        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .shadow(color: .gray.opacity(0.2), radius: 4, x: 0, y: 3)
+    }
+    
+    private var languageToggle: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Language")
+                .font(.system(size: 16, weight: .semibold))
+            Picker("Language", selection: $selectedLanguage) {
+                Text("English").tag("en")
+                Text("ქართული").tag("ka")
+            }
+            .pickerStyle(SegmentedPickerStyle())
+        }
+        .padding()
+        .background(Color.customWhite)
+        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .shadow(color: .gray.opacity(0.2), radius: 4, x: 0, y: 3)
+    }
+    
+    private var themeToggle: some View {
+        HStack {
+            Text("Dark Mode")
+                .font(.system(size: 16, weight: .semibold))
+            Spacer()
+            Toggle(isOn: $isDarkMode) {
+                EmptyView()
+            }
+            .toggleStyle(SwitchToggleStyle(tint: .customBlue))
+        }
+        .padding()
+        .background(Color.customWhite)
         .clipShape(RoundedRectangle(cornerRadius: 15))
         .shadow(color: .gray.opacity(0.2), radius: 4, x: 0, y: 3)
     }
@@ -92,7 +128,7 @@ struct ProfileView: View {
                             .foregroundColor(.gray)
                     }
                     .padding()
-                    .background(Color.white)
+                    .background(Color.customWhite)
                 }
                 .buttonStyle(PlainButtonStyle())
                 Divider()
@@ -103,7 +139,6 @@ struct ProfileView: View {
         .shadow(color: .gray.opacity(0.1), radius: 2, x: 0, y: 2)
     }
 }
-
 
 #Preview {
     ProfileView()

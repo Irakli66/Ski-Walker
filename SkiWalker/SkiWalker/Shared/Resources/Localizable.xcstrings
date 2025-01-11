@@ -102,6 +102,9 @@
         }
       }
     },
+    "Dark Mode" : {
+
+    },
     "Don't have an account?" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -123,6 +126,9 @@
           }
         }
       }
+    },
+    "English" : {
+
     },
     "Enter email to recover your password" : {
       "extractionState" : "manual",
@@ -229,6 +235,9 @@
 
     },
     "John Doe" : {
+
+    },
+    "Language" : {
 
     },
     "Last Name" : {
@@ -385,6 +394,9 @@
           }
         }
       }
+    },
+    "ქართული" : {
+
     }
   },
   "version" : "1.0"
