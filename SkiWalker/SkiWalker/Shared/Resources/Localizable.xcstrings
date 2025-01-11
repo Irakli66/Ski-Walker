@@ -11,6 +11,9 @@
         }
       }
     },
+    "Balance 0 ₾ +" : {
+
+    },
     "Cart View" : {
 
     },
@@ -213,6 +216,12 @@
     "Hello, world!" : {
 
     },
+    "ID: 6578" : {
+
+    },
+    "John Doe" : {
+
+    },
     "Last Name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -255,7 +264,7 @@
         }
       }
     },
-    "Profile View" : {
+    "Profile" : {
 
     },
     "Recover Password" : {
