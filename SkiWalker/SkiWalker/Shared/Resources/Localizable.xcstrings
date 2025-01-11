@@ -1,6 +1,15 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "+ Add Funds" : {
+
+    },
+    "0 ₾" : {
+
+    },
+    "Addresses View" : {
+
+    },
     "Already have an account?" : {
       "localizations" : {
         "ka" : {
@@ -11,7 +20,7 @@
         }
       }
     },
-    "Balance 0 ₾ +" : {
+    "Balance:" : {
 
     },
     "Cart View" : {
@@ -264,6 +273,9 @@
         }
       }
     },
+    "Payment Methods View" : {
+
+    },
     "Profile" : {
 
     },
@@ -331,6 +343,9 @@
           }
         }
       }
+    },
+    "Settings View" : {
+
     },
     "Sign in to your Account" : {
       "extractionState" : "manual",
