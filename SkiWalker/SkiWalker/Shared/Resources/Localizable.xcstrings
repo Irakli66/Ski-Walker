@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@"
+          }
+        }
+      }
+    },
     "+ Add Funds" : {
       "localizations" : {
         "ka" : {
@@ -37,9 +47,6 @@
           }
         }
       }
-    },
-    "Addresses View" : {
-
     },
     "Already have an account?" : {
       "localizations" : {
