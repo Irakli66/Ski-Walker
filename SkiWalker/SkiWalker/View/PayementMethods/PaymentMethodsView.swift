@@ -29,7 +29,7 @@ struct PaymentMethodsView: View {
             .navigationBarBackButtonHidden(true)
             .sheet(isPresented: $isSheetPresented) {
                 AddCreditCardView()
-                    .presentationDetents([.height(410)])
+                    .presentationDetents([.height(430)])
                     .background(Color.customBackground)
             }
             .environmentObject(paymentMethodsViewModel)

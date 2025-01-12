@@ -56,3 +56,7 @@ struct CreditCardView: View {
         .padding(.horizontal)
     }
 }
+
+#Preview {
+    CreditCardView(card: CreditCard(fullName: "John Does", number: "1234 5678 9012 3456", validThru: "26/30", cvc: "363"))
+}
