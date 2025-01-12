@@ -340,6 +340,9 @@
         }
       }
     },
+    "No Payment Methods" : {
+
+    },
     "Order History" : {
       "extractionState" : "manual",
       "localizations" : {

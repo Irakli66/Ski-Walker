@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct CreditCardView: View {
+    @EnvironmentObject var viewModel: PaymentMethodsViewModel
     let card: CreditCard
     
     var body: some View {
@@ -28,6 +29,9 @@ struct CreditCardView: View {
                     Spacer()
                     Image(systemName: "trash")
                         .foregroundStyle(.customWhite)
+                        .onTapGesture {
+                            viewModel.removeCreditCard(with: card.id)
+                        }
                 }
                 
                 Spacer()

@@ -18,14 +18,16 @@ struct AddCreditCardView: View {
         VStack(spacing: 20) {
             HStack {
                 Spacer()
-                Button("Cancel") {
+                Button(action: {
                     dismiss()
+                }) {
+                    Text("Cancel")
+                        .foregroundColor(.customWhite)
+                        .padding(.vertical, 5)
+                        .padding(.horizontal, 15)
+                        .background(Color.customPurple)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
-                .foregroundColor(.customWhite)
-                .padding(.vertical, 5)
-                .padding(.horizontal, 15)
-                .background(Color.customPurple)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
             }
             
             ZStack {
@@ -43,7 +45,7 @@ struct AddCreditCardView: View {
                     HStack(spacing: 10) {
                         LabeledTextFieldView(label: "Card Number", placeholder: "1234 5678 9012 3456", text: $cardNumber)
                             .frame(maxWidth: .infinity)
-                        LabeledTextFieldView(label: "Valid Thru", placeholder: "MM/YY", text: $validThru)
+                        ValidThruTextField(label: "Valid Thru", placeholder: "MM/YY", text: $validThru)
                             .frame(width: 80)
                     }
                     
@@ -61,7 +63,7 @@ struct AddCreditCardView: View {
             Spacer()
             
             Button(action: {
-                print(fullName, cardNumber, validThru, cvc)
+                saveCreditCard()
             }) {
                 Text("Save")
                     .font(.headline)
@@ -76,7 +78,22 @@ struct AddCreditCardView: View {
         .padding()
         .background(Color.customBackground)
     }
+    
+    private func saveCreditCard() {
+        let newCard = CreditCard(fullName: fullName, number: cardNumber, validThru: validThru, cvc: cvc)
+        Task {
+            do {
+                try await viewModel.addCreditCard(creditCard: newCard)
+                dismiss()
+            } catch let error as CreditCardValidationErrors {
+                AlertManager.showAlert(message: error.localizedDescription)
+            } catch {
+                AlertManager.showAlert(message: "An unexpected error occurred. Please try again.")
+            }
+        }
+    }
 }
+
 
 #Preview {
     AddCreditCardView()

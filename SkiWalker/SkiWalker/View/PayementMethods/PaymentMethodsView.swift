@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct PaymentMethodsView: View {
-    private let paymentMethodsViewModel = PaymentMethodsViewModel()
+    @StateObject private var paymentMethodsViewModel = PaymentMethodsViewModel()
     @Environment(\.dismiss) private var dismiss
     @State private var isSheetPresented = false
     
@@ -15,13 +15,21 @@ struct PaymentMethodsView: View {
         NavigationStack {
             VStack {
                 paymentsHeader
-                List(paymentMethodsViewModel.paymentMethods, id: \.number) { card in
-                    CreditCardView(card: card)
-                        .listRowInsets(EdgeInsets())
-                        .padding(.vertical, 10)
-                        .background(Color.customBackground)
+                if paymentMethodsViewModel.paymentMethods.isEmpty {
+                    Spacer()
+                    Text("No Payment Methods")
+                        .font(.headline)
+                        .foregroundColor(Color.customGrey)
+                } else {
+                    List(paymentMethodsViewModel.paymentMethods, id: \.id) { card in
+                        CreditCardView(card: card)
+                            .listRowInsets(EdgeInsets())
+                            .padding(.vertical, 10)
+                            .background(Color.customBackground)
+                    }
+                    .listStyle(PlainListStyle())
                 }
-                .listStyle(PlainListStyle())
+                
                 Spacer()
             }
             .padding()
