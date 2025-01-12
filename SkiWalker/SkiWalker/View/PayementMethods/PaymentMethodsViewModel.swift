@@ -41,7 +41,7 @@ final class PaymentMethodsViewModel: ObservableObject {
            (1...12).contains(month) {
             
             let calendar = Calendar.current
-            let currentYear = calendar.component(.year, from: Date()) % 100 // Get last two digits of the current year
+            let currentYear = calendar.component(.year, from: Date()) % 100
             let currentMonth = calendar.component(.month, from: Date())
             
             if year < currentYear || (year == currentYear && month < currentMonth) {

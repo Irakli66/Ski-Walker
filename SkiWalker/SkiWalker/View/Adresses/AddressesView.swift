@@ -14,8 +14,15 @@ struct AddressesView: View {
     var body: some View {
         VStack{
             addressesHeader
-            ScrollView {
-                addressesContent
+            if addressesViewModel.addresses.isEmpty {
+                Spacer()
+                Text("Nothing to show")
+                    .foregroundStyle(.customGrey)
+                Spacer()
+            } else {
+                ScrollView {
+                    addressesContent
+                }
             }
         }
         .padding()
