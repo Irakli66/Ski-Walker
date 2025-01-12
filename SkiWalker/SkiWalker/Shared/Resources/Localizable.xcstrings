@@ -56,10 +56,35 @@
       }
     },
     "Cancel" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაუქმება"
+          }
+        }
+      }
     },
     "Card Holder" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მფლობელი"
+          }
+        }
+      }
+    },
+    "Card Number" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბარათის ნომერი"
+          }
+        }
+      }
     },
     "Cart View" : {
 
@@ -237,6 +262,17 @@
         }
       }
     },
+    "Enter your full name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეიყვანე მფლობელის სრული სახელი"
+          }
+        }
+      }
+    },
     "Enter your last name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -276,6 +312,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დაგავიწყდა პაროლი?"
+          }
+        }
+      }
+    },
+    "Full Name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სრული სახელი"
           }
         }
       }
@@ -341,7 +388,14 @@
       }
     },
     "No Payment Methods" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არ გაქვს ბარათი"
+          }
+        }
+      }
     },
     "Order History" : {
       "extractionState" : "manual",
@@ -494,7 +548,14 @@
       }
     },
     "Valid Thru" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვადა"
+          }
+        }
+      }
     },
     "Vendor" : {
       "extractionState" : "manual",

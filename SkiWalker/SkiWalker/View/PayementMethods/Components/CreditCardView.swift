@@ -37,7 +37,7 @@ struct CreditCardView: View {
                 Spacer()
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("Card Holder")
+                        Text(LocalizedStringKey("Card Holder"))
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.7))
                         Text(card.fullName)

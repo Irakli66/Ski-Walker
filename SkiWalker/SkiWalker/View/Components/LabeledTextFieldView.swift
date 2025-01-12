@@ -13,11 +13,11 @@ struct LabeledTextFieldView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .font(.subheadline)
                 .foregroundColor(Color.customWhite)
             
-            TextField(placeholder, text: $text)
+            TextField(LocalizedStringKey(placeholder), text: $text)
                 .padding(10)
                 .background(Color.customWhite)
                 .cornerRadius(8)

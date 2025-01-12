@@ -13,14 +13,14 @@ struct ValidThruTextField: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .font(.subheadline)
-                .foregroundColor(.white)
+                .foregroundColor(.customWhite)
             
-            TextField(placeholder, text: $text)
+            TextField(LocalizedStringKey(placeholder), text: $text)
                 .keyboardType(.numberPad)
                 .padding(10)
-                .background(Color.white)
+                .background(Color.customWhite)
                 .cornerRadius(8)
                 .shadow(radius: 2)
                 .onChange(of: text) { newValue in
