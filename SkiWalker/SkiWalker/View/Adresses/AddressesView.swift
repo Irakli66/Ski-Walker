@@ -10,6 +10,7 @@ import SwiftUI
 struct AddressesView: View {
     @StateObject private var addressesViewModel = AddressViewModel()
     @State private var isSheetPresented = false
+    
     var body: some View {
         VStack{
             addressesHeader
@@ -19,6 +20,13 @@ struct AddressesView: View {
         }
         .padding()
         .background(Color.customBackground)
+        .sheet(isPresented: $isSheetPresented) {
+            AddAddressView()
+                .presentationDetents([.height(550)])
+                .background(Color.customBackground)
+            
+        }
+        .environmentObject(addressesViewModel)
     }
     
     private var addressesHeader: some View {
@@ -61,7 +69,7 @@ struct AddressesView: View {
                     Spacer()
                     
                     Button(action: {
-                        print("delete")
+                        addressesViewModel.removeAddress(address)
                     }) {
                         Image(systemName: "trash.fill")
                             .foregroundStyle(Color.red)
