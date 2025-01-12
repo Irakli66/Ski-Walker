@@ -55,6 +55,9 @@
         }
       }
     },
+    "Card Holder" : {
+
+    },
     "Cart View" : {
 
     },
@@ -367,9 +370,6 @@
         }
       }
     },
-    "Payment Methods View" : {
-
-    },
     "Profile" : {
       "localizations" : {
         "ka" : {
@@ -486,6 +486,9 @@
           }
         }
       }
+    },
+    "Valid Thru" : {
+
     },
     "Vendor" : {
       "extractionState" : "manual",
