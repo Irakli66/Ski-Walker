@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@"
+          }
+        }
+      }
+    },
     "+ Add Funds" : {
       "localizations" : {
         "ka" : {
@@ -37,9 +47,6 @@
           }
         }
       }
-    },
-    "Addresses View" : {
-
     },
     "Already have an account?" : {
       "localizations" : {
@@ -105,6 +112,17 @@
         }
       }
     },
+    "City" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქალაქი"
+          }
+        }
+      }
+    },
     "Company ID" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -145,6 +163,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Google-ით შესვლა"
+          }
+        }
+      }
+    },
+    "Country" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყანა"
           }
         }
       }
@@ -234,6 +263,17 @@
         }
       }
     },
+    "Enter your city" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეიყვანე ქალაქი"
+          }
+        }
+      }
+    },
     "Enter your company ID" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -252,6 +292,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შეიყვანე კომპანიის სახელი"
+          }
+        }
+      }
+    },
+    "Enter your country" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეიყვანე ქვეყანა"
           }
         }
       }
@@ -424,6 +475,16 @@
         }
       }
     },
+    "Nothing to show" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ცარიელია"
+          }
+        }
+      }
+    },
     "Order History" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -590,6 +651,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "სტატუსი:"
+          }
+        }
+      }
+    },
+    "Street" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქუჩა"
           }
         }
       }

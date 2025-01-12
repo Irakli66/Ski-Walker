@@ -15,7 +15,7 @@ struct LabeledTextFieldView: View {
         VStack(alignment: .leading, spacing: 5) {
             Text(LocalizedStringKey(label))
                 .font(.subheadline)
-                .foregroundColor(Color.customWhite)
+                .foregroundColor(Color.customPurple)
             
             TextField(LocalizedStringKey(placeholder), text: $text)
                 .padding(10)
