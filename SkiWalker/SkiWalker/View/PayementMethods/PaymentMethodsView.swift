@@ -8,7 +8,6 @@ import SwiftUI
 
 struct PaymentMethodsView: View {
     @StateObject private var paymentMethodsViewModel = PaymentMethodsViewModel()
-    @Environment(\.dismiss) private var dismiss
     @State private var isSheetPresented = false
     
     var body: some View {
@@ -46,10 +45,7 @@ struct PaymentMethodsView: View {
     
     private var paymentsHeader: some View {
         HStack {
-            Image(systemName: "chevron.left")
-                .onTapGesture {
-                    dismiss()
-                }
+            ReusableBackButton()
             Spacer()
             Text("Payment Methods")
                 .font(.system(size: 24, weight: .bold))
