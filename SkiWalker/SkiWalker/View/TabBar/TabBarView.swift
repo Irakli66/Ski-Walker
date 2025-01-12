@@ -31,7 +31,7 @@ struct TabBarView: View {
                             .frame(width: 24, height: 24)
                     }
                     .padding(15)
-                    .background(selectedTab == item.tab ? .customBlue : .white)
+                    .background(selectedTab == item.tab ? Color.customBlue : Color.customWhite)
                     .cornerRadius(50)
                     .onTapGesture {
                         selectedTab = item.tab
@@ -42,7 +42,7 @@ struct TabBarView: View {
             .frame(height: 60)
             .padding(.vertical, 10)
             .padding(.bottom, 15)
-            .background(Color.white)
+            .background(Color.customWhite)
         }
     }
 }

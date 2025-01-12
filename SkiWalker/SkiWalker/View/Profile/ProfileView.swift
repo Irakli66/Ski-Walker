@@ -143,7 +143,6 @@ struct ProfileView: View {
                 Divider()
             }
         }
-        .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 15))
         .shadow(color: .gray.opacity(0.1), radius: 2, x: 0, y: 2)
     }
