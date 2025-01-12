@@ -179,7 +179,14 @@
       }
     },
     "Date:" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თარიღი:"
+          }
+        }
+      }
     },
     "Don't have an account?" : {
       "extractionState" : "manual",
@@ -393,6 +400,17 @@
         }
       }
     },
+    "My Orders" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩემი შეკვეთები"
+          }
+        }
+      }
+    },
     "No Payment Methods" : {
       "localizations" : {
         "ka" : {
@@ -415,7 +433,14 @@
       }
     },
     "Order:" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეკვეთა:"
+          }
+        }
+      }
     },
     "Password" : {
       "extractionState" : "manual",
@@ -557,10 +582,24 @@
       }
     },
     "Status:" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სტატუსი:"
+          }
+        }
+      }
     },
     "Total Price:" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფასი:"
+          }
+        }
+      }
     },
     "Valid Thru" : {
       "localizations" : {
