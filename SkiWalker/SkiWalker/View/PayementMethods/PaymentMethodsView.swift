@@ -10,17 +10,12 @@ struct PaymentMethodsView: View {
     private let paymentMethodsViewModel = PaymentMethodsViewModel()
     @Environment(\.dismiss) private var dismiss
     @State private var isSheetPresented = false
-    private let paymentMethods: [CreditCard] = [
-        CreditCard(fullName: "John Does", number: "1234 5678 9012 3456", validThru: "26/30", cvc: "363"),
-        CreditCard(fullName: "John Does", number: "1235 5678 9012 3456", validThru: "26/30", cvc: "363"),
-        CreditCard(fullName: "John Does", number: "1236 5678 9012 3456", validThru: "26/30", cvc: "363")
-    ]
     
     var body: some View {
         NavigationStack {
             VStack {
                 paymentsHeader
-                List(paymentMethods, id: \.number) { card in
+                List(paymentMethodsViewModel.paymentMethods, id: \.number) { card in
                     CreditCardView(card: card)
                         .listRowInsets(EdgeInsets())
                         .padding(.vertical, 10)
@@ -65,11 +60,4 @@ struct PaymentMethodsView: View {
 
 #Preview {
     PaymentMethodsView()
-}
-
-struct CreditCard {
-    let fullName: String
-    let number: String
-    let validThru: String
-    let cvc: String
 }

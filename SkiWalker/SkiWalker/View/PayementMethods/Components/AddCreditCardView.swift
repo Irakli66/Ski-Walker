@@ -12,3 +12,7 @@ struct AddCreditCardView: View {
         Text("Add Credit Card")
     }
 }
+
+#Preview {
+    AddCreditCardView()
+}
