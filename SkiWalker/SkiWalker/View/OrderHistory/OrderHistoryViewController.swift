@@ -8,7 +8,7 @@
 import SwiftUI
 
 final class OrderHistoryViewController: UIViewController {
-    private let orders = ["1","2","3"]
+    private let orderHistoryViewModel = OrderHistoryViewModel()
     var navigationHandler: (() -> Void)?
     
     private let navigateBackButton: UIButton = {
@@ -32,7 +32,7 @@ final class OrderHistoryViewController: UIViewController {
     private let orderHistoryTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
+        tableView.backgroundColor = .clear
         return tableView
     }()
     
@@ -86,23 +86,33 @@ final class OrderHistoryViewController: UIViewController {
 
 extension OrderHistoryViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        orders.count
+        orderHistoryViewModel.getOrderCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "OrderCell", for: indexPath)
         
-        let currentOrder = orders[indexPath.row]
+        let currentOrder = orderHistoryViewModel.getOrderAt(index: indexPath.row)
         
         cell.contentConfiguration = UIHostingConfiguration(content: {
             OrderHistoryCellView(order: currentOrder)
         })
+        
+        cell.separatorInset = .zero
+        cell.layoutMargins = .zero
+        cell.preservesSuperviewLayoutMargins = false
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
+        
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let currentOrder = orderHistoryViewModel.getOrderAt(index: indexPath.row)
+        print(currentOrder.id)
+    }
     
 }
-
 
 
 struct OrderHistoryView: UIViewControllerRepresentable {

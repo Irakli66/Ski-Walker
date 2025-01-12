@@ -11,6 +11,9 @@
         }
       }
     },
+    "$%.2f" : {
+
+    },
     "0 ₾" : {
       "localizations" : {
         "ka" : {
@@ -174,6 +177,9 @@
           }
         }
       }
+    },
+    "Date:" : {
+
     },
     "Don't have an account?" : {
       "extractionState" : "manual",
@@ -408,6 +414,9 @@
         }
       }
     },
+    "Order:" : {
+
+    },
     "Password" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -546,6 +555,12 @@
           }
         }
       }
+    },
+    "Status:" : {
+
+    },
+    "Total Price:" : {
+
     },
     "Valid Thru" : {
       "localizations" : {
