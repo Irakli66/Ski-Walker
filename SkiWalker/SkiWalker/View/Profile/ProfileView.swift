@@ -12,7 +12,7 @@ struct ProfileView: View {
     @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
     
     private let tabs: [ProfileTabItem] = [
-        ProfileTabItem(icon: "list.bullet.rectangle.portrait", title: "Order History", destination: AnyView(OrderHistoryView())),
+        ProfileTabItem(icon: "list.bullet.rectangle.portrait", title: "Order History", destination: AnyView(OrderHistoryView().background(.customBackground))),
         ProfileTabItem(icon: "creditcard.fill", title: "Payment Methods", destination: AnyView(PaymentMethodsView())),
         ProfileTabItem(icon: "mappin.circle", title: "Addresses", destination: AnyView(AddressesView())),
         ProfileTabItem(icon: "gearshape.fill", title: "Settings", destination: AnyView(ProfileSettingsView()))
@@ -125,7 +125,7 @@ struct ProfileView: View {
     private var tabNavigationList: some View {
         VStack(spacing: 1) {
             ForEach(tabs) { tab in
-                NavigationLink(destination: tab.destination) {
+                NavigationLink(destination: tab.destination .navigationBarHidden(true)) {
                     HStack {
                         Image(systemName: tab.icon)
                             .frame(width: 24, height: 24)

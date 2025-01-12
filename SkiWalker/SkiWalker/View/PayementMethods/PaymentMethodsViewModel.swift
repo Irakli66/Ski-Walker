@@ -57,14 +57,6 @@ final class PaymentMethodsViewModel: ObservableObject {
     }
 }
 
-struct CreditCard {
-    let id: UUID = UUID()
-    let fullName: String
-    let number: String
-    let validThru: String
-    let cvc: String
-}
-
 enum CreditCardValidationErrors: Error, LocalizedError {
     case invalidFullName
     case invalidNumber

@@ -11,6 +11,12 @@
         }
       }
     },
+    "+%lld" : {
+
+    },
+    "$%.2f" : {
+
+    },
     "0 ₾" : {
       "localizations" : {
         "ka" : {
@@ -171,6 +177,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მუქი ფონი"
+          }
+        }
+      }
+    },
+    "Date:" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თარიღი:"
           }
         }
       }
@@ -387,6 +403,17 @@
         }
       }
     },
+    "My Orders" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩემი შეკვეთები"
+          }
+        }
+      }
+    },
     "No Payment Methods" : {
       "localizations" : {
         "ka" : {
@@ -404,6 +431,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შეკვეთების ისტორია"
+          }
+        }
+      }
+    },
+    "Order:" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეკვეთა:"
           }
         }
       }
@@ -543,6 +580,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დარეგისტრირდი"
+          }
+        }
+      }
+    },
+    "Status:" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სტატუსი:"
+          }
+        }
+      }
+    },
+    "Total Price:" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფასი:"
           }
         }
       }
