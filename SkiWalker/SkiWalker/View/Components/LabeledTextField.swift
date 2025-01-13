@@ -8,6 +8,7 @@
 import UIKit
 
 final class LabeledTextField: UIView, UITextFieldDelegate {
+    private weak var parentView: UIView?
     
     private let label: UILabel = {
         let label = UILabel()
@@ -17,11 +18,12 @@ final class LabeledTextField: UIView, UITextFieldDelegate {
         return label
     }()
     
-    private let textField: UITextField = {
+    private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .customWhite
         textField.layer.cornerRadius = 10
+        textField.delegate = self
         
         let spacer = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 0))
         textField.leftView = spacer
@@ -48,11 +50,14 @@ final class LabeledTextField: UIView, UITextFieldDelegate {
     private var isSecureEntry: Bool
     private var isEmail: Bool
     
-    init(labelText: String, placeholderText: String, isSecure: Bool = false, isEmail: Bool = false) {
+    init(labelText: String, placeholderText: String, isSecure: Bool = false, isEmail: Bool = false, parentView: UIView? = nil) {
         self.isSecureEntry = isSecure
         self.isEmail = isEmail
+        self.parentView = parentView
         super.init(frame: .zero)
         setupView(labelText: labelText, placeholderText: placeholderText)
+        setupKeyboardNotifications()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -99,11 +104,57 @@ final class LabeledTextField: UIView, UITextFieldDelegate {
         toggleButton.setImage(UIImage(systemName: imageName), for: .normal)
     }
     
+    private func setupKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        guard let parentView = parentView else { return }
+        guard let window = findKeyWindow() else { return }
+        
+        if textField.isFirstResponder {
+            let keyboardHeight = keyboardFrame.height
+            let textFieldFrame = self.convert(self.bounds, to: window)
+            let bottomSpace = window.frame.height - textFieldFrame.maxY
+            
+            if bottomSpace < keyboardHeight {
+                let offset = keyboardHeight - bottomSpace + 10
+                UIView.animate(withDuration: 0.3) {
+                    parentView.transform = CGAffineTransform(translationX: 0, y: -offset)
+                }
+            }
+        }
+    }
+    
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        UIView.animate(withDuration: 0.3) {
+            self.parentView?.transform = .identity
+        }
+    }
+    
+    private func findKeyWindow() -> UIWindow? {
+        return UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     func getText() -> String {
         return textField.text ?? ""
     }
     
     func clearText() {
         textField.text = ""
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
