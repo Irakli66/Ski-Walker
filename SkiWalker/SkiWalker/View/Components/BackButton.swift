@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class BackButton: UIButton {
+final class BackButton: UIButton {
 
     weak var navigationController: UINavigationController?
 

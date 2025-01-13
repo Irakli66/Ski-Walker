@@ -445,17 +445,6 @@
         }
       }
     },
-    "logout" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "გასვლა"
-          }
-        }
-      }
-    },
     "Mail Code" : {
       "localizations" : {
         "ka" : {
@@ -626,9 +615,6 @@
         }
       }
     },
-    "Settings View" : {
-
-    },
     "Sign in to your Account" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -684,6 +670,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ფასი:"
+          }
+        }
+      }
+    },
+    "Update profile" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ცვლილებების შენახვა"
           }
         }
       }
