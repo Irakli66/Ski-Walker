@@ -5,10 +5,16 @@
 //  Created by irakli kharshiladze on 10.01.25.
 //
 import Foundation
+import NetworkPackage
 
 final class SignupViewModel {
+    private let networkService: NetworkServiceProtocol
     
-    func register(firstName: String = "", lastName: String = "", companyName: String = "", companyID: String = "", email: String = "", password: String = "", confirmPassword: String = "", userRole: UserRole) async throws {
+    init(networkService: NetworkService = NetworkService()) {
+        self.networkService = networkService
+    }
+    
+    func register(firstName: String = "", lastName: String = "", companyName: String = "", companyID: String = "", email: String = "", password: String = "", confirmPassword: String = "", userRole: UserRole) async throws -> String {
         
         switch userRole {
         case .customer:
@@ -23,12 +29,40 @@ final class SignupViewModel {
         try validatePassword(password)
         try validatePasswordMatch(password, confirmPassword)
         
-        if userRole == .customer {
-            print(firstName, lastName, email, password)
-        } else {
-            print(companyName, companyID, email, password)
+        let (url, requestBody): (String, [String: String]) = {
+            switch userRole {
+            case .customer:
+                return ("https://api.gargar.dev:8088/Auth/registerUser", [
+                    "firstName": firstName,
+                    "lastName": lastName,
+                    "email": email,
+                    "password": password
+                ])
+            case .vendor:
+                return ("https://api.gargar.dev:8088/Auth/registerVendor", [
+                    "companyName": companyName,
+                    "companyId": companyID,
+                    "email": email,
+                    "password": password
+                ])
+            }
+        }()
+        
+        guard let bodyData = try? JSONEncoder().encode(requestBody) else {
+            throw SignupErrors.invalidRequestData
         }
+        
+        let response: RegistrationResponse = try await networkService.request(
+            urlString: url,
+            method: .post,
+            headers: nil,
+            body: bodyData,
+            decoder: JSONDecoder()
+        )
+        
+        return response.message
     }
+    
     
     private func validateName(_ name: String, error: SignupErrors) throws {
         if name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
@@ -67,6 +101,7 @@ enum SignupErrors: Error, LocalizedError {
     case invalidEmail
     case invalidPassword
     case passwordsDontMatch
+    case invalidRequestData
     
     var errorDescription: String? {
         switch self {
@@ -84,6 +119,8 @@ enum SignupErrors: Error, LocalizedError {
             return "Password must be at least 6 characters long, contain at least 1 uppercase letter, and 1 special character."
         case .passwordsDontMatch:
             return "Passwords do not match."
+        case .invalidRequestData:
+            return "Invalid request data."
         }
     }
 }
@@ -91,4 +128,8 @@ enum SignupErrors: Error, LocalizedError {
 enum UserRole: String, Hashable {
     case customer = "Customer"
     case vendor = "Vendor"
+}
+
+struct RegistrationResponse: Decodable {
+    let message: String
 }

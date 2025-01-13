@@ -194,7 +194,7 @@ final class SignupViewController: UIViewController {
         Task {
             do {
                 if currentCategory == .customer {
-                    try await signupViewModel.register(
+                   let response = try await signupViewModel.register(
                         firstName: firstNameField.getText(),
                         lastName: lastNameField.getText(),
                         email: emailField.getText(),
@@ -202,8 +202,11 @@ final class SignupViewController: UIViewController {
                         confirmPassword: confirmPasswordField.getText(),
                         userRole: .customer
                     )
+                    
+                    AlertManager.showAlert(title: "Success", message: response)
+                    navigationController?.popViewController(animated: true)
                 } else {
-                    try await signupViewModel.register(
+                    let response = try await signupViewModel.register(
                         companyName: companyNameField.getText(),
                         companyID: companyIDField.getText(),
                         email: emailField.getText(),
@@ -211,9 +214,11 @@ final class SignupViewController: UIViewController {
                         confirmPassword: confirmPasswordField.getText(),
                         userRole: .vendor
                     )
+                    
+                    AlertManager.showAlert(title: "Success", message: response)
+                    navigationController?.popViewController(animated: true)
                 }
                 resetFields()
-                AlertManager.showAlert(title: "Success", message: "Registration successful!")
             } catch {
                 handleSignupError(error)
             }
