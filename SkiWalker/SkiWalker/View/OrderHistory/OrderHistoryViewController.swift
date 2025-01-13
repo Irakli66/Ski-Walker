@@ -109,7 +109,9 @@ extension OrderHistoryViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let currentOrder = orderHistoryViewModel.getOrderAt(index: indexPath.row)
-        print(currentOrder.id)
+        let vc = OrderHistoryDetailsViewController()
+        vc.order = currentOrder
+        navigationController?.pushViewController(vc, animated: true)
     }
     
 }
