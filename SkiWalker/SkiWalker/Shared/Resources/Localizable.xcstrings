@@ -434,7 +434,19 @@
         }
       }
     },
+    "Log out" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასვლა"
+          }
+        }
+      }
+    },
     "logout" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {

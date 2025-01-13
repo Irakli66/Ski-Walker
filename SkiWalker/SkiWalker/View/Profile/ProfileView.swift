@@ -27,14 +27,17 @@ struct ProfileView: View {
                     languageToggle
                     themeToggle
                     tabNavigationList
-                    Button("logout") {
+                    
+                    Button(action: {
                         isLoggedIn = false
+                    }) {
+                        Text("Log out")
+                            .frame(maxWidth: .infinity)
+                            .foregroundStyle(.white)
+                            .padding()
+                            .background(Color.red)
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
                     }
-                    .frame(maxWidth: .infinity)
-                    .foregroundStyle(.white)
-                    .padding()
-                    .background(.red)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
                 .padding(20)
             }
