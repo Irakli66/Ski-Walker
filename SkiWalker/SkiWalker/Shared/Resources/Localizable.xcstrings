@@ -626,9 +626,6 @@
         }
       }
     },
-    "Settings View" : {
-
-    },
     "Sign in to your Account" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -687,6 +684,9 @@
           }
         }
       }
+    },
+    "Update profile" : {
+
     },
     "Valid Thru" : {
       "localizations" : {
