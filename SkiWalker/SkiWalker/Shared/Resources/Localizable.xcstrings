@@ -445,17 +445,6 @@
         }
       }
     },
-    "logout" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "გასვლა"
-          }
-        }
-      }
-    },
     "Mail Code" : {
       "localizations" : {
         "ka" : {
@@ -686,7 +675,14 @@
       }
     },
     "Update profile" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ცვლილებების შენახვა"
+          }
+        }
+      }
     },
     "Valid Thru" : {
       "localizations" : {
