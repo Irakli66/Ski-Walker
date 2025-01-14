@@ -194,7 +194,7 @@ final class SignupViewController: UIViewController {
         Task {
             do {
                 if currentCategory == .customer {
-                   let response = try await signupViewModel.register(
+                    try await signupViewModel.register(
                         firstName: firstNameField.getText(),
                         lastName: lastNameField.getText(),
                         email: emailField.getText(),
@@ -202,11 +202,8 @@ final class SignupViewController: UIViewController {
                         confirmPassword: confirmPasswordField.getText(),
                         userRole: .customer
                     )
-                    
-                    AlertManager.showAlert(title: "Success", message: response)
-                    navigationController?.popViewController(animated: true)
                 } else {
-                    let response = try await signupViewModel.register(
+                    try await signupViewModel.register(
                         companyName: companyNameField.getText(),
                         companyID: companyIDField.getText(),
                         email: emailField.getText(),
@@ -214,10 +211,17 @@ final class SignupViewController: UIViewController {
                         confirmPassword: confirmPasswordField.getText(),
                         userRole: .vendor
                     )
-                    
-                    AlertManager.showAlert(title: "Success", message: response)
-                    navigationController?.popViewController(animated: true)
                 }
+                
+                AlertManager.showAlertWithActions(
+                    title: "Success",
+                    message: "Successfully registered",
+                    actions: [
+                        UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+                            self?.navigationController?.popViewController(animated: true)
+                        })
+                    ]
+                )
                 resetFields()
             } catch {
                 handleSignupError(error)
@@ -240,7 +244,7 @@ final class SignupViewController: UIViewController {
         if let signupError = error as? SignupErrors {
             AlertManager.showAlert(message: signupError.localizedDescription)
         } else {
-            AlertManager.showAlert(message: "An unexpected error occurred. Please try again.")
+            AlertManager.showAlert(message: error.localizedDescription)
         }
     }
     

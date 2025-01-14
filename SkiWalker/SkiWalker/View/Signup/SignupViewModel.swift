@@ -14,7 +14,7 @@ final class SignupViewModel {
         self.networkService = networkService
     }
     
-    func register(firstName: String = "", lastName: String = "", companyName: String = "", companyID: String = "", email: String = "", password: String = "", confirmPassword: String = "", userRole: UserRole) async throws -> String {
+    func register(firstName: String = "", lastName: String = "", companyName: String = "", companyID: String = "", email: String = "", password: String = "", confirmPassword: String = "", userRole: UserRole) async throws {
         
         switch userRole {
         case .customer:
@@ -52,15 +52,13 @@ final class SignupViewModel {
             throw SignupErrors.invalidRequestData
         }
         
-        let response: RegistrationResponse = try await networkService.request(
+        let _: APIResponse? = try await networkService.request(
             urlString: url,
             method: .post,
             headers: nil,
             body: bodyData,
             decoder: JSONDecoder()
         )
-        
-        return response.message
     }
     
     
@@ -102,6 +100,8 @@ enum SignupErrors: Error, LocalizedError {
     case invalidPassword
     case passwordsDontMatch
     case invalidRequestData
+    case custom(message: String)
+    case unknownError
     
     var errorDescription: String? {
         switch self {
@@ -121,6 +121,11 @@ enum SignupErrors: Error, LocalizedError {
             return "Passwords do not match."
         case .invalidRequestData:
             return "Invalid request data."
+        case .custom(let message):
+            return message
+
+        case .unknownError:
+            return "An unknown error occurred."
         }
     }
 }
@@ -130,6 +135,7 @@ enum UserRole: String, Hashable {
     case vendor = "Vendor"
 }
 
-struct RegistrationResponse: Decodable {
-    let message: String
+struct APIResponse: Decodable {
+    let code: String
+    let description: String
 }
