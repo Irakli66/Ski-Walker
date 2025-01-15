@@ -205,14 +205,25 @@ final class LoginViewController: UIViewController {
         Task {
             do {
                 let _ =  try await viewModel.login(email: emailField.getText(), password: passwordField.getText())
-                isLoggedIn = true
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
+                    let toast = ToastView(message: "Login successful!", type: .success)
+                    toast.show(in: self.view)
+                }
             } catch LoginError.invalidEmail {
                 AlertManager.showAlert(message: "Invalid email, it should contain @")
             } catch LoginError.invalidPassword {
                 AlertManager.showAlert(message: "Fill Password Field")
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else {return}
+                    let toast = ToastView(message: error.localizedDescription, type: .error)
+                    toast.show(in: self.view)
+                }
             }
         }
     }
+    
     
     private func didTapSignup() {
         let signupVC = SignupViewController()
@@ -231,3 +242,4 @@ struct LoginView: UIViewControllerRepresentable {
         // Empty for now
     }
 }
+

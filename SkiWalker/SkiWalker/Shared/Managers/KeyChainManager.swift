@@ -1,5 +1,5 @@
 //
-//  KeychainManager.swift
+//  KeyChainManager.swift
 //  SkiWalker
 //
 //  Created by irakli kharshiladze on 13.01.25.
@@ -23,7 +23,7 @@ enum KeychainError: Error {
     case itemNotFound
 }
 
-final class KeyChainManager: KeyChainManagerProtocol {
+final class KeyChainManager: KeyChainManagerProtocol, ObservableObject {
     
     private func createQuery(forKey key: String) -> [String: Any] {
         return [

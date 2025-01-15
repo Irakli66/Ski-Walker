@@ -14,7 +14,7 @@ final class SignupViewModel {
         self.networkService = networkService
     }
     
-    func register(firstName: String = "", lastName: String = "", companyName: String = "", companyID: String = "", email: String = "", password: String = "", confirmPassword: String = "", userRole: UserRole) async throws -> String {
+    func register(firstName: String = "", lastName: String = "", companyName: String = "", companyID: String = "", email: String = "", password: String = "", confirmPassword: String = "", userRole: UserRole) async throws {
         
         switch userRole {
         case .customer:
@@ -52,15 +52,13 @@ final class SignupViewModel {
             throw SignupErrors.invalidRequestData
         }
         
-        let response: RegistrationResponse = try await networkService.request(
+        let _: SignupResponse? = try await networkService.request(
             urlString: url,
             method: .post,
             headers: nil,
             body: bodyData,
             decoder: JSONDecoder()
         )
-        
-        return response.message
     }
     
     
@@ -92,44 +90,7 @@ final class SignupViewModel {
         }
     }
 }
-
-enum SignupErrors: Error, LocalizedError {
-    case invalidFirstName
-    case invalidLastName
-    case invalidCompanyName
-    case inValidCompanyID
-    case invalidEmail
-    case invalidPassword
-    case passwordsDontMatch
-    case invalidRequestData
-    
-    var errorDescription: String? {
-        switch self {
-        case .invalidFirstName:
-            return "First name cannot be empty."
-        case .invalidLastName:
-            return "Last name cannot be empty."
-        case .invalidCompanyName:
-            return "Company name cannot be empty."
-        case .inValidCompanyID:
-            return "Company ID cannot be empty."
-        case .invalidEmail:
-            return "Please enter a valid email address."
-        case .invalidPassword:
-            return "Password must be at least 6 characters long, contain at least 1 uppercase letter, and 1 special character."
-        case .passwordsDontMatch:
-            return "Passwords do not match."
-        case .invalidRequestData:
-            return "Invalid request data."
-        }
-    }
-}
-
 enum UserRole: String, Hashable {
     case customer = "Customer"
     case vendor = "Vendor"
-}
-
-struct RegistrationResponse: Decodable {
-    let message: String
 }

@@ -7,9 +7,10 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject private var sessionManager: SessionManager
     @AppStorage("selectedLanguage") private var selectedLanguage: String = "en"
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
-    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
+    @State private var showToast = false
     
     private let tabs: [ProfileTabItem] = [
         ProfileTabItem(icon: "list.bullet.rectangle.portrait", title: "Order History", destination: AnyView(OrderHistoryView().background(.customBackground))),
@@ -29,7 +30,11 @@ struct ProfileView: View {
                     tabNavigationList
                     
                     Button(action: {
-                        isLoggedIn = false
+                        showToast = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            showToast = false
+                            sessionManager.logout()
+                        }
                     }) {
                         Text("Log out")
                             .frame(maxWidth: .infinity)
@@ -44,6 +49,7 @@ struct ProfileView: View {
             .background(Color.customBackground)
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
+            .toast(isPresented: $showToast, message: "Logged Out Successfully!", type: .success)
         }
     }
     
