@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
     "%@, %@" : {
       "localizations" : {
         "en" : {
@@ -395,12 +405,6 @@
       }
     },
     "Hello, world!" : {
-
-    },
-    "ID: 6578" : {
-
-    },
-    "John Doe" : {
 
     },
     "Language" : {

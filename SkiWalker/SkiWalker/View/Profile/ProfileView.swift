@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @StateObject private var profileViewModel = ProfileViewModel()
     @EnvironmentObject private var sessionManager: SessionManager
     @AppStorage("selectedLanguage") private var selectedLanguage: String = "en"
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
@@ -62,13 +63,22 @@ struct ProfileView: View {
                 .shadow(radius: 4)
             
             VStack(alignment: .leading, spacing: 4) {
-                Text("John Doe")
+                Text("\(profileViewModel.user?.firstname ?? "") \(profileViewModel.user?.lastname ?? "")")
                     .font(.system(size: 22, weight: .bold))
-                Text("ID: 6578")
+                Text(profileViewModel.user?.email ?? "")
                     .font(.system(size: 14))
                     .foregroundStyle(.customGrey)
             }
             Spacer()
+        }
+        .onAppear() {
+            Task {
+                do {
+                    try await profileViewModel.getCurrentUser()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
     
