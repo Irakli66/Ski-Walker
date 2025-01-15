@@ -7,9 +7,9 @@
 import Foundation
 
 struct CreditCard: Codable {
-    var id: UUID = UUID()
-    let fullName: String
-    let number: String
+    var id: String?
+    let fullname: String
+    let cardNumber: String
     let validThru: String
     let cvc: String
 }

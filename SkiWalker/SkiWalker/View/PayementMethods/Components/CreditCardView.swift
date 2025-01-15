@@ -22,15 +22,16 @@ struct CreditCardView: View {
             
             VStack(alignment: .leading, spacing: 15) {
                 HStack{
-                    Text("**** **** **** \(card.number.suffix(4))")
+                    Text("**** **** **** \(card.cardNumber.suffix(4))")
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                     Spacer()
+                    
                     Image(systemName: "trash")
                         .foregroundStyle(.customWhite)
                         .onTapGesture {
-                            viewModel.removeCreditCard(with: card.id)
+                            deleteCard()
                         }
                 }
                 
@@ -40,7 +41,7 @@ struct CreditCardView: View {
                         Text(LocalizedStringKey("Card Holder"))
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.7))
-                        Text(card.fullName)
+                        Text(card.fullname)
                             .foregroundColor(.white)
                             .fontWeight(.semibold)
                     }
@@ -59,8 +60,19 @@ struct CreditCardView: View {
         }
         .padding(.horizontal)
     }
+    
+    private func deleteCard() {
+        Task {
+            do {
+                try await viewModel.removeCreditCard(with: card.id ?? "")
+                try await viewModel.fetchPaymentMethods()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
 
 #Preview {
-    CreditCardView(card: CreditCard(fullName: "John Does", number: "1234 5678 9012 3456", validThru: "26/30", cvc: "363"))
+    CreditCardView(card: CreditCard(id: UUID().uuidString, fullname: "John Does", cardNumber: "1234 5678 9012 3456", validThru: "26/30", cvc: "363"))
 }

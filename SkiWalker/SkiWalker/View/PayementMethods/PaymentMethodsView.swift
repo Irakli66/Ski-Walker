@@ -14,21 +14,22 @@ struct PaymentMethodsView: View {
         NavigationStack {
             VStack {
                 paymentsHeader
-                if paymentMethodsViewModel.paymentMethods.isEmpty {
-                    Spacer()
-                    Text("No Payment Methods")
-                        .font(.headline)
-                        .foregroundColor(Color.customGrey)
-                } else {
-                    List(paymentMethodsViewModel.paymentMethods, id: \.id) { card in
+                
+                if let paymentMethods = paymentMethodsViewModel.paymentMethods {
+                    List(paymentMethods, id: \.id) { card in
                         CreditCardView(card: card)
                             .listRowInsets(EdgeInsets())
                             .padding(.vertical, 10)
                             .background(Color.customBackground)
                     }
                     .listStyle(PlainListStyle())
+                } else {
+                    Spacer()
+                    Text("No Payment Methods")
+                        .font(.headline)
+                        .foregroundColor(Color.customGrey)
                 }
-                
+
                 Spacer()
             }
             .padding()
@@ -56,6 +57,15 @@ struct PaymentMethodsView: View {
                 .onTapGesture {
                     isSheetPresented = true
                 }
+        }
+        .onAppear() {
+            Task {
+                do {
+                    try await paymentMethodsViewModel.fetchPaymentMethods()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
 }
