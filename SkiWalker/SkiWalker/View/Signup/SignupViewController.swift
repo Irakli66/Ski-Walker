@@ -212,16 +212,14 @@ final class SignupViewController: UIViewController {
                         userRole: .vendor
                     )
                 }
-                
-                AlertManager.showAlertWithActions(
-                    title: "Success",
-                    message: "Successfully registered",
-                    actions: [
-                        UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
-                            self?.navigationController?.popViewController(animated: true)
-                        })
-                    ]
-                )
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
+                    let toast = ToastView(message: "Signup successful!", type: .success)
+                    toast.show(in: self.view)
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                    self?.navigationController?.popViewController(animated: true)
+                }
                 resetFields()
             } catch {
                 handleSignupError(error)
