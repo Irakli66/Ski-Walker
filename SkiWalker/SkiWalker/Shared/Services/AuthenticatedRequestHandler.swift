@@ -7,7 +7,11 @@
 import SwiftUI
 import NetworkPackage
 
-final class AuthenticatedRequestHandler {
+protocol AuthenticatedRequestHandlerProtocol {
+    func sendRequest<T: Decodable>(urlString: String, method: HTTPMethod, headers: [String: String]?, body: Data?, decoder: JSONDecoder) async throws -> T?
+}
+
+final class AuthenticatedRequestHandler: AuthenticatedRequestHandlerProtocol {
     private let keyChainManager: KeyChainManagerProtocol
     private let networkService: NetworkServiceProtocol
     
