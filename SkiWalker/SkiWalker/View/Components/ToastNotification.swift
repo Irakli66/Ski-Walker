@@ -30,7 +30,7 @@ enum ToastType {
 }
 
 //UIKit Toast
-class ToastView: UIView {
+final class ToastView: UIView {
     
     private let messageLabel = UILabel()
     private let iconImageView = UIImageView()
