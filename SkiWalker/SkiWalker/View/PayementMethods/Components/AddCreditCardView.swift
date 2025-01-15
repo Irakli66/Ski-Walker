@@ -9,10 +9,6 @@ import SwiftUI
 struct AddCreditCardView: View {
     @EnvironmentObject var viewModel: PaymentMethodsViewModel
     @Environment(\.dismiss) private var dismiss
-    @State private var fullName: String = ""
-    @State private var cardNumber: String = ""
-    @State private var validThru: String = ""
-    @State private var cvc: String = ""
     
     var body: some View {
         VStack(spacing: 20) {
@@ -40,12 +36,12 @@ struct AddCreditCardView: View {
                     .shadow(radius: 5)
                 
                 VStack(spacing: 15) {
-                    LabeledTextFieldView(label: "Full Name", placeholder: "Enter your full name", text: $fullName)
+                    LabeledTextFieldView(label: "Full Name", placeholder: "Enter your full name", text: $viewModel.fullname)
                     
                     HStack(spacing: 10) {
-                        LabeledTextFieldView(label: "Card Number", placeholder: "1234 5678 9012 3456", text: $cardNumber)
+                        LabeledTextFieldView(label: "Card Number", placeholder: "1234 5678 9012 3456", text: $viewModel.cardNumber)
                             .frame(maxWidth: .infinity)
-                        ValidThruTextField(label: "Valid Thru", placeholder: "MM/YY", text: $validThru)
+                        ValidThruTextField(label: "Valid Thru", placeholder: "MM/YY", text: $viewModel.validThru)
                             .frame(width: 80)
                     }
                     
@@ -53,7 +49,7 @@ struct AddCreditCardView: View {
                         Image(systemName: "creditcard")
                             .foregroundColor(.white)
                         Spacer()
-                        LabeledTextFieldView(label: "CVC", placeholder: "123", text: $cvc)
+                        LabeledTextFieldView(label: "CVC", placeholder: "123", text: $viewModel.cvc)
                             .frame(width: 80)
                     }
                 }
@@ -77,18 +73,19 @@ struct AddCreditCardView: View {
         }
         .padding()
         .background(Color.customBackground)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
     
     private func saveCreditCard() {
-        let newCard = CreditCard(fullName: fullName, number: cardNumber, validThru: validThru, cvc: cvc)
         Task {
             do {
-                try await viewModel.addCreditCard(creditCard: newCard)
+                try await viewModel.addCreditCard()
+                try await viewModel.fetchPaymentMethods()
                 dismiss()
             } catch let error as CreditCardValidationErrors {
                 AlertManager.showAlert(message: error.localizedDescription)
             } catch {
-                AlertManager.showAlert(message: "An unexpected error occurred. Please try again.")
+                AlertManager.showAlert(message: error.localizedDescription)
             }
         }
     }
