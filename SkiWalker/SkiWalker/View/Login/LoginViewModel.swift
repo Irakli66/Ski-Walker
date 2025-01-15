@@ -47,7 +47,9 @@ final class LoginViewModel {
             guard let response else {
                 throw LoginError.invalidCredentials
             }
-            sessionManager.login(refreshToken: response.refreshToken, accessToken: response.accessToken)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
+                self?.sessionManager.login(refreshToken: response.refreshToken, accessToken: response.accessToken)
+            })
         } catch {
             throw error
         }
