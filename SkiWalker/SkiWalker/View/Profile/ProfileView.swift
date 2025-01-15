@@ -7,9 +7,9 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject private var sessionManager: SessionManager
     @AppStorage("selectedLanguage") private var selectedLanguage: String = "en"
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
-    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
     
     private let tabs: [ProfileTabItem] = [
         ProfileTabItem(icon: "list.bullet.rectangle.portrait", title: "Order History", destination: AnyView(OrderHistoryView().background(.customBackground))),
@@ -29,7 +29,7 @@ struct ProfileView: View {
                     tabNavigationList
                     
                     Button(action: {
-                        isLoggedIn = false
+                        sessionManager.logout()
                     }) {
                         Text("Log out")
                             .frame(maxWidth: .infinity)
