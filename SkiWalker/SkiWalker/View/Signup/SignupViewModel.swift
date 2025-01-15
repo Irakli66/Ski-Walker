@@ -90,7 +90,3 @@ final class SignupViewModel {
         }
     }
 }
-enum UserRole: String, Hashable {
-    case customer = "Customer"
-    case vendor = "Vendor"
-}
