@@ -55,16 +55,3 @@ final class LoginViewModel {
         }
     }
 }
-
-
-
-enum LoginError: Error {
-    case invalidEmail
-    case invalidPassword
-    case invalidCredentials
-}
-
-struct LoginResponse: Decodable {
-    let refreshToken: String
-    let accessToken: String
-}

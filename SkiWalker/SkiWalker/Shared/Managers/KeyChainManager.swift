@@ -1,5 +1,5 @@
 //
-//  KeychainManager.swift
+//  KeyChainManager.swift
 //  SkiWalker
 //
 //  Created by irakli kharshiladze on 13.01.25.
