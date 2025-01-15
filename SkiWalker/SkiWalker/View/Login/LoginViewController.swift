@@ -205,14 +205,17 @@ final class LoginViewController: UIViewController {
         Task {
             do {
                 let _ =  try await viewModel.login(email: emailField.getText(), password: passwordField.getText())
-                isLoggedIn = true
+                isLoggedIn = true 
             } catch LoginError.invalidEmail {
                 AlertManager.showAlert(message: "Invalid email, it should contain @")
             } catch LoginError.invalidPassword {
                 AlertManager.showAlert(message: "Fill Password Field")
+            } catch {
+                AlertManager.showAlert(message: error.localizedDescription)
             }
         }
     }
+    
     
     private func didTapSignup() {
         let signupVC = SignupViewController()
