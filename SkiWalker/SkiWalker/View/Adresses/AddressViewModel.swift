@@ -7,41 +7,81 @@
 import Foundation
 
 final class AddressViewModel: ObservableObject {
-    @Published var fullName: String = ""
+    private let authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol
+    @Published var fullname: String = ""
     @Published var country: String = ""
     @Published var city: String = ""
     @Published var street: String = ""
     @Published var postalCode: String = ""
-    @Published var addresses: [Address] = [Address(id: UUID().uuidString, country: "Georgia", city: "Tbilisi", street: "25 merab kostava", postalCode: "0236", fullName: "John Doe")]
+    @Published var addresses: [Address] = []
     
-    func addAddress() async throws {
-        let newAddress = Address(id: UUID().uuidString, country: country, city: city, street: street, postalCode: postalCode, fullName: fullName)
+    init(authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler()) {
+        self.authenticatedRequestHandler = authenticatedRequestHandler
+    }
+    
+    func fetchAddresses() async throws {
+        let url = "https://api.gargar.dev:8088/Shipping"
         
-        try validateAddress(newAddress)
+        let response: [Address]? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
+        
+        guard let addressesResponse = response else {
+            fatalError("Failed to fetch payment methods: No data received.")
+        }
         
         await MainActor.run {
-            addresses.append(newAddress)
+            addresses = addressesResponse
         }
     }
     
-    func removeAddress(_ address: Address) {
-        addresses.removeAll(where: { $0.id == address.id })
+    func addAddress() async throws {
+        let url = "https://api.gargar.dev:8088/Shipping"
+        
+        try validateAddress()
+        
+        let requestBody: [String: String] = [
+            "fullname": fullname,
+            "street": street,
+            "city": city,
+            "country": country,
+            "postalCode": postalCode,
+        ]
+        
+        guard let bodyData = try? JSONEncoder().encode(requestBody) else {
+            throw AddressValidationError.invalidRequestData
+        }
+        
+        let _: Address? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .post, headers: nil, body: bodyData, decoder: JSONDecoder())
+        
+        await MainActor.run() {
+            fullname = ""
+            street = ""
+            city = ""
+            country = ""
+            postalCode = ""
+        }
     }
     
-    private func validateAddress(_ address: Address) throws {
-        if address.fullName.trimmingCharacters(in: .whitespaces).isEmpty {
+    func removeAddress(with id: String) async throws {
+        let url = "https://api.gargar.dev:8088/Shipping/\(id)"
+        
+        let _: Address? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .delete, headers: nil, body: nil, decoder: JSONDecoder())
+        
+    }
+    
+    private func validateAddress() throws {
+        if fullname.trimmingCharacters(in: .whitespaces).isEmpty {
             throw AddressValidationError.invalidFullName
         }
-        if address.country.trimmingCharacters(in: .whitespaces).isEmpty {
+        if country.trimmingCharacters(in: .whitespaces).isEmpty {
             throw AddressValidationError.invalidCountry
         }
-        if address.city.trimmingCharacters(in: .whitespaces).isEmpty {
+        if city.trimmingCharacters(in: .whitespaces).isEmpty {
             throw AddressValidationError.invalidCity
         }
-        if address.street.trimmingCharacters(in: .whitespaces).isEmpty {
+        if street.trimmingCharacters(in: .whitespaces).isEmpty {
             throw AddressValidationError.invalidStreet
         }
-        if address.postalCode.trimmingCharacters(in: .whitespaces).isEmpty || !CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: address.postalCode)) {
+        if postalCode.trimmingCharacters(in: .whitespaces).isEmpty || !CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: postalCode)) {
             throw AddressValidationError.invalidPostalCode
         }
     }

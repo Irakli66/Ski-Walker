@@ -9,7 +9,7 @@ import NetworkPackage
 
 final class PaymentMethodsViewModel: ObservableObject {
     private let authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol
-    @Published var paymentMethods: [CreditCard]?
+    @Published var paymentMethods: [CreditCard] = []
     @Published var fullname: String = ""
     @Published var cardNumber: String = ""
     @Published var cvc: String = ""

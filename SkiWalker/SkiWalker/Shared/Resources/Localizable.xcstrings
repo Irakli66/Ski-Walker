@@ -616,6 +616,7 @@
       }
     },
     "Popular products" : {
+      "extractionState" : "manual",
       "localizations" : {
         "ka" : {
           "stringUnit" : {

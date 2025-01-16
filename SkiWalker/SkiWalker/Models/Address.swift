@@ -12,7 +12,7 @@ struct Address: Codable {
     let city: String
     let street: String
     let postalCode: String
-    let fullName: String
+    let fullname: String
 }
 
 enum AddressValidationError: Error, LocalizedError {
@@ -21,6 +21,7 @@ enum AddressValidationError: Error, LocalizedError {
     case invalidStreet
     case invalidPostalCode
     case invalidFullName
+    case invalidRequestData
     
     var errorDescription: String? {
         switch self {
@@ -34,6 +35,8 @@ enum AddressValidationError: Error, LocalizedError {
             return "Postal Code must be filled and contain only numbers."
         case .invalidFullName:
             return "Fill the Full Name field."
+        case .invalidRequestData:
+            return "Invalid request data."
         }
     }
 }

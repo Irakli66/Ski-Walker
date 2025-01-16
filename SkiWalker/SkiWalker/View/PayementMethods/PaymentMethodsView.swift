@@ -15,8 +15,8 @@ struct PaymentMethodsView: View {
             VStack {
                 paymentsHeader
                 
-                if let paymentMethods = paymentMethodsViewModel.paymentMethods {
-                    List(paymentMethods, id: \.id) { card in
+                if !paymentMethodsViewModel.paymentMethods.isEmpty {
+                    List(paymentMethodsViewModel.paymentMethods, id: \.id) { card in
                         CreditCardView(card: card)
                             .listRowInsets(EdgeInsets())
                             .padding(.vertical, 10)
@@ -29,7 +29,7 @@ struct PaymentMethodsView: View {
                         .font(.headline)
                         .foregroundColor(Color.customGrey)
                 }
-
+                
                 Spacer()
             }
             .padding()
