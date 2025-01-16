@@ -1,3 +1,11 @@
+//
+//  ProductsView.swift
+//  SkiWalker
+//
+//  Created by irakli kharshiladze on 16.01.25.
+//
+import SwiftUI
+
 struct ProductsView: View {
     let searchQuery: String
     @State private var products: [String] = []
