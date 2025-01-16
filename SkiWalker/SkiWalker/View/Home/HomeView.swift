@@ -44,10 +44,10 @@ struct HomeView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(.customWhite)
-                    .frame(width: .infinity, height: 43)
+                    .frame(maxWidth: .infinity, maxHeight: 43)
                 Image("searchBarBackground")
                     .resizable()
-                    .frame(width: .infinity, height: 43)
+                    .frame(maxWidth: .infinity, maxHeight: 43)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 TextField("Search skis, boards, gear...", text: $searchText, onCommit: {
                     if !searchText.isEmpty {

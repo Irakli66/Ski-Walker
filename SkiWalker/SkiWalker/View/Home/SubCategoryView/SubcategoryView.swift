@@ -25,9 +25,9 @@ struct SubcategoryView: View {
                         Spacer()
                     }
                     
-                    Text("Categories")
+                    Text(LocalizedStringKey(category.rawValue))
                         .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.customBlue)
+                        .foregroundColor(.customBlack)
                 }
                 
                 NavigationLink {
@@ -35,35 +35,40 @@ struct SubcategoryView: View {
                 } label: {
                     Text("See All")
                         .font(.system(size: 16, weight: .medium))
-                        .foregroundStyle(.customBlue)
+                        .foregroundStyle(.customBlack)
                 }
-                LazyVStack(spacing: 30) {
-                    ForEach(category.subcategories, id: \.self) { subcategory in
-                        NavigationLink {
-                            ProductsView(searchQuery: subcategory.rawValue)
-                        } label: {
-                            HStack {
-                                HStack {
-                                    Image(subcategory.iconName)
-                                        .padding(10)
-                                        .background(Color.customWhite)
-                                        .clipShape(RoundedRectangle(cornerRadius: 50))
-                                    Text(subcategory.rawValue)
-                                        .font(.system(size: 20, weight: .medium))
-                                        .foregroundStyle(Color.customBlue)
-                                }
-                                
-                                Spacer()
-                                Image(systemName: "chevron.forward")
-                            }
-                        }
-                    }
-                }
-                Spacer()
+                categoriesSection
             }
             .padding()
             .background(Color.customBackground)
             .navigationBarBackButtonHidden(true)
+        }
+    }
+    
+    private var categoriesSection: some View {
+        ScrollView {
+            LazyVStack(spacing: 30) {
+                ForEach(category.subcategories, id: \.self) { subcategory in
+                    NavigationLink {
+                        ProductsView(searchQuery: subcategory.rawValue)
+                    } label: {
+                        HStack {
+                            HStack {
+                                Image(subcategory.iconName)
+                                    .padding(10)
+                                    .background(Color.customWhite)
+                                    .clipShape(RoundedRectangle(cornerRadius: 50))
+                                Text(LocalizedStringKey(subcategory.rawValue))
+                                    .font(.system(size: 20, weight: .medium))
+                                    .foregroundStyle(Color.customBlack)
+                            }
+                            
+                            Spacer()
+                            Image(systemName: "chevron.forward")
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -78,6 +78,17 @@
         }
       }
     },
+    "Boots" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფეხსაცმელები"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "localizations" : {
         "ka" : {
@@ -113,7 +124,14 @@
 
     },
     "Categories" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კატეგორიები"
+          }
+        }
+      }
     },
     "Check your mail for a code" : {
       "localizations" : {
@@ -132,6 +150,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ქალაქი"
+          }
+        }
+      }
+    },
+    "Clothing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტანსაცმელი"
           }
         }
       }
@@ -407,6 +436,39 @@
         }
       }
     },
+    "Gloves" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხელთათმანები"
+          }
+        }
+      }
+    },
+    "Helmets" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩაფხუტები"
+          }
+        }
+      }
+    },
+    "Jackets" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქურთუკები"
+          }
+        }
+      }
+    },
     "Language" : {
       "localizations" : {
         "ka" : {
@@ -517,6 +579,17 @@
         }
       }
     },
+    "Pants" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შარვლები"
+          }
+        }
+      }
+    },
     "Password" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -596,7 +669,24 @@
       }
     },
     "Search skis, boards, gear..." : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოძებნე რაც გაგიხარდება"
+          }
+        }
+      }
+    },
+    "See All" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა"
+          }
+        }
+      }
     },
     "Send" : {
       "extractionState" : "manual",
@@ -655,6 +745,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დარეგისტრირდი"
+          }
+        }
+      }
+    },
+    "Ski" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თხილამური"
+          }
+        }
+      }
+    },
+    "Snow Board" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სნოუბორდი"
           }
         }
       }
