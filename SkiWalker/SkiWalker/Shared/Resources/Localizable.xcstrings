@@ -47,6 +47,9 @@
         }
       }
     },
+    "130 ₾" : {
+
+    },
     "Addresses" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -611,6 +614,19 @@
           }
         }
       }
+    },
+    "Popular products" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პოპულარული"
+          }
+        }
+      }
+    },
+    "product name" : {
+
     },
     "Profile" : {
       "localizations" : {

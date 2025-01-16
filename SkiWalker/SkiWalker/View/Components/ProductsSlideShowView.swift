@@ -12,7 +12,7 @@ struct ProductsSlideShowView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10){
-            Text("Popular products")
+            Text(LocalizedStringKey(title))
                 .font(.system(size: 20, weight: .semibold))
             ScrollView (.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 20) {
