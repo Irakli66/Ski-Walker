@@ -1,3 +1,11 @@
+//
+//  SubcategoryView.swift
+//  SkiWalker
+//
+//  Created by irakli kharshiladze on 16.01.25.
+//
+import SwiftUI
+
 struct SubcategoryView: View {
     @Environment(\.presentationMode) var presentationMode
     let category: ProductCategory
@@ -23,7 +31,7 @@ struct SubcategoryView: View {
                 }
                 
                 NavigationLink {
-                    ProductsView(searchQuery: "")
+                    ProductsView(searchQuery: category.rawValue)
                 } label: {
                     Text("See All")
                         .font(.system(size: 16, weight: .medium))
