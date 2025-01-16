@@ -112,6 +112,9 @@
     "Cart View" : {
 
     },
+    "Categories" : {
+
+    },
     "Check your mail for a code" : {
       "localizations" : {
         "ka" : {
@@ -404,9 +407,6 @@
         }
       }
     },
-    "Hello, world!" : {
-
-    },
     "Language" : {
       "localizations" : {
         "ka" : {
@@ -427,6 +427,9 @@
           }
         }
       }
+    },
+    "Loading products..." : {
+
     },
     "Log in" : {
       "localizations" : {
@@ -479,6 +482,9 @@
           }
         }
       }
+    },
+    "No products found for \"%@\"" : {
+
     },
     "Nothing to show" : {
       "localizations" : {
@@ -576,6 +582,9 @@
         }
       }
     },
+    "Results for '%@'" : {
+
+    },
     "Save" : {
       "localizations" : {
         "ka" : {
@@ -585,6 +594,9 @@
           }
         }
       }
+    },
+    "Search skis, boards, gear..." : {
+
     },
     "Send" : {
       "extractionState" : "manual",
