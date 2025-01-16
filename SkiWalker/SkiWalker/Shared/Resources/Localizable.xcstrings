@@ -47,6 +47,9 @@
         }
       }
     },
+    "130 ₾" : {
+
+    },
     "Addresses" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -74,6 +77,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ბალანსი:"
+          }
+        }
+      }
+    },
+    "Boots" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფეხსაცმელები"
           }
         }
       }
@@ -112,6 +126,16 @@
     "Cart View" : {
 
     },
+    "Categories" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კატეგორიები"
+          }
+        }
+      }
+    },
     "Check your mail for a code" : {
       "localizations" : {
         "ka" : {
@@ -129,6 +153,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ქალაქი"
+          }
+        }
+      }
+    },
+    "Clothing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტანსაცმელი"
           }
         }
       }
@@ -404,8 +439,38 @@
         }
       }
     },
-    "Hello, world!" : {
-
+    "Gloves" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხელთათმანები"
+          }
+        }
+      }
+    },
+    "Helmets" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩაფხუტები"
+          }
+        }
+      }
+    },
+    "Jackets" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქურთუკები"
+          }
+        }
+      }
     },
     "Language" : {
       "localizations" : {
@@ -427,6 +492,9 @@
           }
         }
       }
+    },
+    "Loading products..." : {
+
     },
     "Log in" : {
       "localizations" : {
@@ -480,6 +548,9 @@
         }
       }
     },
+    "No products found for \"%@\"" : {
+
+    },
     "Nothing to show" : {
       "localizations" : {
         "ka" : {
@@ -511,6 +582,17 @@
         }
       }
     },
+    "Pants" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შარვლები"
+          }
+        }
+      }
+    },
     "Password" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -532,6 +614,19 @@
           }
         }
       }
+    },
+    "Popular products" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პოპულარული"
+          }
+        }
+      }
+    },
+    "product name" : {
+
     },
     "Profile" : {
       "localizations" : {
@@ -576,12 +671,35 @@
         }
       }
     },
+    "Results for '%@'" : {
+
+    },
     "Save" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "შენახვა"
+          }
+        }
+      }
+    },
+    "Search skis, boards, gear..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოძებნე რაც გაგიხარდება"
+          }
+        }
+      }
+    },
+    "See All" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა"
           }
         }
       }
@@ -643,6 +761,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დარეგისტრირდი"
+          }
+        }
+      }
+    },
+    "Ski" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თხილამური"
+          }
+        }
+      }
+    },
+    "Snow Board" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სნოუბორდი"
           }
         }
       }
