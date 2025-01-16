@@ -33,6 +33,15 @@ struct AddressesView: View {
                 .background(Color.customBackground)
             
         }
+        .onAppear() {
+            Task {
+                do {
+                    try await addressesViewModel.fetchAddresses()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
         .environmentObject(addressesViewModel)
     }
     
@@ -61,7 +70,7 @@ struct AddressesView: View {
                         .font(.system(size: 28))
                     
                     VStack(alignment: .leading, spacing: 6) {
-                        Text(address.fullName)
+                        Text(address.fullname)
                             .font(.headline)
                             .foregroundStyle(Color.primary)
                         
@@ -76,7 +85,14 @@ struct AddressesView: View {
                     Spacer()
                     
                     Button(action: {
-                        addressesViewModel.removeAddress(address)
+                        Task {
+                            do {
+                                try await addressesViewModel.removeAddress(with: address.id)
+                                try await addressesViewModel.fetchAddresses()
+                            } catch {
+                                AlertManager.showAlert(message: error.localizedDescription)
+                            }
+                        }
                     }) {
                         Image(systemName: "trash.fill")
                             .foregroundStyle(Color.red)

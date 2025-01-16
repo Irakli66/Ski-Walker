@@ -25,7 +25,7 @@ struct AddAddressView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
             }
-            LabeledTextFieldView(label: "Full Name", placeholder: "Enter your full name", text: $addressesViewModel.fullName)
+            LabeledTextFieldView(label: "Full Name", placeholder: "Enter your full name", text: $addressesViewModel.fullname)
             LabeledTextFieldView(label: "Country", placeholder: "Enter your country", text: $addressesViewModel.country)
             LabeledTextFieldView(label: "City", placeholder: "Enter your city", text: $addressesViewModel.city)
             LabeledTextFieldView(label: "Street", placeholder: "John Doe N25", text: $addressesViewModel.street)
@@ -35,6 +35,7 @@ struct AddAddressView: View {
                 Task {
                     do {
                         try await addressesViewModel.addAddress()
+                        try await addressesViewModel.fetchAddresses()
                         dismiss()
                     } catch {
                         AlertManager.showAlert(message: error.localizedDescription)
