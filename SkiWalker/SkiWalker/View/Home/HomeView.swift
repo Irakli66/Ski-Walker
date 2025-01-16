@@ -12,11 +12,16 @@ struct HomeView: View {
     @State private var searchText: String = ""
     @State private var navigateToProducts: Bool = false
     @State private var searchHistory: [String] = []
+    private var products = ["person", "photo.stack.fill", "simcard.fill"]
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
                 customSearchBar
+                
+                ScrollView() {
+                    ProductsSlideShowView(title: "Popular products", products: products)
+                }
                 
                 Spacer()
             }
