@@ -34,18 +34,5 @@ struct ReusableAsyncImageView: View {
                 EmptyView()
             }
         }
-//        AsyncImage(
-//            url: URL(string: url),
-//            content: { image in
-//                image
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fill)
-//                    .frame(width: 100, height: 100)
-//                    .clipShape(RoundedRectangle(cornerRadius: 10))
-//            },
-//            placeholder: {
-//                ProgressView()
-//            }
-//        )
     }
 }
