@@ -7,9 +7,12 @@
 import SwiftUI
 
 struct ProductsView: View {
+    @StateObject private var productsViewModel = ProductsViewModel()
     @Environment(\.presentationMode) var presentationMode
     let searchQuery: String
-    @State private var products: [String] = []
+    let category: String
+    let subCategory: String
+
     @State private var isLoading: Bool = true
     
     var body: some View {
@@ -20,9 +23,9 @@ struct ProductsView: View {
                 ProgressView("Loading products...")
                     .frame(maxWidth: .infinity)
                 Spacer()
-            } else if products.isEmpty {
+            } else if productsViewModel.products.isEmpty {
                 Spacer()
-                Text("No products found for \"\(searchQuery)\"")
+                Text("No products found")
                     .foregroundColor(Color.customGrey)
                     .frame(maxWidth: .infinity)
                 Spacer()
@@ -32,7 +35,11 @@ struct ProductsView: View {
         }
         .background(Color.customBackground)
         .onAppear {
-            fetchProducts()
+            Task {
+                await productsViewModel.fetchProducts(queryText: searchQuery, category: category, subCategory: subCategory)
+                isLoading = false
+                
+            }
         }
         .navigationBarBackButtonHidden(true)
     }
@@ -50,29 +57,46 @@ struct ProductsView: View {
                 Spacer()
             }
             
-            Text(searchQuery)
-                .font(.system(size: 20, weight: .bold))
-                .foregroundColor(.customBlack)
+            if !searchQuery.isEmpty {
+                Text(searchQuery)
+                    .font(.system(size: 20, weight: .medium))
+                    .foregroundColor(Color.customBlack)
+            } else if subCategory.isEmpty {
+                Text(category)
+                    .font(.system(size: 20, weight: .medium))
+                    .foregroundColor(Color.customBlack)
+            } else {
+                Text(subCategory)
+                    .font(.system(size: 20, weight: .medium))
+                    .foregroundColor(Color.customBlack)
+            }
         }
         .padding()
     }
     
     private var productsListSection: some View {
-        List(products, id: \.self) { product in
+        List(productsViewModel.products, id: \.self.id) { product in
             HStack(alignment: .top, spacing: 15) {
-                Image(systemName: "photo.stack.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 60, height: 60)
-                    .cornerRadius(8)
-                    .padding(.vertical, 5)
-                
+                AsyncImage(
+                    url: URL(string: product.photos[0].url),
+                    content: { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 100, height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    },
+                    placeholder: {
+                        ProgressView()
+                    }
+                )
+
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(product)
+                    Text(product.name)
                         .font(.headline)
                         .foregroundColor(Color.customBlack)
                     
-                    Text("130 ₾")
+                    Text("\(product.price.formatted(.currency(code: "GEL")))")
                         .font(.subheadline)
                         .foregroundColor(Color.customGrey)
                     
@@ -116,23 +140,15 @@ struct ProductsView: View {
             .contentShape(Rectangle())
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
+            .onAppear {
+                if product == productsViewModel.products.last {
+                    Task {
+                        await productsViewModel.fetchNextPage(queryText: searchQuery, category: category, subCategory: subCategory)
+                    }
+                }
+            }
         }
         .listStyle(PlainListStyle())
         .scrollContentBackground(.hidden)
-    }
-
-
-    
-    private func fetchProducts() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            if searchQuery.isEmpty {
-                products = ["ski", "jackets", "boots"]
-            } else {
-                products = ["ski", "jackets", "boots"].filter {
-                    $0.lowercased().contains(searchQuery.lowercased())
-                }
-            }
-            isLoading = false
-        }
     }
 }
