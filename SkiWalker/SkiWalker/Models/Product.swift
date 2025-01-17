@@ -20,7 +20,7 @@ struct Product: Codable, Equatable {
     let description: String
     let price: Double
     let stock: Int
-    let discounnt: Double?
+    let discount: Double?
     let finalPrice: Double
     let rentable: Bool?
     let rentalPrice: Double?
