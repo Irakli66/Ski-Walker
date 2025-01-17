@@ -77,19 +77,7 @@ struct ProductsView: View {
     private var productsListSection: some View {
         List(productsViewModel.products, id: \.self.id) { product in
             HStack(alignment: .top, spacing: 15) {
-                AsyncImage(
-                    url: URL(string: product.photos[0].url),
-                    content: { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 100, height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    },
-                    placeholder: {
-                        ProgressView()
-                    }
-                )
+                ReusableAsyncImageView(url: product.photos[0].url)
 
                 VStack(alignment: .leading, spacing: 8) {
                     Text(product.name)
