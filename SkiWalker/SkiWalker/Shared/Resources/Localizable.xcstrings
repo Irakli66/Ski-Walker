@@ -50,6 +50,9 @@
     "130 ₾" : {
 
     },
+    "Add" : {
+
+    },
     "Addresses" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -671,9 +674,6 @@
           }
         }
       }
-    },
-    "Results for '%@'" : {
-
     },
     "Save" : {
       "localizations" : {
