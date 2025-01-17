@@ -27,7 +27,7 @@ struct HomeView: View {
             }
             .padding()
             .navigationDestination(isPresented: $navigateToProducts) {
-                ProductsView(searchQuery: searchText)
+                ProductsView(searchQuery: searchText, category: "", subCategory: "")
             }
             .background(Color.customBackground)
         }

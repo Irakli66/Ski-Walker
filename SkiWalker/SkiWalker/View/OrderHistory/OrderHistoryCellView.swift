@@ -12,7 +12,7 @@ struct OrderHistoryCellView: View {
     var body: some View {
         HStack(spacing: 12) {
             ZStack(alignment: .center) {
-                Image(systemName: order.products[0].imageURLs[0])
+                Image(systemName: order.products[0].photos[0].url)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 100, height: 100)

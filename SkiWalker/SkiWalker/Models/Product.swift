@@ -6,27 +6,36 @@
 //
 import Foundation
 
-struct Product: Codable {
+struct ProductsResponse: Codable {
+    let collection: [Product]
+    let page: Int
+    let pages: Int
+    let pageSize: Int
+    let totalItemCount: Int
+}
+
+struct Product: Codable, Equatable {
     let id: String
-    let vendorId: String
     let name: String
     let description: String
-    let category: ProductCategory
     let price: Double
-    let discount: Double?
-    var finalPrice: Double {
-        if let discount = discount {
-            return price - (price * discount / 100)
-        }
-        return price
-    }
     let stock: Int
+    let discounnt: Double?
+    let finalPrice: Double
     let rentable: Bool?
     let rentalPrice: Double?
     let rentalStock: Int?
-    let imageURLs: [String]
+    let category: String
+    let subcategory: String?
+    let vendorId: String
+    let photos: [Photo]
 }
 
+struct Photo: Codable, Equatable {
+    let id: String
+    let name: String?
+    let url: String
+}
 
 enum ProductCategory: String, Codable, CaseIterable {
     case ski = "Ski"

@@ -32,7 +32,7 @@ struct CategoryView: View {
                 }
                 
                 NavigationLink {
-                    ProductsView(searchQuery: "")
+                    ProductsView(searchQuery: "", category: "", subCategory: "")
                 } label: {
                     Text("See All")
                         .font(.system(size: 16, weight: .medium))
@@ -54,7 +54,7 @@ struct CategoryView: View {
                 ForEach(categories, id: \.self) { category in
                     NavigationLink {
                         if category.subcategories.isEmpty {
-                            ProductsView(searchQuery: category.rawValue)
+                            ProductsView(searchQuery: "", category: category.rawValue, subCategory: "")
                         } else {
                             SubcategoryView(category: category)
                         }
