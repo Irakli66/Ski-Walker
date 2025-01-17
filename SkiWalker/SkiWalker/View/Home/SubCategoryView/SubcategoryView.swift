@@ -31,7 +31,7 @@ struct SubcategoryView: View {
                 }
                 
                 NavigationLink {
-                    ProductsView(searchQuery: category.rawValue)
+                    ProductsView(searchQuery: "", category: category.rawValue, subCategory: "")
                 } label: {
                     Text("See All")
                         .font(.system(size: 16, weight: .medium))
@@ -50,7 +50,7 @@ struct SubcategoryView: View {
             LazyVStack(spacing: 30) {
                 ForEach(category.subcategories, id: \.self) { subcategory in
                     NavigationLink {
-                        ProductsView(searchQuery: subcategory.rawValue)
+                        ProductsView(searchQuery: "", category: category.rawValue, subCategory: subcategory.rawValue)
                     } label: {
                         HStack {
                             HStack {

@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@" : {
+
+    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -551,7 +554,7 @@
         }
       }
     },
-    "No products found for \"%@\"" : {
+    "No products found" : {
 
     },
     "Nothing to show" : {
