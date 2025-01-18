@@ -52,7 +52,7 @@ struct ProductsSlideShowView: View {
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .shadow(color: .gray.opacity(0.1), radius: 2, x: 0, y: 2)
         }
-        .buttonStyle(PlainButtonStyle())  // Removes default link styling
+        .buttonStyle(PlainButtonStyle())
     }
     
     @ViewBuilder
