@@ -43,7 +43,7 @@ struct ProductsSlideShowView: View {
                 }
             }
         }
-        .frame(maxWidth: 150, maxHeight: 200)
+        .frame(minWidth: 150, maxHeight: 200)
         .padding(10)
         .background(Color.customWhite)
         .clipShape(RoundedRectangle(cornerRadius: 12))

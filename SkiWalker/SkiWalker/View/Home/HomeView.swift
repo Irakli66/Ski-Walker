@@ -24,8 +24,6 @@ struct HomeView: View {
                     ProductsSlideShowView(title: "Popular products", products: homeViewModel.popularProducts, isSale: false)
                     ProductsSlideShowView(title: "Sale products", products: homeViewModel.saleProducts, isSale: true)
                 }
-                
-                Spacer()
             }
             .padding()
             .navigationDestination(isPresented: $navigateToProducts) {
