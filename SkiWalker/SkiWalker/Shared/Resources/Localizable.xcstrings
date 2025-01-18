@@ -24,6 +24,9 @@
         }
       }
     },
+    "%@%%" : {
+
+    },
     "+ Add Funds" : {
       "localizations" : {
         "ka" : {
@@ -50,11 +53,15 @@
         }
       }
     },
-    "130 ₾" : {
-
-    },
     "Add" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დამატება"
+          }
+        }
+      }
     },
     "Addresses" : {
       "extractionState" : "manual",
@@ -500,7 +507,14 @@
       }
     },
     "Loading products..." : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იტვირთება"
+          }
+        }
+      }
     },
     "Log in" : {
       "localizations" : {
@@ -631,9 +645,6 @@
           }
         }
       }
-    },
-    "product name" : {
-
     },
     "Profile" : {
       "localizations" : {

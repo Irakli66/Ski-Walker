@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftUI
 
 struct HomeView: View {
+    @StateObject private var homeViewModel = HomeViewModel()
     @State private var searchText: String = ""
     @State private var navigateToProducts: Bool = false
     @State private var searchHistory: [String] = []
@@ -20,16 +21,21 @@ struct HomeView: View {
                 customSearchBar
                 
                 ScrollView() {
-                    ProductsSlideShowView(title: "Popular products", products: products)
+                    ProductsSlideShowView(title: "Popular products", products: homeViewModel.popularProducts, isSale: false)
+                    ProductsSlideShowView(title: "Sale products", products: homeViewModel.saleProducts, isSale: true)
                 }
-                
-                Spacer()
             }
             .padding()
             .navigationDestination(isPresented: $navigateToProducts) {
                 ProductsView(searchQuery: searchText, category: "", subCategory: "")
             }
             .background(Color.customBackground)
+            .onAppear() {
+                Task {
+                    try await homeViewModel.fetchPopularProducts()
+                    try await homeViewModel.fetchSaleProducts()
+                }
+            }
         }
     }
     
