@@ -120,7 +120,9 @@ struct ProductDetailsView: View {
             }
             
             Button(action: {
-                print("add to cart func")
+                Task {
+                   try await productViewModel.addProductToCart(productId: productId, count: quantity)
+                }
             }) {
                 HStack {
                     Image("cart")
