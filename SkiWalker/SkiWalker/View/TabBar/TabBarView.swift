@@ -63,6 +63,7 @@ struct TabContentView: View {
         case .cart:
             NavigationView {
                 CartView()
+                    .background(Color.customBackground)
             }
         case .profile:
             NavigationView {
