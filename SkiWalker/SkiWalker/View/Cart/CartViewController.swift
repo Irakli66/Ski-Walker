@@ -57,8 +57,8 @@ final class CartViewController: UIViewController {
             pageTitleLabel.topAnchor.constraint(equalTo: view.topAnchor),
             pageTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
-        setupCartTableView()
         setupCartDetailsStackView()
+        setupCartTableView()
     }
     
     private func setupCartTableView() {
@@ -68,7 +68,8 @@ final class CartViewController: UIViewController {
             cartTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             cartTableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
             cartTableView.topAnchor.constraint(equalTo: pageTitleLabel.bottomAnchor, constant: 30),
-            cartTableView.heightAnchor.constraint(equalToConstant: 410)
+            cartTableView.bottomAnchor.constraint(equalTo: cartDetailsStackView.topAnchor),
+            
         ])
         
         cartTableView.dataSource = self
@@ -88,7 +89,7 @@ final class CartViewController: UIViewController {
         NSLayoutConstraint.activate([
             cartDetailsStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             cartDetailsStackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            cartDetailsStackView.topAnchor.constraint(equalTo: cartTableView.bottomAnchor, constant: 50),
+            cartDetailsStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
         ])
         
         checkoutButton.addAction(UIAction(handler: {[weak self] _ in
