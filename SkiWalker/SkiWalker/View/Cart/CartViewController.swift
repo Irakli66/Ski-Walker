@@ -8,6 +8,7 @@
 import SwiftUI
 
 final class CartViewController: UIViewController {
+    private let cartViewModel = CartViewModel()
     
     private let pageTitleLabel: UILabel = {
         let label = UILabel()
@@ -97,22 +98,18 @@ final class CartViewController: UIViewController {
         }), for: .touchUpInside)
     }
     
-    private func updateCart(quantity: Int) {
-        print("cart update: \(quantity)")
-    }
-    
     private func checkout() {
         print("checkout")
     }
 }
 
-extension CartViewController: UITableViewDataSource, UITableViewDelegate {
+extension CartViewController: UITableViewDataSource, UITableViewDelegate, CartTableViewCellDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         120
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        cartViewModel.getCartItemsCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -120,22 +117,68 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         
-        cell.configureCell(quantity: 5)
-        cell.onStepperValueChanged = { [weak self] adjustedStepValue in
-            self?.updateCart(quantity: adjustedStepValue)
-        }
+        let currentItem = cartViewModel.getCartItem(at: indexPath.row)
+        cell.delegate = self
+        cell.configureCell(with: currentItem)
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let productId = "b4250b33-9f40-403c-995d-20136c333121"
-
-        let productDetailsView = ProductDetailsView(productId: productId)
-
+        let currentItem = cartViewModel.getCartItem(at: indexPath.row)
+        
+        let productDetailsView = ProductDetailsView(productId: currentItem.product.id)
+        
         let hostingController = UIHostingController(rootView: productDetailsView)
-
+        
         navigationController?.pushViewController(hostingController, animated: true)
         navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    func didChangeStepperValue(cell: CartTableViewCell, adjustedStepValue: Int) {
+        guard let indexPath = cartTableView.indexPath(for: cell) else { return }
+        let currentItem = cartViewModel.getCartItem(at: indexPath.row)
+        
+        Task {
+            do {
+                print(adjustedStepValue)
+                try await cartViewModel.updateProduct(productId: currentItem.product.id, count: adjustedStepValue)
+                await cartViewModel.fetchCart()
+                cartTableView.reloadData()
+            } catch {
+                print("Error updating cart: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func didTapDelete(cell: CartTableViewCell) {
+        guard let indexPath = cartTableView.indexPath(for: cell) else { return }
+        let currentItem = cartViewModel.getCartItem(at: indexPath.row)
+        
+        Task {
+            do {
+                try await cartViewModel.deleteCartItem(with: currentItem.id)
+                await cartViewModel.fetchCart()
+                cartTableView.reloadData()
+            } catch {
+                print("error deleting cart item: \(error.localizedDescription)")
+            }
+        }
+        
+        print(indexPath.row)
+    }
+    
+    func didTapFavorite(cell: CartTableViewCell) {
+        guard let indexPath = cartTableView.indexPath(for: cell) else { return }
+        let currentItem = cartViewModel.getCartItem(at: indexPath.row)
+        print(indexPath.row)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task {
+            await cartViewModel.fetchCart()
+        }
     }
     
 }
@@ -149,3 +192,4 @@ struct CartView: UIViewControllerRepresentable {
         
     }
 }
+

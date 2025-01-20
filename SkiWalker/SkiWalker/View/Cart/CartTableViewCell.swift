@@ -7,16 +7,21 @@
 
 import UIKit
 
+protocol CartTableViewCellDelegate: AnyObject {
+    func didChangeStepperValue(cell: CartTableViewCell, adjustedStepValue: Int)
+    func didTapDelete(cell: CartTableViewCell)
+    func didTapFavorite(cell: CartTableViewCell)
+}
+
 class CartTableViewCell: UITableViewCell {
+    weak var delegate: CartTableViewCellDelegate?
     private var lastStepperValue: Double = 1
-    var onStepperValueChanged: ((Int) -> Void)?
     
     private let productImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.image = UIImage(systemName: "photo")
         return imageView
     }()
     
@@ -170,6 +175,12 @@ class CartTableViewCell: UITableViewCell {
         favoritesAndDeleteButtonsStackView.addArrangedSubview(deleteButton)
         
         quantityStepper.addTarget(self, action: #selector(stepperValueChanged(_:)), for: .valueChanged)
+        favoritesButton.addAction(UIAction(handler: {[weak self] _ in
+            self?.favoriteButtonTapped()
+        }), for: .touchUpInside)
+        deleteButton.addAction(UIAction(handler: {[weak self] _ in
+            self?.deleteButtonTapped()
+        }), for: .touchUpInside)
     }
     
     @objc private func stepperValueChanged(_ sender: UIStepper) {
@@ -177,17 +188,25 @@ class CartTableViewCell: UITableViewCell {
         lastStepperValue = sender.value
         
         let adjustedStepValue = stepValue > 0 ? 1 : -1
-        
         quantityLabel.text = "\(Int(sender.value))"
         
-        onStepperValueChanged?(adjustedStepValue)
+        delegate?.didChangeStepperValue(cell: self, adjustedStepValue: adjustedStepValue)
     }
     
-    func configureCell(quantity: Int = 1) {
-        productNameLabel.text = "Ski pants"
-        productPriceLabel.text = "$130"
-        quantityStepper.value = Double(quantity)
-        lastStepperValue = Double(quantity)
-        quantityLabel.text = "\(quantity)"
+    private func deleteButtonTapped() {
+        delegate?.didTapDelete(cell: self)
+    }
+    
+    private func favoriteButtonTapped() {
+        delegate?.didTapFavorite(cell: self)
+    }
+    
+    func configureCell(with cartItem: CartItem) {
+        productImageView.imageFrom(url:  URL(string: cartItem.product.photos[0].url)!)
+        productNameLabel.text = cartItem.product.name
+        productPriceLabel.text = "\(cartItem.product.finalPrice)"
+        quantityStepper.value = Double(cartItem.count)
+        lastStepperValue = Double(cartItem.count)
+        quantityLabel.text = "\(cartItem.count)"
     }
 }
