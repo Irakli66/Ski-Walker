@@ -7,21 +7,20 @@
 
 import UIKit
 
-protocol CartTableViewCellDelegate: AnyObject {
-    func didChangeStepperValue(cell: CartTableViewCell, adjustedStepValue: Int)
-    func didTapDelete(cell: CartTableViewCell)
-    func didTapFavorite(cell: CartTableViewCell)
+protocol FavoritesTableViewCellDelegate: AnyObject {
+    func addToCartButtonTapped(cell: FavoriteTableViewCell)
+    func didTapFavorite(cell: FavoriteTableViewCell)
 }
 
-class CartTableViewCell: UITableViewCell {
-    weak var delegate: CartTableViewCellDelegate?
-    private var lastStepperValue: Double = 1
+class FavoriteTableViewCell: UITableViewCell {
+    weak var delegate: FavoritesTableViewCellDelegate?
     
     private let productImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
+        imageView.imageFrom(url: URL(string: "https://api.gargar.dev:8088/Products/b4250b33-9f40-403c-995d-20136c333121/1.png")!)
         return imageView
     }()
     
@@ -47,6 +46,7 @@ class CartTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .label
+        label.text = "Test Product"
         return label
     }()
     
@@ -55,6 +55,7 @@ class CartTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.textColor = .label
+        label.text = "130"
         return label
     }()
     
@@ -63,50 +64,42 @@ class CartTableViewCell: UITableViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
+        stackView.alignment = .center
         return stackView
     }()
     
-    private let quantityLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 16, weight: .medium)
-        label.textColor = .label
-        label.textAlignment = .center
-        label.text = "1"
-        return label
-    }()
     
-    private let quantityStepper: UIStepper = {
-        let stepper = UIStepper()
-        stepper.translatesAutoresizingMaskIntoConstraints = false
-        stepper.minimumValue = 1
-        stepper.maximumValue = 10
-        stepper.value = 1
-        return stepper
-    }()
-    
-    private let favoritesAndDeleteButtonsStackView: UIStackView = {
+    private let favoritesAndAddButtonsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 10
-        stackView.alignment = .trailing
+        stackView.alignment = .center
         return stackView
     }()
     
     private let favoritesButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "favorites"), for: .normal)
-        button.tintColor = .customGrey
+        button.setImage(UIImage(systemName: "trash"), for: .normal)
+        button.tintColor = .red
         return button
     }()
     
-    private let deleteButton: UIButton = {
+    private let addToCartButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "trash"), for: .normal)
-        button.tintColor = .red
+
+        var config = UIButton.Configuration.filled()
+        config.title = "Add"
+        config.image = UIImage(named: "cart")
+        config.imagePadding = 8
+        config.baseForegroundColor = .customWhite
+        config.baseBackgroundColor = .customPurple
+        config.cornerStyle = .medium
+        config.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10)
+
+        button.configuration = config
         return button
     }()
     
@@ -167,34 +160,26 @@ class CartTableViewCell: UITableViewCell {
     private func setupActionButtonsStackView() {
         productDetailsStackView.addArrangedSubview(actionButtonsStackView)
         
-        actionButtonsStackView.addArrangedSubview(quantityStepper)
-        actionButtonsStackView.addArrangedSubview(quantityLabel)
-        actionButtonsStackView.addArrangedSubview(favoritesAndDeleteButtonsStackView)
+        let spacer = UIView()
+        spacer.translatesAutoresizingMaskIntoConstraints = false
         
-        favoritesAndDeleteButtonsStackView.addArrangedSubview(favoritesButton)
-        favoritesAndDeleteButtonsStackView.addArrangedSubview(deleteButton)
+        actionButtonsStackView.addArrangedSubview(spacer)
+        actionButtonsStackView.addArrangedSubview(favoritesAndAddButtonsStackView)
         
-        quantityStepper.addTarget(self, action: #selector(stepperValueChanged(_:)), for: .valueChanged)
+        favoritesAndAddButtonsStackView.addArrangedSubview(favoritesButton)
+        favoritesAndAddButtonsStackView.addArrangedSubview(addToCartButton)
+        
         favoritesButton.addAction(UIAction(handler: {[weak self] _ in
             self?.favoriteButtonTapped()
         }), for: .touchUpInside)
-        deleteButton.addAction(UIAction(handler: {[weak self] _ in
-            self?.deleteButtonTapped()
+        addToCartButton.addAction(UIAction(handler: {[weak self] _ in
+            self?.addToCartButtonTapped()
         }), for: .touchUpInside)
     }
+
     
-    @objc private func stepperValueChanged(_ sender: UIStepper) {
-        let stepValue = sender.value - lastStepperValue
-        lastStepperValue = sender.value
-        
-        let adjustedStepValue = stepValue > 0 ? 1 : -1
-        quantityLabel.text = "\(Int(sender.value))"
-        
-        delegate?.didChangeStepperValue(cell: self, adjustedStepValue: adjustedStepValue)
-    }
-    
-    private func deleteButtonTapped() {
-        delegate?.didTapDelete(cell: self)
+    private func addToCartButtonTapped() {
+        delegate?.addToCartButtonTapped(cell: self)
     }
     
     private func favoriteButtonTapped() {
@@ -202,12 +187,8 @@ class CartTableViewCell: UITableViewCell {
     }
     
     func configureCell(with cartItem: CartItem) {
-        productImageView.imageFrom(url:  URL(string: cartItem.product.photos[0].url)!)
+        productImageView.imageFrom(url:  URL(string: "cartItem.product.photos[0].url")!)
         productNameLabel.text = cartItem.product.name
         productPriceLabel.text = "\(cartItem.product.finalPrice)"
-        quantityStepper.value = Double(cartItem.count)
-        lastStepperValue = Double(cartItem.count)
-        quantityLabel.text = "\(cartItem.count)"
-        quantityStepper.maximumValue = Double(cartItem.product.stock)
     }
 }

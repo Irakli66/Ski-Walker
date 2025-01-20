@@ -6,11 +6,19 @@
 //
 
 struct Cart: Codable {
-    let products: [CartItem]
+    let productInCarts: [CartItem]
 }
 
 struct CartItem: Codable {
     let id: String
     let count: Int
-    let product: Product
+    let product: CartProduct
+}
+
+struct CartProduct: Codable {
+    let id: String
+    let name: String
+    let stock: Int
+    let finalPrice: Double
+    let photos: [Photo]
 }

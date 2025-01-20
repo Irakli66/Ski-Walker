@@ -8,7 +8,7 @@ import Foundation
 
 final class CartViewModel {
     private let cartManager: CartManagerProtocol
-    private var cartItems: [CartItem] = [CartItem(id: "312312", count: 5, product: Product(id: "b4250b33-9f40-403c-995d-20136c333121", name: "Test Product", description: "test", price: 12, stock: 20, discount: 0, finalPrice: 12, rentable: false, rentalPrice: 0, rentalStock: 0, category: "clothing", subcategory: "jacket", vendorId: "31232131", photos: [Photo(id: "1231", name: "test", url: "https://api.gargar.dev:8088/Products/b4250b33-9f40-403c-995d-20136c333121/1.png")]))]
+    private var cartItems: [CartItem] = []
     
     init(cartManager: CartManagerProtocol = CartManager()) {
         self.cartManager = cartManager
