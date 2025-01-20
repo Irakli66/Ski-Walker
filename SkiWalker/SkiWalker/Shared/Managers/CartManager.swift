@@ -10,7 +10,6 @@ protocol CartManagerProtocol {
     func fetchCartItems() async throws -> [CartItem]
     func addProductToCart(productId: String, count: Int) async throws
     func deleteProductFromCart(productId: String) async throws
-    func updateCartItemCount(productId: String, count: Int) async throws
 }
 
 final class CartManager: CartManagerProtocol {
@@ -28,27 +27,21 @@ final class CartManager: CartManagerProtocol {
         guard let response else {
             return []
         }
-        return response.products
+        return response.productInCarts
     }
     
     func addProductToCart(productId: String, count: Int) async throws {
         let url = "https://api.gargar.dev:8088/Cart/\(productId)?count=\(count)"
-        print(url)
 
         let response: CartItem? = try await authenticatedRequestHanlder.sendRequest(urlString: url, method: .post, headers: nil, body: nil, decoder: JSONDecoder())
         
-        print(response ?? "")
     }
     
     func deleteProductFromCart(productId: String) async throws {
         let url = "https://api.gargar.dev:8088/Cart/\(productId)"
         
-        let _: Cart? = try await authenticatedRequestHanlder.sendRequest(urlString: url, method: .delete, headers: nil, body: nil, decoder: JSONDecoder())
-    }
-    
-    func updateCartItemCount(productId: String, count: Int) async throws {
-        let url = "https://api.gargar.dev:8088/Cart/\(productId)?count=\(count)"
+        print(url)
         
-        let _: Cart? = try await authenticatedRequestHanlder.sendRequest(urlString: url, method: .post, headers: nil, body: nil, decoder: JSONDecoder())
+        let _: Cart? = try await authenticatedRequestHanlder.sendRequest(urlString: url, method: .delete, headers: nil, body: nil, decoder: JSONDecoder())
     }
 }
