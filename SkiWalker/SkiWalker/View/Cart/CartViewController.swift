@@ -141,7 +141,6 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate, CartTa
         
         Task {
             do {
-                print(adjustedStepValue)
                 try await cartViewModel.updateProduct(productId: currentItem.product.id, count: adjustedStepValue)
                 await cartViewModel.fetchCart()
                 cartTableView.reloadData()
@@ -165,7 +164,6 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate, CartTa
             }
         }
         
-        print(indexPath.row)
     }
     
     func didTapFavorite(cell: CartTableViewCell) {
@@ -178,6 +176,7 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate, CartTa
         super.viewWillAppear(animated)
         Task {
             await cartViewModel.fetchCart()
+            cartTableView.reloadData()
         }
     }
     

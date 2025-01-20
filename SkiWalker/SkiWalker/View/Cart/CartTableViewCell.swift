@@ -208,5 +208,6 @@ class CartTableViewCell: UITableViewCell {
         quantityStepper.value = Double(cartItem.count)
         lastStepperValue = Double(cartItem.count)
         quantityLabel.text = "\(cartItem.count)"
+        quantityStepper.maximumValue = Double(cartItem.product.stock)
     }
 }
