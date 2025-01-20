@@ -90,7 +90,7 @@ class CartTableViewCell: UITableViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 10
-        stackView.alignment = .trailing
+        stackView.alignment = .center
         return stackView
     }()
     
