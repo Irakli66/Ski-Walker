@@ -33,15 +33,13 @@ final class CartManager: CartManagerProtocol {
     func addProductToCart(productId: String, count: Int) async throws {
         let url = "https://api.gargar.dev:8088/Cart/\(productId)?count=\(count)"
 
-        let response: CartItem? = try await authenticatedRequestHanlder.sendRequest(urlString: url, method: .post, headers: nil, body: nil, decoder: JSONDecoder())
+        let _: CartItem? = try await authenticatedRequestHanlder.sendRequest(urlString: url, method: .post, headers: nil, body: nil, decoder: JSONDecoder())
         
     }
     
     func deleteProductFromCart(productId: String) async throws {
         let url = "https://api.gargar.dev:8088/Cart/\(productId)"
-        
-        print(url)
-        
+                
         let _: Cart? = try await authenticatedRequestHanlder.sendRequest(urlString: url, method: .delete, headers: nil, body: nil, decoder: JSONDecoder())
     }
 }
