@@ -33,7 +33,11 @@ class LabelAndValueView: UIStackView {
     
     private func setupView(labelText: String, valueText: String, isVertical: Bool) {
         axis = isVertical ? .vertical : .horizontal
-        spacing = 5
+        if isVertical {
+            spacing = 5
+        } else {
+            distribution = .equalSpacing
+        }
         translatesAutoresizingMaskIntoConstraints = false
         
         titleLabel.text = labelText
