@@ -204,7 +204,7 @@ class CartTableViewCell: UITableViewCell {
     func configureCell(with cartItem: CartItem) {
         productImageView.imageFrom(url:  URL(string: cartItem.product.photos[0].url)!)
         productNameLabel.text = cartItem.product.name
-        productPriceLabel.text = "\(cartItem.product.finalPrice)"
+        productPriceLabel.text = CurrencyFormatter.formatPriceToGEL(cartItem.product.finalPrice)
         quantityStepper.value = Double(cartItem.count)
         lastStepperValue = Double(cartItem.count)
         quantityLabel.text = "\(cartItem.count)"
