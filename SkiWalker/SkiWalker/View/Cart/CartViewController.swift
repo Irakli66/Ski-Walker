@@ -171,7 +171,7 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate, CartTa
     func didTapFavorite(cell: CartTableViewCell) {
         guard let indexPath = cartTableView.indexPath(for: cell) else { return }
         let currentItem = cartViewModel.getCartItem(at: indexPath.row)
-        print(indexPath.row)
+        print(currentItem)
     }
     
     override func viewWillAppear(_ animated: Bool) {
