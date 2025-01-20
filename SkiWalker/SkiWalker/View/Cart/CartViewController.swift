@@ -34,6 +34,7 @@ final class CartViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
@@ -177,7 +178,9 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate, CartTa
             do {
                 try await cartViewModel.updateProduct(productId: currentItem.product.id, count: adjustedStepValue)
                 await cartViewModel.fetchCart()
-                cartTableView.reloadData()
+                DispatchQueue.main.async { [weak self] in
+                    self?.cartTableView.reloadRows(at: [indexPath], with: .none)
+                }
             } catch {
                 print("Error updating cart: \(error.localizedDescription)")
             }
