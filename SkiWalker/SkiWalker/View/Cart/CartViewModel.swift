@@ -9,6 +9,7 @@ import Foundation
 final class CartViewModel {
     private let cartManager: CartManagerProtocol
     private var cartItems: [CartItem] = []
+    var doneFetching: (() -> Void)?
     
     init(cartManager: CartManagerProtocol = CartManager()) {
         self.cartManager = cartManager
@@ -21,7 +22,7 @@ final class CartViewModel {
         } catch {
             print(error.localizedDescription)
         }
-        
+        doneFetching?()
     }
     
     func updateProduct(productId: String, count: Int) async throws {
@@ -46,5 +47,14 @@ final class CartViewModel {
     
     func getCartItem(at index: Int) -> CartItem {
         return cartItems[index]
+    }
+    
+    func getCartTotalItemCount() -> Int {
+        return cartItems.reduce(0) { $0 + $1.count }
+    }
+    
+    func getTotalPriceFormatted() -> String {
+        let totalPrice = cartItems.reduce(0) { $0 + Double($1.count) * $1.product.finalPrice }
+        return CurrencyFormatter.formatPriceToGEL(totalPrice)
     }
 }

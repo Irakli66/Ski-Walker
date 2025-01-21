@@ -20,11 +20,21 @@ final class CartViewController: UIViewController {
         return label
     }()
     
+    private let emptyCartImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "emptyCart")
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
     private let cartTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
@@ -35,6 +45,10 @@ final class CartViewController: UIViewController {
         stackView.spacing = 16
         return stackView
     }()
+    
+    private lazy var numberOfProducts = LabelAndValueView(labelText: "Number of products", valueText: "2", isVertical: false)
+    private lazy var totalPrice = LabelAndValueView(labelText: "Total Price", valueText: "260 ₾", isVertical: false)
+    private lazy var checkoutButton = CustomButton(buttonText: "Checkout")
     
     private let orderLabel: UILabel = {
         let label = UILabel()
@@ -48,6 +62,11 @@ final class CartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        cartViewModel.doneFetching = { [weak self] in
+            DispatchQueue.main.async {
+                self?.updateUI()
+            }
+        }
         setupUI()
     }
     
@@ -81,10 +100,6 @@ final class CartViewController: UIViewController {
     private func setupCartDetailsStackView() {
         view.addSubview(cartDetailsStackView)
         
-        let numberOfProducts = LabelAndValueView(labelText: "Number of products", valueText: "2", isVertical: false)
-        let totalPrice = LabelAndValueView(labelText: "Total Price", valueText: "260 ₾", isVertical: false)
-        let checkoutButton = CustomButton(buttonText: "Checkout")
-        
         [orderLabel, numberOfProducts, totalPrice, checkoutButton].forEach { cartDetailsStackView.addArrangedSubview($0) }
         
         NSLayoutConstraint.activate([
@@ -100,6 +115,26 @@ final class CartViewController: UIViewController {
     
     private func checkout() {
         print("checkout")
+    }
+    
+    private func updateUI() {
+        numberOfProducts.updateValue("\(cartViewModel.getCartTotalItemCount())")
+        totalPrice.updateValue(cartViewModel.getTotalPriceFormatted())
+        
+        if cartViewModel.getCartItemsCount() < 1 {
+            view.addSubview(emptyCartImageView)
+            NSLayoutConstraint.activate([
+                emptyCartImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                emptyCartImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                emptyCartImageView.heightAnchor.constraint(equalToConstant: 200),
+                emptyCartImageView.widthAnchor.constraint(equalTo: emptyCartImageView.heightAnchor),
+            ])
+            
+            cartTableView.removeFromSuperview()
+            cartDetailsStackView.removeFromSuperview()
+        } else {
+            emptyCartImageView.removeFromSuperview()
+        }
     }
 }
 
@@ -143,7 +178,9 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate, CartTa
             do {
                 try await cartViewModel.updateProduct(productId: currentItem.product.id, count: adjustedStepValue)
                 await cartViewModel.fetchCart()
-                cartTableView.reloadData()
+                DispatchQueue.main.async { [weak self] in
+                    self?.cartTableView.reloadRows(at: [indexPath], with: .none)
+                }
             } catch {
                 print("Error updating cart: \(error.localizedDescription)")
             }
