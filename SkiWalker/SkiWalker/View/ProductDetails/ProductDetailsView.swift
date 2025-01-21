@@ -38,6 +38,7 @@ struct ProductDetailsView: View {
         .toast(isPresented: $showToast, message: "Added to cart successfully!", type: .success)
     }
     
+    @ViewBuilder
     private var productDetailsHeader: some View {
         HStack {
             Button(action: {
@@ -49,9 +50,16 @@ struct ProductDetailsView: View {
             }
             Spacer()
             Button(action: {
-                print("add/remove favorites")
+                Task {
+                    if productViewModel.product?.favorite ?? false {
+                        await productViewModel.deleteFromFavorites(with: productId)
+                    } else {
+                        await productViewModel.addToFavorites(with: productId)
+                    }
+                   try await productViewModel.fetchProduct(with: productId)
+                }
             }) {
-                Image(systemName: "heart")
+                Image(systemName: productViewModel.product?.favorite ?? false ?  "heart.fill" : "heart")
                     .resizable()
                     .foregroundStyle(Color.customGrey)
                     .scaledToFit()

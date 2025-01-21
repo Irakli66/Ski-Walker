@@ -186,7 +186,7 @@ class FavoriteTableViewCell: UITableViewCell {
     }
     
     func configureCell(with product: Product) {
-        productImageView.imageFrom(url:  URL(string: product.photos[0].url)!)
+//        productImageView.imageFrom(url:  URL(string: product.photos[0].url)!)
         productNameLabel.text = product.name
         productPriceLabel.text = "\(product.finalPrice)"
     }
