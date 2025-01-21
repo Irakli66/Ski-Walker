@@ -9,7 +9,7 @@ import UIKit
 
 protocol FavoritesTableViewCellDelegate: AnyObject {
     func addToCartButtonTapped(cell: FavoriteTableViewCell)
-    func didTapFavorite(cell: FavoriteTableViewCell)
+    func deleteButtonTapped(cell: FavoriteTableViewCell)
 }
 
 class FavoriteTableViewCell: UITableViewCell {
@@ -169,7 +169,7 @@ class FavoriteTableViewCell: UITableViewCell {
         favoritesAndAddButtonsStackView.addArrangedSubview(addToCartButton)
         
         favoritesButton.addAction(UIAction(handler: {[weak self] _ in
-            self?.favoriteButtonTapped()
+            self?.deleteButtonTapped()
         }), for: .touchUpInside)
         addToCartButton.addAction(UIAction(handler: {[weak self] _ in
             self?.addToCartButtonTapped()
@@ -181,13 +181,13 @@ class FavoriteTableViewCell: UITableViewCell {
         delegate?.addToCartButtonTapped(cell: self)
     }
     
-    private func favoriteButtonTapped() {
-        delegate?.didTapFavorite(cell: self)
+    private func deleteButtonTapped() {
+        delegate?.deleteButtonTapped(cell: self)
     }
     
     func configureCell(with product: Product) {
-//        productImageView.imageFrom(url:  URL(string: product.photos[0].url)!)
+        productImageView.imageFrom(url:  URL(string: product.photos[0].url)!)
         productNameLabel.text = product.name
-        productPriceLabel.text = "\(product.finalPrice)"
+        productPriceLabel.text = CurrencyFormatter.formatPriceToGEL(product.finalPrice)
     }
 }

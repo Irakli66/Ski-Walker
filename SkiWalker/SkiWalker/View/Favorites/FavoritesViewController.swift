@@ -101,12 +101,26 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, F
     
     func addToCartButtonTapped(cell: FavoriteTableViewCell) {
         guard let indexPath = favoritesTableView.indexPath(for: cell) else { return }
-        print(indexPath.row)
+        let currentFavoriteProduct = favoritesViewModel.getFavorite(at: indexPath.row)
+        
+        Task {
+            try await favoritesViewModel.addProductToCart(productId: currentFavoriteProduct.id)
+            let toast = ToastView(message: "added to cart", type: .success)
+            toast.show(in: self.view)
+        }
     }
     
-    func didTapFavorite(cell: FavoriteTableViewCell) {
+    func deleteButtonTapped(cell: FavoriteTableViewCell) {
         guard let indexPath = favoritesTableView.indexPath(for: cell) else { return }
-        print(indexPath.row)
+        let currentFavoriteProduct = favoritesViewModel.getFavorite(at: indexPath.row)
+        
+        Task {
+            await favoritesViewModel.deleFavorite(with: currentFavoriteProduct.id)
+            await favoritesViewModel.fetchFavorites()
+            let toast = ToastView(message: "removed from favorites", type: .success)
+            toast.show(in: self.view)
+            favoritesTableView.reloadData()
+        }
     }
 }
 
@@ -115,7 +129,7 @@ struct FavoritesView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> FavoritesViewController {
         return FavoritesViewController()
     }
-
+    
     func updateUIViewController(_ uiViewController: FavoritesViewController, context: Context) {
         // empty for now
     }
