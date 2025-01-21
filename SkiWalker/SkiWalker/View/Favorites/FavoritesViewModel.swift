@@ -10,6 +10,7 @@ final class FavoritesViewModel {
     private let favoritesManager: FavoritesManagerProtocol
     private let cartManager: CartManagerProtocol
     private var favorites: [Product] = []
+    var doneFetching: (() -> Void)?
     
     init(favoritesManager: FavoritesManagerProtocol = FAvoritesManager(), cartManager: CartManagerProtocol = CartManager()) {
         self.favoritesManager = favoritesManager
@@ -23,6 +24,8 @@ final class FavoritesViewModel {
         } catch {
             print(error.localizedDescription)
         }
+        
+        doneFetching?()
     }
     
     func addProductToCart(productId: String, count: Int = 1) async throws {

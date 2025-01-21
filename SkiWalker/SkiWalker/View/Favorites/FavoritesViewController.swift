@@ -9,6 +9,15 @@ import SwiftUI
 final class FavoritesViewController: UIViewController {
     private let favoritesViewModel = FavoritesViewModel()
     
+    private let emptyFavoritesImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "emptyCart")
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
     private let pageTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -29,6 +38,12 @@ final class FavoritesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        favoritesViewModel.doneFetching = { [weak self] in
+            DispatchQueue.main.async {
+                self?.updateUI()
+            }
+        }
+        
         setupUI()
     }
     
@@ -56,6 +71,23 @@ final class FavoritesViewController: UIViewController {
         favoritesTableView.dataSource = self
         favoritesTableView.delegate = self
         favoritesTableView.register(FavoriteTableViewCell.self, forCellReuseIdentifier: "FavoriteTableViewCell")
+    }
+    
+    private func updateUI() {
+        
+        if favoritesViewModel.getFavoritesCount() < 1 {
+            view.addSubview(emptyFavoritesImageView)
+            
+            NSLayoutConstraint.activate([
+                emptyFavoritesImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                emptyFavoritesImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                emptyFavoritesImageView.heightAnchor.constraint(equalToConstant: 200),
+                emptyFavoritesImageView.widthAnchor.constraint(equalTo: emptyFavoritesImageView.heightAnchor),
+            ])
+            
+            favoritesTableView.removeFromSuperview()
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,6 +152,7 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, F
             let toast = ToastView(message: "removed from favorites", type: .success)
             toast.show(in: self.view)
             favoritesTableView.reloadData()
+            updateUI()
         }
     }
 }
