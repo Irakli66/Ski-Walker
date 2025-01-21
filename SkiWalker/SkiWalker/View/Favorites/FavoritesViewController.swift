@@ -7,6 +7,7 @@
 import SwiftUI
 
 final class FavoritesViewController: UIViewController {
+    private let favoritesViewModel = FavoritesViewModel()
     
     private let pageTitleLabel: UILabel = {
         let label = UILabel()
@@ -56,6 +57,14 @@ final class FavoritesViewController: UIViewController {
         favoritesTableView.delegate = self
         favoritesTableView.register(FavoriteTableViewCell.self, forCellReuseIdentifier: "FavoriteTableViewCell")
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task {
+            await favoritesViewModel.fetchFavorites()
+            favoritesTableView.reloadData()
+        }
+    }
 }
 
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, FavoritesTableViewCellDelegate {
@@ -64,7 +73,7 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, F
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        favoritesViewModel.getFavoritesCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -72,14 +81,17 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, F
             return UITableViewCell()
         }
         
+        let currentFavoriteProduct = favoritesViewModel.getFavorite(at: indexPath.row)
         cell.delegate = self
+        cell.configureCell(with: currentFavoriteProduct)
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let id = "b4250b33-9f40-403c-995d-20136c333121"
+        let currentFavoriteProduct = favoritesViewModel.getFavorite(at: indexPath.row)
         
-        let productDetailsView = ProductDetailsView(productId: id)
+        let productDetailsView = ProductDetailsView(productId: currentFavoriteProduct.id)
         
         let hostingController = UIHostingController(rootView: productDetailsView)
         

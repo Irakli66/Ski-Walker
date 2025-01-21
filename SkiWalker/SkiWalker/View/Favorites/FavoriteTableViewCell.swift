@@ -20,7 +20,6 @@ class FavoriteTableViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.imageFrom(url: URL(string: "https://api.gargar.dev:8088/Products/b4250b33-9f40-403c-995d-20136c333121/1.png")!)
         return imageView
     }()
     
@@ -186,9 +185,9 @@ class FavoriteTableViewCell: UITableViewCell {
         delegate?.didTapFavorite(cell: self)
     }
     
-    func configureCell(with cartItem: CartItem) {
-        productImageView.imageFrom(url:  URL(string: "cartItem.product.photos[0].url")!)
-        productNameLabel.text = cartItem.product.name
-        productPriceLabel.text = "\(cartItem.product.finalPrice)"
+    func configureCell(with product: Product) {
+        productImageView.imageFrom(url:  URL(string: product.photos[0].url)!)
+        productNameLabel.text = product.name
+        productPriceLabel.text = "\(product.finalPrice)"
     }
 }

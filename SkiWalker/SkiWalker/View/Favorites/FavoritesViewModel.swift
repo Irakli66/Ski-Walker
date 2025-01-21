@@ -19,9 +19,7 @@ final class FavoritesViewModel {
     func fetchFavorites() async {
         do {
             let response: [Product] = try await favoritesManager.fetchFavorites()
-            await MainActor.run {
-                favorites = response
-            }
+            favorites = response
         } catch {
             print(error.localizedDescription)
         }
