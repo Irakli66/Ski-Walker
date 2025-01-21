@@ -10,6 +10,7 @@ import SwiftUI
 struct ProductDetailsView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var productViewModel = ProductDetailsViewModel()
+    @State private var showToast = false
     let productId: String
     @State private var quantity: Int = 1
     
@@ -34,6 +35,7 @@ struct ProductDetailsView: View {
                 try await productViewModel.fetchProduct(with: productId)
             }
         }
+        .toast(isPresented: $showToast, message: "Added to cart successfully!", type: .success)
     }
     
     private var productDetailsHeader: some View {
@@ -122,6 +124,7 @@ struct ProductDetailsView: View {
             Button(action: {
                 Task {
                    try await productViewModel.addProductToCart(productId: productId, count: quantity)
+                    showToast = true
                 }
             }) {
                 HStack {
