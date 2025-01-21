@@ -8,6 +8,7 @@ import SwiftUI
 
 final class ProductsViewModel: ObservableObject {
     private let authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol
+    private let cartManager: CartManagerProtocol
     @Published var products: [Product] = []
     @Published var errorMessage: String?
     @Published var isFetchingMore: Bool = false
@@ -15,8 +16,9 @@ final class ProductsViewModel: ObservableObject {
     private var currentPage: Int = 1
     private var isLastPage: Bool = false
     
-    init(authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler()) {
+    init(authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler(), cartManager: CartManagerProtocol = CartManager()) {
         self.authenticatedRequestHandler = authenticatedRequestHandler
+        self.cartManager = cartManager
     }
     
     func fetchProducts(queryText: String?, category: String?, subCategory: String?, page: Int = 1, pageSize: Int = 5) async {
@@ -92,6 +94,14 @@ final class ProductsViewModel: ObservableObject {
     func fetchNextPage(queryText: String?, category: String?, subCategory: String?) async {
         guard !isLastPage && !isFetchingMore else { return }
         await fetchProducts(queryText: queryText, category: category, subCategory: subCategory, page: currentPage + 1)
+    }
+    
+    func addToCart(productId: String, count: Int = 1) async throws {
+        do {
+            try await cartManager.addProductToCart(productId: productId, count: count)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     @MainActor

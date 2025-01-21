@@ -9,6 +9,7 @@ import SwiftUI
 struct ProductsView: View {
     @StateObject private var productsViewModel = ProductsViewModel()
     @Environment(\.presentationMode) var presentationMode
+    @State private var showToast = false
     let searchQuery: String
     let category: String
     let subCategory: String
@@ -43,6 +44,7 @@ struct ProductsView: View {
                 }
             }
             .navigationBarBackButtonHidden(true)
+            .toast(isPresented: $showToast, message: "Added to cart successfully!", type: .success)
         }
     }
     
@@ -104,7 +106,7 @@ struct ProductsView: View {
                             .buttonStyle(PlainButtonStyle())
                             
                             Button(action: {
-                                print("Add to cart func")
+                                addProductToCart(with: product.id)
                             }) {
                                 HStack(spacing: 5) {
                                     Image("cart")
@@ -142,5 +144,16 @@ struct ProductsView: View {
         }
         .listStyle(PlainListStyle())
         .scrollContentBackground(.hidden)
+    }
+    
+    private func addProductToCart(with id: String) {
+        Task {
+            do {
+                try await productsViewModel.addToCart(productId: id)
+                showToast = true
+            } catch {
+                AlertManager.showAlert(title: "Error", message: error.localizedDescription)
+            }
+        }
     }
 }
