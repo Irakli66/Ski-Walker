@@ -56,6 +56,15 @@
         }
       }
     },
+    "25 John Doe, Tbilis, Georgia" : {
+
+    },
+    "260" : {
+
+    },
+    "4567 **** **** 657" : {
+
+    },
     "Add" : {
       "localizations" : {
         "ka" : {
@@ -168,6 +177,9 @@
         }
       }
     },
+    "Checkout" : {
+
+    },
     "City" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -256,6 +268,9 @@
         }
       }
     },
+    "Credit Cart" : {
+
+    },
     "Customer" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -286,6 +301,12 @@
           }
         }
       }
+    },
+    "Delivery Details" : {
+
+    },
+    "Delivery price" : {
+
     },
     "Don't have an account?" : {
       "extractionState" : "manual",
@@ -450,6 +471,9 @@
         }
       }
     },
+    "FREE" : {
+
+    },
     "Full Name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -493,6 +517,9 @@
           }
         }
       }
+    },
+    "John Doe" : {
+
     },
     "Language" : {
       "localizations" : {
@@ -590,6 +617,9 @@
         }
       }
     },
+    "Order" : {
+
+    },
     "Order History" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -600,6 +630,9 @@
           }
         }
       }
+    },
+    "Order total" : {
+
     },
     "Order:" : {
       "localizations" : {
@@ -633,6 +666,12 @@
         }
       }
     },
+    "Pay" : {
+
+    },
+    "Payment Method" : {
+
+    },
     "Payment Methods" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -644,6 +683,9 @@
         }
       }
     },
+    "Pick delivery date:" : {
+
+    },
     "Popular products" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -654,6 +696,9 @@
           }
         }
       }
+    },
+    "Product (2)" : {
+
     },
     "Product Description:" : {
 
