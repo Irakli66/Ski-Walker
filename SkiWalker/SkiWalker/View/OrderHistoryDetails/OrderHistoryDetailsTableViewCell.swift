@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OrderHistoryDetailsTableViewCell: UITableViewCell {
+final class OrderHistoryDetailsTableViewCell: UITableViewCell {
     static let identifier = "OrderHistoryDetailsTableViewCell"
     
     private let productImageView: UIImageView = {

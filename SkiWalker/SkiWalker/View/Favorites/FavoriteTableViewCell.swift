@@ -12,7 +12,7 @@ protocol FavoritesTableViewCellDelegate: AnyObject {
     func deleteButtonTapped(cell: FavoriteTableViewCell)
 }
 
-class FavoriteTableViewCell: UITableViewCell {
+final class FavoriteTableViewCell: UITableViewCell {
     weak var delegate: FavoritesTableViewCellDelegate?
     
     private let productImageView: UIImageView = {

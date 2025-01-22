@@ -13,7 +13,7 @@ protocol CartTableViewCellDelegate: AnyObject {
     func didTapFavorite(cell: CartTableViewCell)
 }
 
-class CartTableViewCell: UITableViewCell {
+final class CartTableViewCell: UITableViewCell {
     weak var delegate: CartTableViewCellDelegate?
     private var lastStepperValue: Double = 1
     
