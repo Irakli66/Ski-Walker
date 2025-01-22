@@ -11,8 +11,10 @@ final class CheckoutViewModel: ObservableObject {
     private let cartManager: CartManagerProtocol
     private let authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol
     private let today = Date()
+    @Published var addresses: [Address] = []
+    @Published var paymentMethods: [CreditCard] = []
     @Published var cartItems: [CartItem] = []
-    @Published var singleProduct: Product?
+    @Published var singleProduct: CartProduct?
     
     var deliveryDates: [Date] {
         let calendar = Calendar.current
@@ -43,7 +45,7 @@ final class CheckoutViewModel: ObservableObject {
         let url = "https://api.gargar.dev:8088/Product/\(id)"
         
         do {
-            let response: Product? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
+            let response: CartProduct? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
             
             await MainActor.run {
                 singleProduct = response
@@ -51,6 +53,67 @@ final class CheckoutViewModel: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
+    }
+    
+    func createTemporaryCartItem(with quantity: Int) {
+        guard let product = singleProduct else {
+            return
+        }
+        let temporaryCartItem = CartItem(id: UUID().uuidString, count: quantity, product: product)
+        
+        cartItems = [temporaryCartItem]
+    }
+    
+    func fetchAddresses() async {
+        let url = "https://api.gargar.dev:8088/Shipping"
+        
+        do {
+            let response: [Address]? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
+            
+            guard let addressesResponse = response else {
+                fatalError("Failed to fetch payment methods: No data received.")
+            }
+            
+            await MainActor.run {
+                addresses = addressesResponse
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func fetchPaymentMethods() async {
+        let url = "https://api.gargar.dev:8088/Payment"
+        
+        do {
+            let response: [CreditCard]? = try await authenticatedRequestHandler.sendRequest(
+                urlString: url,
+                method: .get,
+                headers: nil,
+                body: nil,
+                decoder: JSONDecoder()
+            )
+            
+            guard let creditCards = response else {
+                fatalError("Failed to fetch payment methods: No data received.")
+            }
+            
+            await MainActor.run {
+                paymentMethods = creditCards
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getCartTotalItemCount() -> String {
+        let totalItems = cartItems.reduce(0) { $0 + $1.count }
+        return String(totalItems)
+    }
+    
+    func getTotalPriceFormatted() -> String {
+        let totalPrice = cartItems.reduce(0) { $0 + Double($1.count) * $1.product.finalPrice }
+        return CurrencyFormatter.formatPriceToGEL(totalPrice)
     }
     
     func formatDateToDayAndMonth(_ date: Date) -> String {

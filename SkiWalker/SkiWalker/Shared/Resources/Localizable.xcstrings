@@ -59,9 +59,6 @@
     "25 John Doe, Tbilis, Georgia" : {
 
     },
-    "260" : {
-
-    },
     "4567 **** **** 657" : {
 
     },
@@ -697,7 +694,7 @@
         }
       }
     },
-    "Product (2)" : {
+    "Product (%@)" : {
 
     },
     "Product Description:" : {

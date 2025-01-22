@@ -33,7 +33,7 @@ struct CheckoutView: View {
                     .font(.system(size: 20, weight: .bold))
                     .foregroundColor(Color.customPurple)
             }
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 30) {
                     deliveryAddressSection
                     deliveryDateSection
@@ -48,7 +48,7 @@ struct CheckoutView: View {
         .padding(.horizontal)
         .background(Color.customBackground)
         .onAppear() {
-            getCheckoutItems()
+            getCheckoutData()
         }
     }
     
@@ -101,8 +101,8 @@ struct CheckoutView: View {
     
     @ViewBuilder
     private var productsSection: some View {
-        LazyHStack {
-            ScrollView(.horizontal) {
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(spacing: 10) {
                 ForEach(checkoutViewModel.cartItems, id: \.self.id) { item in
                     ReusableAsyncImageView(url: item.product.photos[0].url)
                 }
@@ -135,10 +135,10 @@ struct CheckoutView: View {
             Text("Order")
                 .font(.system(size: 16, weight: .bold))
             HStack {
-                Text("Product (2)")
+                Text("Product (\(checkoutViewModel.getCartTotalItemCount()))")
                     .font(.system(size: 14, weight: .regular))
                 Spacer()
-                Text("260")
+                Text(checkoutViewModel.getTotalPriceFormatted())
                     .font(.system(size: 14, weight: .regular))
             }
             HStack {
@@ -153,7 +153,7 @@ struct CheckoutView: View {
                 Text("Order total")
                     .font(.system(size: 14, weight: .regular))
                 Spacer()
-                Text("260")
+                Text(checkoutViewModel.getTotalPriceFormatted())
                     .font(.system(size: 14, weight: .regular))
             }
             Button(action: {
@@ -169,15 +169,19 @@ struct CheckoutView: View {
             }
         }
     }
-        
     
-    private func getCheckoutItems() {
+    
+    private func getCheckoutData() {
         Task {
             if let id = productId, let quantity = quantity {
-                print("id: \(id), quantity: \(quantity)")
+                await checkoutViewModel.fetchSingleProduct(with: id)
+                checkoutViewModel.createTemporaryCartItem(with: quantity)
             } else {
-               await checkoutViewModel.fetchCart()
+                await checkoutViewModel.fetchCart()
             }
+            
+            await checkoutViewModel.fetchAddresses()
+            await checkoutViewModel.fetchPaymentMethods()
         }
     }
 }
