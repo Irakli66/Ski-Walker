@@ -21,4 +21,5 @@ struct CartProduct: Codable {
     let stock: Int
     let finalPrice: Double
     let photos: [Photo]
+    let favorite: Bool
 }

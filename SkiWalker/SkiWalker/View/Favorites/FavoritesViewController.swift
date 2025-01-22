@@ -7,6 +7,16 @@
 import SwiftUI
 
 final class FavoritesViewController: UIViewController {
+    private let favoritesViewModel = FavoritesViewModel()
+    
+    private let emptyFavoritesImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "emptyCart")
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        return imageView
+    }()
     
     private let pageTitleLabel: UILabel = {
         let label = UILabel()
@@ -28,6 +38,12 @@ final class FavoritesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        favoritesViewModel.doneFetching = { [weak self] in
+            DispatchQueue.main.async {
+                self?.updateUI()
+            }
+        }
+        
         setupUI()
     }
     
@@ -56,6 +72,31 @@ final class FavoritesViewController: UIViewController {
         favoritesTableView.delegate = self
         favoritesTableView.register(FavoriteTableViewCell.self, forCellReuseIdentifier: "FavoriteTableViewCell")
     }
+    
+    private func updateUI() {
+        
+        if favoritesViewModel.getFavoritesCount() < 1 {
+            view.addSubview(emptyFavoritesImageView)
+            
+            NSLayoutConstraint.activate([
+                emptyFavoritesImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                emptyFavoritesImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                emptyFavoritesImageView.heightAnchor.constraint(equalToConstant: 200),
+                emptyFavoritesImageView.widthAnchor.constraint(equalTo: emptyFavoritesImageView.heightAnchor),
+            ])
+            
+            favoritesTableView.removeFromSuperview()
+        }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task {
+            await favoritesViewModel.fetchFavorites()
+            favoritesTableView.reloadData()
+        }
+    }
 }
 
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, FavoritesTableViewCellDelegate {
@@ -64,7 +105,7 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, F
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        favoritesViewModel.getFavoritesCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -72,14 +113,17 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, F
             return UITableViewCell()
         }
         
+        let currentFavoriteProduct = favoritesViewModel.getFavorite(at: indexPath.row)
         cell.delegate = self
+        cell.configureCell(with: currentFavoriteProduct)
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let id = "b4250b33-9f40-403c-995d-20136c333121"
+        let currentFavoriteProduct = favoritesViewModel.getFavorite(at: indexPath.row)
         
-        let productDetailsView = ProductDetailsView(productId: id)
+        let productDetailsView = ProductDetailsView(productId: currentFavoriteProduct.id)
         
         let hostingController = UIHostingController(rootView: productDetailsView)
         
@@ -89,12 +133,27 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, F
     
     func addToCartButtonTapped(cell: FavoriteTableViewCell) {
         guard let indexPath = favoritesTableView.indexPath(for: cell) else { return }
-        print(indexPath.row)
+        let currentFavoriteProduct = favoritesViewModel.getFavorite(at: indexPath.row)
+        
+        Task {
+            try await favoritesViewModel.addProductToCart(productId: currentFavoriteProduct.id)
+            let toast = ToastView(message: "added to cart", type: .success)
+            toast.show(in: self.view)
+        }
     }
     
-    func didTapFavorite(cell: FavoriteTableViewCell) {
+    func deleteButtonTapped(cell: FavoriteTableViewCell) {
         guard let indexPath = favoritesTableView.indexPath(for: cell) else { return }
-        print(indexPath.row)
+        let currentFavoriteProduct = favoritesViewModel.getFavorite(at: indexPath.row)
+        
+        Task {
+            await favoritesViewModel.deleFavorite(with: currentFavoriteProduct.id)
+            await favoritesViewModel.fetchFavorites()
+            let toast = ToastView(message: "removed from favorites", type: .success)
+            toast.show(in: self.view)
+            favoritesTableView.reloadData()
+            updateUI()
+        }
     }
 }
 
@@ -103,7 +162,7 @@ struct FavoritesView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> FavoritesViewController {
         return FavoritesViewController()
     }
-
+    
     func updateUIViewController(_ uiViewController: FavoritesViewController, context: Context) {
         // empty for now
     }

@@ -13,7 +13,7 @@ protocol CartTableViewCellDelegate: AnyObject {
     func didTapFavorite(cell: CartTableViewCell)
 }
 
-class CartTableViewCell: UITableViewCell {
+final class CartTableViewCell: UITableViewCell {
     weak var delegate: CartTableViewCellDelegate?
     private var lastStepperValue: Double = 1
     
@@ -97,7 +97,7 @@ class CartTableViewCell: UITableViewCell {
     private let favoritesButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "favorites"), for: .normal)
+//        button.setImage(UIImage(systemName: "heart"), for: .normal)
         button.tintColor = .customGrey
         return button
     }()
@@ -209,5 +209,6 @@ class CartTableViewCell: UITableViewCell {
         lastStepperValue = Double(cartItem.count)
         quantityLabel.text = "\(cartItem.count)"
         quantityStepper.maximumValue = Double(cartItem.product.stock)
+        favoritesButton.setImage(UIImage(systemName: cartItem.product.favorite ? "heart.fill" : "heart"), for: .normal)
     }
 }

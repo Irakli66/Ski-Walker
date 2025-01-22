@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class LabelAndValueView: UIStackView {
+final class LabelAndValueView: UIStackView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()

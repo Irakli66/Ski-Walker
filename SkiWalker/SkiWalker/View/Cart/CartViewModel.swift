@@ -8,11 +8,13 @@ import Foundation
 
 final class CartViewModel {
     private let cartManager: CartManagerProtocol
+    private let favoritesManager: FavoritesManagerProtocol
     private var cartItems: [CartItem] = []
     var doneFetching: (() -> Void)?
     
-    init(cartManager: CartManagerProtocol = CartManager()) {
+    init(cartManager: CartManagerProtocol = CartManager(), favoritesManager: FavoritesManagerProtocol = FAvoritesManager()) {
         self.cartManager = cartManager
+        self.favoritesManager = favoritesManager
     }
     
     func fetchCart() async  {
@@ -36,6 +38,22 @@ final class CartViewModel {
     func deleteCartItem(with id: String) async throws {
         do {
             try await cartManager.deleteProductFromCart(productId: id)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func addToFavorites(with id: String) async {
+        do {
+            try await favoritesManager.addToFavorites(with: id)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func removeFromFavorites(with id: String) async {
+        do {
+            try await favoritesManager.deleteFromFavorites(with: id)
         } catch {
             print(error.localizedDescription)
         }

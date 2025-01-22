@@ -9,10 +9,10 @@ import UIKit
 
 protocol FavoritesTableViewCellDelegate: AnyObject {
     func addToCartButtonTapped(cell: FavoriteTableViewCell)
-    func didTapFavorite(cell: FavoriteTableViewCell)
+    func deleteButtonTapped(cell: FavoriteTableViewCell)
 }
 
-class FavoriteTableViewCell: UITableViewCell {
+final class FavoriteTableViewCell: UITableViewCell {
     weak var delegate: FavoritesTableViewCellDelegate?
     
     private let productImageView: UIImageView = {
@@ -20,7 +20,6 @@ class FavoriteTableViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.imageFrom(url: URL(string: "https://api.gargar.dev:8088/Products/b4250b33-9f40-403c-995d-20136c333121/1.png")!)
         return imageView
     }()
     
@@ -170,7 +169,7 @@ class FavoriteTableViewCell: UITableViewCell {
         favoritesAndAddButtonsStackView.addArrangedSubview(addToCartButton)
         
         favoritesButton.addAction(UIAction(handler: {[weak self] _ in
-            self?.favoriteButtonTapped()
+            self?.deleteButtonTapped()
         }), for: .touchUpInside)
         addToCartButton.addAction(UIAction(handler: {[weak self] _ in
             self?.addToCartButtonTapped()
@@ -182,13 +181,13 @@ class FavoriteTableViewCell: UITableViewCell {
         delegate?.addToCartButtonTapped(cell: self)
     }
     
-    private func favoriteButtonTapped() {
-        delegate?.didTapFavorite(cell: self)
+    private func deleteButtonTapped() {
+        delegate?.deleteButtonTapped(cell: self)
     }
     
-    func configureCell(with cartItem: CartItem) {
-        productImageView.imageFrom(url:  URL(string: "cartItem.product.photos[0].url")!)
-        productNameLabel.text = cartItem.product.name
-        productPriceLabel.text = "\(cartItem.product.finalPrice)"
+    func configureCell(with product: Product) {
+        productImageView.imageFrom(url:  URL(string: product.photos[0].url)!)
+        productNameLabel.text = product.name
+        productPriceLabel.text = CurrencyFormatter.formatPriceToGEL(product.finalPrice)
     }
 }

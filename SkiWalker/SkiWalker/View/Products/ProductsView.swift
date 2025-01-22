@@ -97,10 +97,22 @@ struct ProductsView: View {
                             Spacer()
                             
                             Button(action: {
-                                print("Add to favorites")
+                                Task {
+                                    if product.favorite {
+                                        await productsViewModel.deleteFromFavorites(with: product.id)
+                                    } else {
+                                        await productsViewModel.addToFavorites(with: product.id)
+                                    }
+                                    
+                                    await productsViewModel.fetchProducts(queryText: searchQuery, category: category, subCategory: subCategory)
+                                    
+                                    isLoading = false
+                                }
                             }) {
-                                Image("favorites")
+                                Image(systemName: product.favorite ?  "heart.fill" : "heart")
                                     .resizable()
+                                    .foregroundStyle(Color.customGrey)
+                                    .scaledToFit()
                                     .frame(width: 20, height: 20)
                             }
                             .buttonStyle(PlainButtonStyle())

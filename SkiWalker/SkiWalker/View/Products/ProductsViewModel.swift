@@ -9,6 +9,7 @@ import SwiftUI
 final class ProductsViewModel: ObservableObject {
     private let authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol
     private let cartManager: CartManagerProtocol
+    private let favoritesManager: FavoritesManagerProtocol
     @Published var products: [Product] = []
     @Published var errorMessage: String?
     @Published var isFetchingMore: Bool = false
@@ -16,9 +17,10 @@ final class ProductsViewModel: ObservableObject {
     private var currentPage: Int = 1
     private var isLastPage: Bool = false
     
-    init(authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler(), cartManager: CartManagerProtocol = CartManager()) {
+    init(authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler(), cartManager: CartManagerProtocol = CartManager(), favoritesManager: FavoritesManagerProtocol = FAvoritesManager()) {
         self.authenticatedRequestHandler = authenticatedRequestHandler
         self.cartManager = cartManager
+        self.favoritesManager = favoritesManager
     }
     
     func fetchProducts(queryText: String?, category: String?, subCategory: String?, page: Int = 1, pageSize: Int = 5) async {
@@ -103,6 +105,23 @@ final class ProductsViewModel: ObservableObject {
             print(error.localizedDescription)
         }
     }
+    
+    func addToFavorites(with id: String) async {
+        do {
+            try await favoritesManager.addToFavorites(with: id)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func deleteFromFavorites(with id: String) async {
+        do {
+            try await favoritesManager.deleteFromFavorites(with: id)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     
     @MainActor
     private func handleError(_ error: ProductFetchError) {

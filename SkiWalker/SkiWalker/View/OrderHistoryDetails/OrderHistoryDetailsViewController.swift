@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OrderHistoryDetailsViewController: UIViewController {
+final class OrderHistoryDetailsViewController: UIViewController {
     let orderId: String = ""
     var order: Order?
     private let navigateBackButton: UIButton = {
