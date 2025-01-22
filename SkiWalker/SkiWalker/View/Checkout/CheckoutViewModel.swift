@@ -16,6 +16,8 @@ final class CheckoutViewModel: ObservableObject {
     @Published var cartItems: [CartItem] = []
     @Published var singleProduct: CartProduct?
     @Published var selectedAddress: Address?
+    @Published var selectedPaymentMethod: CreditCard?
+    @Published var selectedDate: Date = Date()
     
     var deliveryDates: [Date] {
         let calendar = Calendar.current
@@ -104,6 +106,9 @@ final class CheckoutViewModel: ObservableObject {
             
             await MainActor.run {
                 paymentMethods = creditCards
+                if !creditCards.isEmpty {
+                    selectedPaymentMethod = creditCards[0]
+                }
             }
         } catch {
             print(error.localizedDescription)
@@ -124,5 +129,16 @@ final class CheckoutViewModel: ObservableObject {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM"
         return formatter.string(from: date)
+    }
+    
+    func makePayment() {
+        guard let selectedAddress = selectedAddress, let selectedPaymentMethod = selectedPaymentMethod else {
+            return
+        }
+        
+        print("address: \(selectedAddress)")
+        print("delviery date: \(selectedDate)")
+        print("payment method: \(selectedPaymentMethod)")
+        print("items: \(cartItems)")
     }
 }

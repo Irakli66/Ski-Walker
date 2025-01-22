@@ -66,9 +66,6 @@
         }
       }
     },
-    "4567 **** **** 657" : {
-
-    },
     "Add" : {
       "localizations" : {
         "ka" : {
@@ -80,6 +77,9 @@
       }
     },
     "Add new address" : {
+
+    },
+    "Add new payment method" : {
 
     },
     "Add one here" : {
@@ -278,7 +278,7 @@
         }
       }
     },
-    "Credit Cart" : {
+    "Credit Card" : {
 
     },
     "Customer" : {
@@ -676,9 +676,6 @@
     "Pay" : {
 
     },
-    "Payment Method" : {
-
-    },
     "Payment Methods" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -787,6 +784,9 @@
       }
     },
     "Select Address" : {
+
+    },
+    "Select payment method" : {
 
     },
     "Seller:" : {
@@ -938,6 +938,9 @@
       }
     },
     "You don't have any saved addresses." : {
+
+    },
+    "You don't have any saved cards." : {
 
     },
     "ქართული" : {

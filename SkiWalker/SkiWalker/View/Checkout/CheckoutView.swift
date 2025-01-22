@@ -10,7 +10,6 @@ import SwiftUI
 struct CheckoutView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var checkoutViewModel = CheckoutViewModel()
-    @State private var selectedDate: Date = Date()
     let productId: String?
     let quantity: Int?
     
@@ -63,7 +62,7 @@ struct CheckoutView: View {
                 ForEach(checkoutViewModel.deliveryDates, id: \.self) { date in
                     VStack {
                         Text(checkoutViewModel.formatDateToDayAndMonth(date))
-                            .foregroundStyle(date == selectedDate ? Color.customWhite : Color.customPurple)
+                            .foregroundStyle(date == checkoutViewModel.selectedDate ? Color.customWhite : Color.customPurple)
                             .font(.system(size: 13, weight: .regular))
                         Text("FREE")
                             .foregroundStyle(Color.green)
@@ -71,10 +70,10 @@ struct CheckoutView: View {
                     }
                     .padding(.vertical, 5)
                     .padding(.horizontal, 15)
-                    .background(date == selectedDate ? Color.customPurple : Color.customWhite)
+                    .background(date == checkoutViewModel.selectedDate ? Color.customPurple : Color.customWhite)
                     .clipShape(RoundedRectangle(cornerRadius: 5))
                     .onTapGesture {
-                        selectedDate = date
+                        checkoutViewModel.selectedDate = date
                     }
                 }
                 Spacer()
@@ -120,7 +119,7 @@ struct CheckoutView: View {
                     .font(.system(size: 14, weight: .regular))
             }
             Button(action: {
-                print(selectedDate)
+                checkoutViewModel.makePayment()
             }) {
                 Text("Pay")
                     .frame(maxWidth: .infinity)
