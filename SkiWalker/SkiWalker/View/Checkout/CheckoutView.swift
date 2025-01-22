@@ -16,60 +16,43 @@ struct CheckoutView: View {
     
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 30) {
-            ZStack {
-                HStack {
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Image(systemName: "chevron.backward")
-                            .imageScale(.large)
-                            .foregroundColor(.primary)
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 30) {
+                ZStack {
+                    HStack {
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Image(systemName: "chevron.backward")
+                                .imageScale(.large)
+                                .foregroundColor(.primary)
+                        }
+                        Spacer()
                     }
-                    Spacer()
+                    
+                    Text("Checkout")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(Color.customPurple)
                 }
-                
-                Text("Checkout")
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(Color.customPurple)
-            }
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 30) {
-                    deliveryAddressSection
-                    deliveryDateSection
-                    Divider()
-                    productsSection
-                    paymentSection
-                    Spacer()
-                    orderDetailsSection
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 30) {
+                        DeliveryAddressView()
+                        deliveryDateSection
+                        Divider()
+                        productsSection
+                        OrderPaymentsView()
+                        Spacer()
+                        orderDetailsSection
+                    }
                 }
             }
-        }
-        .padding(.horizontal)
-        .background(Color.customBackground)
-        .onAppear() {
-            getCheckoutData()
-        }
-    }
-    
-    private var deliveryAddressSection: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("Delivery Details")
-                .font(.system(size: 16, weight: .bold))
-            HStack(alignment: .center) {
-                Image(systemName: "mappin.circle.fill")
-                    .foregroundStyle(Color.customPurple)
-                    .font(.system(size: 28))
-                VStack(alignment: .leading) {
-                    Text("John Doe")
-                        .font(.system(size: 14, weight: .bold))
-                    Text("25 John Doe, Tbilis, Georgia")
-                        .font(.system(size: 13, weight: .regular))
-                }
-                Spacer()
+            .padding(.horizontal)
+            .background(Color.customBackground)
+            .onAppear() {
+                getCheckoutData()
             }
+            .environmentObject(checkoutViewModel)
         }
-        .frame(maxWidth: .infinity)
     }
     
     private var deliveryDateSection: some View {
@@ -108,26 +91,6 @@ struct CheckoutView: View {
                 }
             }
         }
-    }
-    
-    private var paymentSection: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("Payment Method")
-                .font(.system(size: 16, weight: .bold))
-            HStack(alignment: .center) {
-                Image(systemName: "creditcard")
-                    .foregroundStyle(Color.customPurple)
-                    .font(.system(size: 24))
-                VStack(alignment: .leading) {
-                    Text("Credit Cart")
-                        .font(.system(size: 13, weight: .regular))
-                    Text("4567 **** **** 657")
-                        .font(.system(size: 13, weight: .regular))
-                }
-                Spacer()
-            }
-        }
-        .frame(maxWidth: .infinity)
     }
     
     private var orderDetailsSection: some View {

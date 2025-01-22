@@ -15,6 +15,7 @@ final class CheckoutViewModel: ObservableObject {
     @Published var paymentMethods: [CreditCard] = []
     @Published var cartItems: [CartItem] = []
     @Published var singleProduct: CartProduct?
+    @Published var selectedAddress: Address?
     
     var deliveryDates: [Date] {
         let calendar = Calendar.current
@@ -76,6 +77,9 @@ final class CheckoutViewModel: ObservableObject {
             
             await MainActor.run {
                 addresses = addressesResponse
+                if !addressesResponse.isEmpty {
+                    selectedAddress = addressesResponse[0]
+                }
             }
         } catch {
             print(error.localizedDescription)
