@@ -206,7 +206,19 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate, CartTa
     func didTapFavorite(cell: CartTableViewCell) {
         guard let indexPath = cartTableView.indexPath(for: cell) else { return }
         let currentItem = cartViewModel.getCartItem(at: indexPath.row)
-        print(currentItem)
+        
+        Task {
+            if currentItem.product.favorite {
+                await cartViewModel.removeFromFavorites(with: currentItem.product.id)
+            } else {
+                await cartViewModel.addToFavorites(with: currentItem.product.id)
+            }
+            await cartViewModel.fetchCart()
+            DispatchQueue.main.async { [weak self] in
+                self?.cartTableView.reloadRows(at: [indexPath], with: .none)
+            }
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
