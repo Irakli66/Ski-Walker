@@ -24,6 +24,16 @@
         }
       }
     },
+    "%@, %@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@, %3$@"
+          }
+        }
+      }
+    },
     "%@%%" : {
 
     },
@@ -66,8 +76,45 @@
         }
       }
     },
+    "Add new address" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაამატე ახალი მისამართი"
+          }
+        }
+      }
+    },
+    "Add new payment method" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაამატე ახალი ბარათი"
+          }
+        }
+      }
+    },
+    "Add one here" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაამატე აქ"
+          }
+        }
+      }
+    },
     "Add to Cart" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კალათაში დამატება"
+          }
+        }
+      }
     },
     "Addresses" : {
       "extractionState" : "manual",
@@ -101,7 +148,14 @@
       }
     },
     "Best Price Guarantee" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საუკეთესო ფასი"
+          }
+        }
+      }
     },
     "Boots" : {
       "extractionState" : "manual",
@@ -115,7 +169,14 @@
       }
     },
     "Buy Now" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იყიდე ახლავე"
+          }
+        }
+      }
     },
     "Cancel" : {
       "localizations" : {
@@ -164,6 +225,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შეამოწმე კოდი მეილზე"
+          }
+        }
+      }
+    },
+    "Checkout" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყიდვის გაგრძელება"
           }
         }
       }
@@ -256,6 +327,16 @@
         }
       }
     },
+    "Credit Card" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბარათი"
+          }
+        }
+      }
+    },
     "Customer" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -283,6 +364,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "თარიღი:"
+          }
+        }
+      }
+    },
+    "Delivery Details" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიტანის დეტალები"
+          }
+        }
+      }
+    },
+    "Delivery price" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიტანის ფასი"
           }
         }
       }
@@ -450,6 +551,16 @@
         }
       }
     },
+    "FREE" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უფასო"
+          }
+        }
+      }
+    },
     "Full Name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -578,7 +689,14 @@
       }
     },
     "No products found" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედეგი ვერ მოიძებნა"
+          }
+        }
+      }
     },
     "Nothing to show" : {
       "localizations" : {
@@ -590,6 +708,16 @@
         }
       }
     },
+    "Order" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეკვეთა"
+          }
+        }
+      }
+    },
     "Order History" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -597,6 +725,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შეკვეთების ისტორია"
+          }
+        }
+      }
+    },
+    "Order total" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჯამური ღირებულება"
           }
         }
       }
@@ -633,6 +771,16 @@
         }
       }
     },
+    "Pay" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადახდა"
+          }
+        }
+      }
+    },
     "Payment Methods" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -640,6 +788,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "გადახდის მეთოდები"
+          }
+        }
+      }
+    },
+    "Pick delivery date:" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე მიტანის თარიღი:"
           }
         }
       }
@@ -655,8 +813,25 @@
         }
       }
     },
+    "Product (%@)" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროდუქტი(%@)"
+          }
+        }
+      }
+    },
     "Product Description:" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროდუქტის აღწერა"
+          }
+        }
+      }
     },
     "Profile" : {
       "localizations" : {
@@ -669,7 +844,14 @@
       }
     },
     "Quantity" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რაოდენობა"
+          }
+        }
+      }
     },
     "Recover Password" : {
       "extractionState" : "manual",
@@ -734,8 +916,35 @@
         }
       }
     },
+    "Select Address" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე მისამართი"
+          }
+        }
+      }
+    },
+    "Select payment method" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე ბარათი"
+          }
+        }
+      }
+    },
     "Seller:" : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამყიდველი:"
+          }
+        }
+      }
     },
     "Send" : {
       "extractionState" : "manual",
@@ -881,6 +1090,19 @@
           }
         }
       }
+    },
+    "You don't have any saved addresses." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არ გაქვს დამატებული მისამართი"
+          }
+        }
+      }
+    },
+    "You don't have any saved cards." : {
+
     },
     "ქართული" : {
 

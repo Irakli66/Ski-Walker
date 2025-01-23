@@ -15,27 +15,30 @@ struct ProductDetailsView: View {
     @State private var quantity: Int = 1
     
     var body: some View {
-        VStack {
-            productDetailsHeader
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 20) {
-                    productImageCarousel
-                    productDetails
-                    productQuantity
-                    productActionButtons
-                    productDescription
+        NavigationStack {
+            VStack {
+                productDetailsHeader
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 20) {
+                        productImageCarousel
+                        productDetails
+                        productQuantity
+                        productActionButtons
+                        productDescription
+                    }
                 }
             }
-        }
-        .padding(.horizontal)
-        .background(Color.customBackground)
-        .navigationBarBackButtonHidden(true)
-        .onAppear() {
-            Task {
-                try await productViewModel.fetchProduct(with: productId)
+            .padding(.horizontal)
+            .background(Color.customBackground)
+            .navigationBarBackButtonHidden(true)
+            .onAppear() {
+                Task {
+                    try await productViewModel.fetchProduct(with: productId)
+                }
             }
+            .toast(isPresented: $showToast, message: "Added to cart successfully!", type: .success)
         }
-        .toast(isPresented: $showToast, message: "Added to cart successfully!", type: .success)
+        .navigationBarBackButtonHidden(true)
     }
     
     @ViewBuilder
@@ -56,7 +59,7 @@ struct ProductDetailsView: View {
                     } else {
                         await productViewModel.addToFavorites(with: productId)
                     }
-                   try await productViewModel.fetchProduct(with: productId)
+                    try await productViewModel.fetchProduct(with: productId)
                 }
             }) {
                 Image(systemName: productViewModel.product?.favorite ?? false ?  "heart.fill" : "heart")
@@ -121,17 +124,15 @@ struct ProductDetailsView: View {
     }
     
     private var productActionButtons: some View {
-        VStack(spacing: 10) {
-            Button(action: {
-                print("buy now func")
-            }) {
+        VStack(spacing: 15) {
+            NavigationLink(destination: CheckoutView(productId: productId, quantity: quantity).navigationBarBackButtonHidden(), label: {
                 Text("Buy Now")
                     .buttonModifier()
-            }
+            })
             
             Button(action: {
                 Task {
-                   try await productViewModel.addProductToCart(productId: productId, count: quantity)
+                    try await productViewModel.addProductToCart(productId: productId, count: quantity)
                     showToast = true
                 }
             }) {
@@ -148,7 +149,7 @@ struct ProductDetailsView: View {
         VStack(alignment: .leading, spacing: 20) {
             Text("Product Description:")
                 .font(.system(size: 18, weight: .semibold))
-
+            
             Text(productViewModel.product?.description ?? "")
                 .font(.system(size: 14, weight: .regular))
                 .multilineTextAlignment(.leading)

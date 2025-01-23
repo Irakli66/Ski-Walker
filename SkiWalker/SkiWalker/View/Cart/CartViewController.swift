@@ -114,7 +114,12 @@ final class CartViewController: UIViewController {
     }
     
     private func checkout() {
-        print("checkout")
+        let checkoutView = CheckoutView(productId: nil, quantity: nil)
+        
+        let hostingController = UIHostingController(rootView: checkoutView)
+        
+        navigationController?.pushViewController(hostingController, animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     private func updateUI() {
