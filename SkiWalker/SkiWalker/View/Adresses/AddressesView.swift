@@ -49,7 +49,7 @@ struct AddressesView: View {
         HStack {
             ReusableBackButton()
             Spacer()
-            Text("Payment Methods")
+            Text("Addresses")
                 .font(.system(size: 24, weight: .bold))
                 .foregroundStyle(.customPurple)
             Spacer()
