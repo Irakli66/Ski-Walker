@@ -38,6 +38,7 @@ struct ProductDetailsView: View {
             }
             .toast(isPresented: $showToast, message: "Added to cart successfully!", type: .success)
         }
+        .navigationBarBackButtonHidden(true)
     }
     
     @ViewBuilder
