@@ -15,7 +15,7 @@ struct ProductsView: View {
     let searchQuery: String
     let category: String
     let subCategory: String
-
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -32,24 +32,19 @@ struct ProductsView: View {
                         .frame(maxWidth: .infinity)
                     Spacer()
                 } else {
-                    productsListSection
+                    ProductsList(searchQuery: searchQuery, category: category, subCategory: subCategory)
                 }
             }
             .background(Color.customBackground)
             .onAppear {
-                if !isInitialFetchDone {
-                    Task {
-                        await productsViewModel.fetchProducts(queryText: searchQuery, category: category, subCategory: subCategory)
-                        isLoading = false
-                        isInitialFetchDone = true
-                    }
-                }
+                fetchInitialProducts()
             }
             .navigationBarBackButtonHidden(true)
-            .toast(isPresented: $showToast, message: "Added to cart successfully!", type: .success)
+            .toast(isPresented: $productsViewModel.showToast, message: "Added to cart successfully!", type: .success)
+            .environmentObject(productsViewModel)
         }
     }
-
+    
     private var productsViewHeader: some View {
         ZStack {
             HStack {
@@ -62,9 +57,13 @@ struct ProductsView: View {
                 }
                 Spacer()
             }
-
+            
             if !searchQuery.isEmpty {
                 Text(searchQuery)
+                    .font(.system(size: 20, weight: .medium))
+                    .foregroundColor(Color.customBlack)
+            } else if searchQuery.isEmpty, subCategory.isEmpty, category.isEmpty {
+                Text("Everything")
                     .font(.system(size: 20, weight: .medium))
                     .foregroundColor(Color.customBlack)
             } else if subCategory.isEmpty {
@@ -79,90 +78,13 @@ struct ProductsView: View {
         }
         .padding()
     }
-
-    private var productsListSection: some View {
-        List(productsViewModel.products, id: \.self.id) { product in
-            NavigationLink(destination: ProductDetailsView(productId: product.id)) {
-                HStack(alignment: .top, spacing: 15) {
-                    ReusableAsyncImageView(url: product.photos[0].url)
-
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(product.name)
-                            .font(.headline)
-                            .foregroundColor(Color.customBlack)
-
-                        Text("\(product.price.formatted(.currency(code: "GEL")))")
-                            .font(.subheadline)
-                            .foregroundColor(Color.customGrey)
-
-                        HStack {
-                            Spacer()
-
-                            Button(action: {
-                                Task {
-                                    if product.favorite {
-                                        await productsViewModel.deleteFromFavorites(with: product.id)
-                                    } else {
-                                        await productsViewModel.addToFavorites(with: product.id)
-                                    }
-                                }
-                            }) {
-                                Image(systemName: product.favorite ? "heart.fill" : "heart")
-                                    .resizable()
-                                    .foregroundStyle(Color.customGrey)
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                            }
-                            .buttonStyle(PlainButtonStyle())
-
-                            Button(action: {
-                                addProductToCart(with: product.id)
-                            }) {
-                                HStack(spacing: 5) {
-                                    Image("cart")
-                                        .resizable()
-                                        .frame(width: 16, height: 16)
-                                    Text("Add")
-                                        .font(.subheadline)
-                                        .fontWeight(.semibold)
-                                }
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 20)
-                                .background(Color.customPurple)
-                                .foregroundColor(Color.customWhite)
-                                .cornerRadius(8)
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                        }
-                    }
-                }
-                .background(Color.clear)
-                .cornerRadius(12)
-                .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
-                .contentShape(Rectangle())
-                .onAppear {
-                    if product == productsViewModel.products.last && !productsViewModel.isFetchingMore && !productsViewModel.isLastPage {
-                        Task {
-                            await productsViewModel.fetchNextPage(queryText: searchQuery, category: category, subCategory: subCategory)
-                        }
-                    }
-                }
-            }
-            .buttonStyle(PlainButtonStyle())
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.clear)
-        }
-        .listStyle(PlainListStyle())
-        .scrollContentBackground(.hidden)
-    }
-
-    private func addProductToCart(with id: String) {
-        Task {
-            do {
-                try await productsViewModel.addToCart(productId: id)
-                showToast = true
-            } catch {
-                AlertManager.showAlert(title: "Error", message: error.localizedDescription)
+    
+    private func fetchInitialProducts() {
+        if !isInitialFetchDone {
+            Task {
+                await productsViewModel.fetchProducts(queryText: searchQuery, category: category, subCategory: subCategory)
+                isLoading = false
+                isInitialFetchDone = true
             }
         }
     }

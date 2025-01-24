@@ -13,6 +13,7 @@ final class ProductsViewModel: ObservableObject {
     @Published var products: [Product] = []
     @Published var errorMessage: String?
     @Published var isFetchingMore: Bool = false
+    @Published var showToast: Bool = false
     
     private var currentPage: Int = 1
     @Published var isLastPage: Bool = false
@@ -101,7 +102,13 @@ final class ProductsViewModel: ObservableObject {
     func addToCart(productId: String, count: Int = 1) async throws {
         do {
             try await cartManager.addProductToCart(productId: productId, count: count)
+            await MainActor.run {
+                showToast = true
+            }
         } catch {
+            await MainActor.run {
+                showToast = false
+            }
             print(error.localizedDescription)
         }
     }
@@ -111,7 +118,7 @@ final class ProductsViewModel: ObservableObject {
             products[index].favorite = isFavorite
         }
     }
-
+    
     func addToFavorites(with id: String) async {
         do {
             try await favoritesManager.addToFavorites(with: id)
@@ -122,7 +129,7 @@ final class ProductsViewModel: ObservableObject {
             print(error.localizedDescription)
         }
     }
-
+    
     func deleteFromFavorites(with id: String) async {
         do {
             try await favoritesManager.deleteFromFavorites(with: id)

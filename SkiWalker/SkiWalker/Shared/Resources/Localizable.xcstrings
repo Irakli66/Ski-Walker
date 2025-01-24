@@ -529,6 +529,16 @@
         }
       }
     },
+    "Everything" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველაფერი"
+          }
+        }
+      }
+    },
     "First Name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1102,7 +1112,14 @@
       }
     },
     "You don't have any saved cards." : {
-
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არ გაქვს დამატებული ბარათები"
+          }
+        }
+      }
     },
     "ქართული" : {
 
