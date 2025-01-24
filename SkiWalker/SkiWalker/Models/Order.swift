@@ -8,16 +8,35 @@ import Foundation
 
 struct Order: Codable {
     let id: String
-    let date: Date
     let status: OrderStatus
-    let deliveryAddress: String
-    let totalPrice: Double
-    let products: [Product]
-    let payment: String
+    let createdAt: String
+    let products: [CartProduct]
+    let totalPrice: Int
+    let lastUpdatedAt: String
+    let shippingAddress: Address
+    let paymentMethodId: String?
 }
 
-enum OrderStatus: String, Codable {
-    case inProgress = "In Progress"
-    case delivered = "Delivered"
-    case rejected = "Rejected"
+enum OrderStatus: Int, Codable {
+    case inProgress = 0
+    case shipped = 1
+    case delivered = 2
+    case cancelled = 3
+
+    var displayName: String {
+        switch self {
+        case .inProgress:
+            return "In Progress"
+        case .shipped:
+            return "Shipped"
+        case .delivered:
+            return "Delivered"
+        case .cancelled:
+            return "Cancelled"
+        }
+    }
 }
+//0 in progress
+//1 shipped
+//2 delivered
+//3 cancelled
