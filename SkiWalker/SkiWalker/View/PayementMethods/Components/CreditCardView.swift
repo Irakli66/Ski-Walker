@@ -64,7 +64,7 @@ struct CreditCardView: View {
     private func deleteCard() {
         Task {
             do {
-                try await viewModel.removeCreditCard(with: card.id ?? "")
+                try await viewModel.removeCreditCard(with: card.id)
                 try await viewModel.fetchPaymentMethods()
             } catch {
                 print(error.localizedDescription)
