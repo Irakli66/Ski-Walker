@@ -10,12 +10,12 @@ struct ProductsView: View {
     @StateObject private var productsViewModel = ProductsViewModel()
     @Environment(\.presentationMode) var presentationMode
     @State private var showToast = false
+    @State private var isInitialFetchDone = false
+    @State private var isLoading: Bool = true
     let searchQuery: String
     let category: String
     let subCategory: String
-    
-    @State private var isLoading: Bool = true
-    
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -37,17 +37,19 @@ struct ProductsView: View {
             }
             .background(Color.customBackground)
             .onAppear {
-                Task {
-                    await productsViewModel.fetchProducts(queryText: searchQuery, category: category, subCategory: subCategory)
-                    isLoading = false
-                    
+                if !isInitialFetchDone {
+                    Task {
+                        await productsViewModel.fetchProducts(queryText: searchQuery, category: category, subCategory: subCategory)
+                        isLoading = false
+                        isInitialFetchDone = true
+                    }
                 }
             }
             .navigationBarBackButtonHidden(true)
             .toast(isPresented: $showToast, message: "Added to cart successfully!", type: .success)
         }
     }
-    
+
     private var productsViewHeader: some View {
         ZStack {
             HStack {
@@ -60,7 +62,7 @@ struct ProductsView: View {
                 }
                 Spacer()
             }
-            
+
             if !searchQuery.isEmpty {
                 Text(searchQuery)
                     .font(.system(size: 20, weight: .medium))
@@ -77,25 +79,25 @@ struct ProductsView: View {
         }
         .padding()
     }
-    
+
     private var productsListSection: some View {
         List(productsViewModel.products, id: \.self.id) { product in
             NavigationLink(destination: ProductDetailsView(productId: product.id)) {
                 HStack(alignment: .top, spacing: 15) {
                     ReusableAsyncImageView(url: product.photos[0].url)
-                    
+
                     VStack(alignment: .leading, spacing: 8) {
                         Text(product.name)
                             .font(.headline)
                             .foregroundColor(Color.customBlack)
-                        
+
                         Text("\(product.price.formatted(.currency(code: "GEL")))")
                             .font(.subheadline)
                             .foregroundColor(Color.customGrey)
-                        
+
                         HStack {
                             Spacer()
-                            
+
                             Button(action: {
                                 Task {
                                     if product.favorite {
@@ -103,20 +105,16 @@ struct ProductsView: View {
                                     } else {
                                         await productsViewModel.addToFavorites(with: product.id)
                                     }
-                                    
-                                    await productsViewModel.fetchProducts(queryText: searchQuery, category: category, subCategory: subCategory)
-                                    
-                                    isLoading = false
                                 }
                             }) {
-                                Image(systemName: product.favorite ?  "heart.fill" : "heart")
+                                Image(systemName: product.favorite ? "heart.fill" : "heart")
                                     .resizable()
                                     .foregroundStyle(Color.customGrey)
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
                             }
                             .buttonStyle(PlainButtonStyle())
-                            
+
                             Button(action: {
                                 addProductToCart(with: product.id)
                             }) {
@@ -143,7 +141,7 @@ struct ProductsView: View {
                 .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
                 .contentShape(Rectangle())
                 .onAppear {
-                    if product == productsViewModel.products.last {
+                    if product == productsViewModel.products.last && !productsViewModel.isFetchingMore && !productsViewModel.isLastPage {
                         Task {
                             await productsViewModel.fetchNextPage(queryText: searchQuery, category: category, subCategory: subCategory)
                         }
@@ -157,7 +155,7 @@ struct ProductsView: View {
         .listStyle(PlainListStyle())
         .scrollContentBackground(.hidden)
     }
-    
+
     private func addProductToCart(with id: String) {
         Task {
             do {

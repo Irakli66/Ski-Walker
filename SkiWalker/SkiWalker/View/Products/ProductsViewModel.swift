@@ -15,7 +15,7 @@ final class ProductsViewModel: ObservableObject {
     @Published var isFetchingMore: Bool = false
     
     private var currentPage: Int = 1
-    private var isLastPage: Bool = false
+    @Published var isLastPage: Bool = false
     
     init(authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler(), cartManager: CartManagerProtocol = CartManager(), favoritesManager: FavoritesManagerProtocol = FAvoritesManager()) {
         self.authenticatedRequestHandler = authenticatedRequestHandler
@@ -23,7 +23,7 @@ final class ProductsViewModel: ObservableObject {
         self.favoritesManager = favoritesManager
     }
     
-    func fetchProducts(queryText: String?, category: String?, subCategory: String?, page: Int = 1, pageSize: Int = 5) async {
+    func fetchProducts(queryText: String?, category: String?, subCategory: String?, page: Int = 1, pageSize: Int = 10) async {
         guard !isFetchingMore else { return }
         
         let baseURL = "https://api.gargar.dev:8088/Product"
@@ -106,17 +106,29 @@ final class ProductsViewModel: ObservableObject {
         }
     }
     
+    func updateFavoriteStatus(for productId: String, isFavorite: Bool) {
+        if let index = products.firstIndex(where: { $0.id == productId }) {
+            products[index].favorite = isFavorite
+        }
+    }
+
     func addToFavorites(with id: String) async {
         do {
             try await favoritesManager.addToFavorites(with: id)
+            await MainActor.run {
+                updateFavoriteStatus(for: id, isFavorite: true)
+            }
         } catch {
             print(error.localizedDescription)
         }
     }
-    
+
     func deleteFromFavorites(with id: String) async {
         do {
             try await favoritesManager.deleteFromFavorites(with: id)
+            await MainActor.run {
+                updateFavoriteStatus(for: id, isFavorite: false)
+            }
         } catch {
             print(error.localizedDescription)
         }

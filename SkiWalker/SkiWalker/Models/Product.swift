@@ -29,7 +29,7 @@ struct Product: Codable, Equatable {
     let subcategory: String?
     let vendorId: String
     let photos: [Photo]
-    let favorite: Bool
+    var favorite: Bool
 }
 
 struct Photo: Codable, Equatable {
