@@ -1,3 +1,11 @@
+//
+//  DateFormatterHelper.swift
+//  SkiWalker
+//
+//  Created by irakli kharshiladze on 26.01.25.
+//
+
+
 import Foundation
 
 struct DateFormatterHelper {
@@ -6,7 +14,7 @@ struct DateFormatterHelper {
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
         
         guard let date = formatter.date(from: isoDate) else {
-            return isoDate // Return the original string if parsing fails
+            return isoDate
         }
         
         formatter.dateFormat = "dd MMM yyyy"
