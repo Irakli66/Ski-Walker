@@ -149,10 +149,19 @@ struct CheckoutView: View {
     
     private func makePayment() {
         Task {
-            if let productId = productId, let quantity = quantity {
-                await checkoutViewModel.buyNowPayment(productId: productId, quantity: quantity)
-            } else {
-                await checkoutViewModel.cartPayment()
+            do {
+                if let productId = productId, let quantity = quantity {
+                    try await checkoutViewModel.buyNowPayment(productId: productId, quantity: quantity)
+                } else {
+                    try await checkoutViewModel.cartPayment()
+                }
+                AlertManager.showAlertWithActions(title: "Payment Succesful", message: "Navigate back", actions: [UIAlertAction(title: "OK", style: .default) { _ in
+                    presentationMode.wrappedValue.dismiss()
+                }])
+            } catch {
+                print(error.localizedDescription)
+                
+                AlertManager.showAlert(title: "Payment Failed", message: "check you credit card")
             }
         }
     }

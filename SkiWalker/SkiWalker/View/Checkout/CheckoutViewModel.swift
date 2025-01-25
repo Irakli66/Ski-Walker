@@ -131,7 +131,7 @@ final class CheckoutViewModel: ObservableObject {
         return formatter.string(from: date)
     }
     
-    func cartPayment() async {
+    func cartPayment() async throws {
         guard let address = selectedAddress, let paymentMethod = selectedPaymentMethod, !cartItems.isEmpty else {
             return
         }
@@ -160,7 +160,7 @@ final class CheckoutViewModel: ObservableObject {
         }
     }
     
-    func buyNowPayment(productId: String, quantity: Int) async {
+    func buyNowPayment(productId: String, quantity: Int) async throws {
         guard let address = selectedAddress, let paymentMethod = selectedPaymentMethod, !cartItems.isEmpty else {
             return
         }
