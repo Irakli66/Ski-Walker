@@ -36,7 +36,3 @@ enum OrderStatus: Int, Codable {
         }
     }
 }
-//0 in progress
-//1 shipped
-//2 delivered
-//3 cancelled

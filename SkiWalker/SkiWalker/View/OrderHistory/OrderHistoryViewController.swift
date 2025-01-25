@@ -81,6 +81,10 @@ final class OrderHistoryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        Task {
+            await orderHistoryViewModel.fetchOrders()
+            orderHistoryTableView.reloadData()
+        }
     }
 }
 
