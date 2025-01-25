@@ -13,15 +13,7 @@ struct OrderHistoryCellView: View {
         HStack(spacing: 12) {
             ZStack(alignment: .center) {
                 ReusableAsyncImageView(url: order.products[0].photos[0].url)
-//                Image(order.products[0].photos[0].url)
-//                    .resizable()
-//                    .scaledToFill()
-//                    .frame(width: 100, height: 100)
-//                    .background(Color.gray.opacity(0.1))
-//                    .clipShape(RoundedRectangle(cornerRadius: 10))
-//                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
-//                    .clipped()
-                
+        
                 if order.products.count > 1 {
                     RoundedRectangle(cornerRadius: 10)
                         .fill(Color.black.opacity(0.4))
