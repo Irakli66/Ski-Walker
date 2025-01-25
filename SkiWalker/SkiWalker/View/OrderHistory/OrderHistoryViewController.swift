@@ -67,8 +67,8 @@ final class OrderHistoryViewController: UIViewController {
         view.addSubview(orderHistoryTableView)
         
         NSLayoutConstraint.activate([
-            orderHistoryTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            orderHistoryTableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            orderHistoryTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5),
+            orderHistoryTableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5),
             orderHistoryTableView.topAnchor.constraint(equalTo: navigateBackButton.bottomAnchor, constant: 30),
             orderHistoryTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])

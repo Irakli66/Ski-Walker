@@ -21,7 +21,7 @@ final class OrderHistoryViewModel {
             let response: [OrderResponse]? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
             
             if let response = response {
-                orders = response
+                orders = response.reversed()
             } else {
                 orders = []
             }
