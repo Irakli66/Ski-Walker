@@ -7,13 +7,13 @@
 import Foundation
 
 final class OrderHistoryViewModel {
-    private lazy var orders: [Order] = []
+    private lazy var orders: [OrderResponse] = []
     
     func getOrderCount() -> Int {
         orders.count
     }
     
-    func getOrderAt(index: Int) -> Order {
+    func getOrderAt(index: Int) -> OrderResponse {
         orders[index]
     }
 }

@@ -9,7 +9,7 @@ import UIKit
 
 final class OrderHistoryDetailsViewController: UIViewController {
     let orderId: String = ""
-    var order: Order?
+    var order: OrderResponse?
     private let navigateBackButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -101,10 +101,10 @@ final class OrderHistoryDetailsViewController: UIViewController {
         view.addSubview(orderDetailsContainerView)
         orderDetailsContainerView.addSubview(orderDetailsStackView)
         
-        let deliveryAddress = LabelAndValueView(labelText: "Delivery Address", valueText: order.deliveryAddress)
+        let deliveryAddress = LabelAndValueView(labelText: "Delivery Address", valueText: order.shippingAddress.street)
         let orderStatus = LabelAndValueView(labelText: "Status", valueText: "\(order.status)")
         let orderId = LabelAndValueView(labelText: "Order ID", valueText: order.id)
-        let orderDate = LabelAndValueView(labelText: "Order Date", valueText: "\(order.date)")
+        let orderDate = LabelAndValueView(labelText: "Order Date", valueText: "\(order.lastUpdatedAt)")
         
         [deliveryAddress, orderStatus, orderId, orderDate].forEach { orderDetailsStackView.addArrangedSubview($0) }
         
@@ -139,7 +139,7 @@ final class OrderHistoryDetailsViewController: UIViewController {
         
         guard let order else { return }
         let productCount = LabelAndValueView(labelText: "Product (\(order.products.count))", valueText: "\(order.totalPrice) ₾", isVertical: false)
-        let paymentMethod = LabelAndValueView(labelText: "Method \(order.products.count)", valueText: order.payment, isVertical: false)
+        let paymentMethod = LabelAndValueView(labelText: "Method \(order.products.count)", valueText: order.paymentMethodId ?? "", isVertical: false)
         let orderTotal = LabelAndValueView(labelText: "Order Total", valueText: "\(order.totalPrice)", isVertical: false)
         
         [productCount, paymentMethod, orderTotal].forEach { orderDescriptionStackView.addArrangedSubview($0) }

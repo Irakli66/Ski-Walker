@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct OrderHistoryCellView: View {
-    let order: Order
+    let order: OrderResponse
     
     var body: some View {
         HStack(spacing: 12) {
@@ -52,7 +52,7 @@ struct OrderHistoryCellView: View {
                     Text("Date:")
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                    Text(order.date.formatted(.dateTime.day().month(.abbreviated).year()))
+                    Text(order.createdAt)
                         .font(.subheadline)
                         .fontWeight(.medium)
                 }
@@ -63,7 +63,7 @@ struct OrderHistoryCellView: View {
                     Text("Status:")
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                    Text(order.status.rawValue)
+                    Text(order.status.displayName)
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .foregroundColor(order.status == .delivered ? .green : .orange)

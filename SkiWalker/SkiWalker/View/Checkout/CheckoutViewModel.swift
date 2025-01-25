@@ -131,14 +131,63 @@ final class CheckoutViewModel: ObservableObject {
         return formatter.string(from: date)
     }
     
-    func makePayment() {
-        guard let selectedAddress = selectedAddress, let selectedPaymentMethod = selectedPaymentMethod else {
+    func cartPayment() async throws {
+        guard let address = selectedAddress, let paymentMethod = selectedPaymentMethod, !cartItems.isEmpty else {
             return
         }
         
-        print("address: \(selectedAddress)")
-        print("delviery date: \(selectedDate)")
-        print("payment method: \(selectedPaymentMethod)")
-        print("items: \(cartItems)")
+        let url = "https://api.gargar.dev:8088/Order/Checkout/Cart"
+        
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        let formattedDate = dateFormatter.string(from: selectedDate)
+        
+        let requestBody: [String: String] = [
+            "date": formattedDate,
+            "shippingId": address.id,
+            "paymentId": paymentMethod.id,
+        ]
+        
+        let bodyData = try? JSONEncoder().encode(requestBody)
+        
+        do {
+            let _: OrderResponse? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .post, headers: nil, body: bodyData, decoder: JSONDecoder())
+            await MainActor.run {
+                cartItems = []
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func buyNowPayment(productId: String, quantity: Int) async throws {
+        guard let address = selectedAddress, let paymentMethod = selectedPaymentMethod, !cartItems.isEmpty else {
+            return
+        }
+        
+        let url = "https://api.gargar.dev:8088/Order/Checkout"
+        
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        let formattedDate = dateFormatter.string(from: selectedDate)
+        
+        let requestBody: [String: String] = [
+            "productId": productId,
+            "date": formattedDate,
+            "shippingId": address.id,
+            "paymentId": paymentMethod.id,
+            "quantity": "\(quantity)",
+        ]
+        
+        let bodyData = try? JSONEncoder().encode(requestBody)
+        
+        do {
+            let _: OrderResponse? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .post, headers: nil, body: bodyData, decoder: JSONDecoder())
+            await MainActor.run {
+                cartItems = []
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }

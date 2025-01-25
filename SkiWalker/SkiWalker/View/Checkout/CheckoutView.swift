@@ -119,7 +119,7 @@ struct CheckoutView: View {
                     .font(.system(size: 14, weight: .regular))
             }
             Button(action: {
-                checkoutViewModel.makePayment()
+                makePayment()
             }) {
                 Text("Pay")
                     .frame(maxWidth: .infinity)
@@ -144,6 +144,25 @@ struct CheckoutView: View {
             
             await checkoutViewModel.fetchAddresses()
             await checkoutViewModel.fetchPaymentMethods()
+        }
+    }
+    
+    private func makePayment() {
+        Task {
+            do {
+                if let productId = productId, let quantity = quantity {
+                    try await checkoutViewModel.buyNowPayment(productId: productId, quantity: quantity)
+                } else {
+                    try await checkoutViewModel.cartPayment()
+                }
+                AlertManager.showAlertWithActions(title: "Payment Succesful", message: "Navigate back", actions: [UIAlertAction(title: "OK", style: .default) { _ in
+                    presentationMode.wrappedValue.dismiss()
+                }])
+            } catch {
+                print(error.localizedDescription)
+                
+                AlertManager.showAlert(title: "Payment Failed", message: "check you credit card")
+            }
         }
     }
 }
