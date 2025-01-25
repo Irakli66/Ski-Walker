@@ -636,6 +636,16 @@
         }
       }
     },
+    "Last seen" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბოლოს ნანახი"
+          }
+        }
+      }
+    },
     "Loading products..." : {
       "localizations" : {
         "ka" : {
