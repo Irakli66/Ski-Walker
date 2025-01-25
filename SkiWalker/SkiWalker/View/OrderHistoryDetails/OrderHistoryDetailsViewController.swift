@@ -8,8 +8,14 @@
 import UIKit
 
 final class OrderHistoryDetailsViewController: UIViewController {
-    let orderId: String = ""
     var order: OrderResponse?
+    
+    private let headerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let navigateBackButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -26,6 +32,19 @@ final class OrderHistoryDetailsViewController: UIViewController {
         label.textAlignment = .center
         label.text = "My Orders"
         return label
+    }()
+    
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+    
+    private let contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     private let orderDetailsContainerView: UIView = {
@@ -69,49 +88,80 @@ final class OrderHistoryDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .customBackground
+        
+        setupHeaderView()
+        setupScrollView()
         setupUI()
     }
     
+    private func setupHeaderView() {
+        view.addSubview(headerView)
+        headerView.addSubview(navigateBackButton)
+        headerView.addSubview(pageTitleLabel)
+        
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            headerView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            
+            headerView.heightAnchor.constraint(equalToConstant: 60),
+            
+            navigateBackButton.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 20),
+            navigateBackButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            
+            pageTitleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            pageTitleLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+        ])
+        
+        navigateBackButton.addAction(UIAction(handler: { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }), for: .touchUpInside)
+    }
+    
+    private func setupScrollView() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            scrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            contentView.leftAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leftAnchor),
+            contentView.rightAnchor.constraint(equalTo: scrollView.contentLayoutGuide.rightAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            
+            contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+        ])
+    }
+    
     private func setupUI() {
-        setupNavigationButtonAndTitle()
         setupOrderDetails()
         setupOrderProductsTableView()
         setupOrderDescription()
     }
     
-    private func setupNavigationButtonAndTitle() {
-        view.addSubview(navigateBackButton)
-        view.addSubview(pageTitleLabel)
-        
-        NSLayoutConstraint.activate([
-            navigateBackButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            navigateBackButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            
-            pageTitleLabel.centerYAnchor.constraint(equalTo: navigateBackButton.centerYAnchor),
-            pageTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        ])
-        
-        navigateBackButton.addAction(UIAction(handler: { [weak self] action in
-            self?.navigationController?.popViewController(animated: true)
-        }), for: .touchUpInside)
-    }
-    
     private func setupOrderDetails() {
         guard let order else { return }
-        view.addSubview(orderDetailsContainerView)
+        
+        contentView.addSubview(orderDetailsContainerView)
         orderDetailsContainerView.addSubview(orderDetailsStackView)
         
         let deliveryAddress = LabelAndValueView(labelText: "Delivery Address", valueText: order.shippingAddress.street)
-        let orderStatus = LabelAndValueView(labelText: "Status", valueText: "\(order.status)")
-        let orderId = LabelAndValueView(labelText: "Order ID", valueText: order.id)
-        let orderDate = LabelAndValueView(labelText: "Order Date", valueText: "\(order.lastUpdatedAt)")
+        let orderStatus = LabelAndValueView(labelText: "Status", valueText: "\(order.status.displayName)")
+        let orderId = LabelAndValueView(labelText: "Order ID", valueText: String(order.id.prefix(6)))
+        let orderDate = LabelAndValueView(labelText: "Order Date", valueText: "\(DateFormatterHelper.formatDate(order.lastUpdatedAt))")
         
-        [deliveryAddress, orderStatus, orderId, orderDate].forEach { orderDetailsStackView.addArrangedSubview($0) }
+        [deliveryAddress, orderStatus, orderId, orderDate].forEach {
+            orderDetailsStackView.addArrangedSubview($0)
+        }
         
         NSLayoutConstraint.activate([
-            orderDetailsContainerView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            orderDetailsContainerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            orderDetailsContainerView.topAnchor.constraint(equalTo: navigateBackButton.bottomAnchor, constant: 20),
+            orderDetailsContainerView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
+            orderDetailsContainerView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
+            orderDetailsContainerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             
             orderDetailsStackView.topAnchor.constraint(equalTo: orderDetailsContainerView.topAnchor, constant: 10),
             orderDetailsStackView.bottomAnchor.constraint(equalTo: orderDetailsContainerView.bottomAnchor, constant: -10),
@@ -121,36 +171,44 @@ final class OrderHistoryDetailsViewController: UIViewController {
     }
     
     private func setupOrderProductsTableView() {
-        view.addSubview(orderProductsTableView)
+        contentView.addSubview(orderProductsTableView)
         
         NSLayoutConstraint.activate([
             orderProductsTableView.topAnchor.constraint(equalTo: orderDetailsContainerView.bottomAnchor, constant: 20),
-            orderProductsTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            orderProductsTableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            orderProductsTableView.heightAnchor.constraint(equalToConstant: 150)
+            orderProductsTableView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
+            orderProductsTableView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
+            orderProductsTableView.heightAnchor.constraint(equalToConstant: 350)
         ])
-        orderProductsTableView.dataSource = self
-        orderProductsTableView.register(OrderHistoryDetailsTableViewCell.self, forCellReuseIdentifier: OrderHistoryDetailsTableViewCell.identifier)
         
+        orderProductsTableView.showsVerticalScrollIndicator = false
+        orderProductsTableView.dataSource = self
+        orderProductsTableView.register(
+            OrderHistoryDetailsTableViewCell.self,
+            forCellReuseIdentifier: OrderHistoryDetailsTableViewCell.identifier
+        )
     }
     
     private func setupOrderDescription() {
-        view.addSubview(orderDescriptionStackView)
+        contentView.addSubview(orderDescriptionStackView)
         
         guard let order else { return }
-        let productCount = LabelAndValueView(labelText: "Product (\(order.products.count))", valueText: "\(order.totalPrice) ₾", isVertical: false)
-        let paymentMethod = LabelAndValueView(labelText: "Method \(order.products.count)", valueText: order.paymentMethodId, isVertical: false)
-        let orderTotal = LabelAndValueView(labelText: "Order Total", valueText: "\(order.totalPrice)", isVertical: false)
+        let productCount = LabelAndValueView(labelText: "Product (\(order.products.count))", valueText: "\(CurrencyFormatter.formatPriceToGEL(order.totalPrice))", isVertical: false)
         
-        [productCount, paymentMethod, orderTotal].forEach { orderDescriptionStackView.addArrangedSubview($0) }
+        let paymentMethod = LabelAndValueView(labelText: "Method", valueText: "Card", isVertical: false)
+        
+        let orderTotal = LabelAndValueView(labelText: "Order Total", valueText: "\(CurrencyFormatter.formatPriceToGEL(order.totalPrice))", isVertical: false)
+        
+        [productCount, paymentMethod, orderTotal].forEach {
+            orderDescriptionStackView.addArrangedSubview($0)
+        }
         
         NSLayoutConstraint.activate([
-            orderDescriptionStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            orderDescriptionStackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            orderDescriptionStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
+            orderDescriptionStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
             orderDescriptionStackView.topAnchor.constraint(equalTo: orderProductsTableView.bottomAnchor, constant: 20),
+            orderDescriptionStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
     }
-    
 }
 
 extension OrderHistoryDetailsViewController: UITableViewDataSource {
@@ -159,7 +217,11 @@ extension OrderHistoryDetailsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: OrderHistoryDetailsTableViewCell.identifier) as? OrderHistoryDetailsTableViewCell else {
+        guard
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: OrderHistoryDetailsTableViewCell.identifier
+            ) as? OrderHistoryDetailsTableViewCell
+        else {
             return UITableViewCell()
         }
         
@@ -169,6 +231,4 @@ extension OrderHistoryDetailsViewController: UITableViewDataSource {
         }
         return cell
     }
-    
-    
 }

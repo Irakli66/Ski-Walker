@@ -65,8 +65,8 @@ final class OrderHistoryDetailsTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             productImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             productImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            productImageView.widthAnchor.constraint(equalToConstant: 60),
-            productImageView.heightAnchor.constraint(equalToConstant: 60)
+            productImageView.widthAnchor.constraint(equalToConstant: 100),
+            productImageView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
@@ -78,15 +78,16 @@ final class OrderHistoryDetailsTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             productDetailsStackView.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 10),
             productDetailsStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            productDetailsStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
+            productDetailsStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            productDetailsStackView.widthAnchor.constraint(equalToConstant: 170),
         ])
     }
     
     func configureCell(with product: CartProduct) {
-        productImageView.image = UIImage(systemName: product.photos[0].url)
+        productImageView.imageFrom(url: URL(string: product.photos[0].url)!)
         productNameLabel.text = product.name
         productStatus.updateValue("In Progress")
         productQuantity.updateValue("1")
-        productPrice.updateValue("\(product.finalPrice)")
+        productPrice.updateValue("\(CurrencyFormatter.formatPriceToGEL(product.finalPrice))")
     }
 }
