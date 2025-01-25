@@ -25,9 +25,9 @@ struct PaymentMethodsView: View {
                     .listStyle(PlainListStyle())
                 } else {
                     Spacer()
-                    Text("No Payment Methods")
-                        .font(.headline)
-                        .foregroundColor(Color.customGrey)
+                    Image("emptyCard")
+                        .resizable()
+                        .frame(width: 200, height: 230)
                 }
                 
                 Spacer()

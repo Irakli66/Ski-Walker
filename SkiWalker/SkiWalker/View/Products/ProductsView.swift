@@ -27,9 +27,9 @@ struct ProductsView: View {
                     Spacer()
                 } else if productsViewModel.products.isEmpty {
                     Spacer()
-                    Text("No products found")
-                        .foregroundColor(Color.customGrey)
-                        .frame(maxWidth: .infinity)
+                    Image("noResult")
+                        .resizable()
+                        .frame(width: 200, height: 230)
                     Spacer()
                 } else {
                     ProductsList(searchQuery: searchQuery, category: category, subCategory: subCategory)

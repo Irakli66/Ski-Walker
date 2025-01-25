@@ -688,36 +688,6 @@
         }
       }
     },
-    "No Payment Methods" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "არ გაქვს ბარათი"
-          }
-        }
-      }
-    },
-    "No products found" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "შედეგი ვერ მოიძებნა"
-          }
-        }
-      }
-    },
-    "Nothing to show" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ცარიელია"
-          }
-        }
-      }
-    },
     "Order" : {
       "localizations" : {
         "ka" : {

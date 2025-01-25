@@ -16,8 +16,9 @@ struct AddressesView: View {
             addressesHeader
             if addressesViewModel.addresses.isEmpty {
                 Spacer()
-                Text("Nothing to show")
-                    .foregroundStyle(.customGrey)
+                Image("emptyAddress")
+                    .resizable()
+                    .frame(width: 200, height: 230)
                 Spacer()
             } else {
                 ScrollView {
