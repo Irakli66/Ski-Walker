@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct Order: Codable {
+struct OrderResponse: Codable {
     let id: String
     let status: OrderStatus
     let createdAt: String

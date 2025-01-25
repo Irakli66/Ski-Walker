@@ -119,7 +119,7 @@ struct CheckoutView: View {
                     .font(.system(size: 14, weight: .regular))
             }
             Button(action: {
-                checkoutViewModel.makePayment()
+                makePayment()
             }) {
                 Text("Pay")
                     .frame(maxWidth: .infinity)
@@ -144,6 +144,16 @@ struct CheckoutView: View {
             
             await checkoutViewModel.fetchAddresses()
             await checkoutViewModel.fetchPaymentMethods()
+        }
+    }
+    
+    private func makePayment() {
+        Task {
+            if let productId = productId, let quantity = quantity {
+                await checkoutViewModel.buyNowPayment(productId: productId, quantity: quantity)
+            } else {
+                await checkoutViewModel.cartPayment()
+            }
         }
     }
 }
