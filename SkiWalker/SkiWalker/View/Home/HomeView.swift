@@ -20,20 +20,26 @@ struct HomeView: View {
             VStack(spacing: 20) {
                 customSearchBar
                 
-                ScrollView() {
+                ScrollView(showsIndicators: false) {
                     ProductsSlideShowView(title: "Popular products", products: homeViewModel.popularProducts, isSale: false)
                     ProductsSlideShowView(title: "Sale products", products: homeViewModel.saleProducts, isSale: true)
+                    
+                    if !homeViewModel.browsingHistory.isEmpty {
+                        browsingHistory
+                    }
                 }
             }
-            .padding()
+            .padding(.horizontal)
             .navigationDestination(isPresented: $navigateToProducts) {
                 ProductsView(searchQuery: searchText, category: "", subCategory: "")
             }
             .background(Color.customBackground)
+            .environmentObject(homeViewModel)
             .onAppear() {
                 Task {
                     try await homeViewModel.fetchPopularProducts()
                     try await homeViewModel.fetchSaleProducts()
+                    homeViewModel.reloadBrowsingHistory()
                 }
             }
         }
@@ -84,9 +90,12 @@ struct HomeView: View {
             }
         }
     }
+    
+    @ViewBuilder
+    private var browsingHistory: some View {
+        BrowsingHistoryView()
+    }
 }
-
-
 
 #Preview {
     HomeView()
