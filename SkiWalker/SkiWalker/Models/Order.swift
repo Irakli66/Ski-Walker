@@ -11,10 +11,10 @@ struct OrderResponse: Codable {
     let status: OrderStatus
     let createdAt: String
     let products: [CartProduct]
-    let totalPrice: Int
+    let totalPrice: Double
     let lastUpdatedAt: String
     let shippingAddress: Address
-    let paymentMethodId: String?
+    let paymentMethodId: String
 }
 
 enum OrderStatus: Int, Codable {

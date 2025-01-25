@@ -72,7 +72,7 @@ final class OrderHistoryViewController: UIViewController {
             orderHistoryTableView.topAnchor.constraint(equalTo: navigateBackButton.bottomAnchor, constant: 30),
             orderHistoryTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        
+        orderHistoryTableView.showsVerticalScrollIndicator = false
         orderHistoryTableView.dataSource = self
         orderHistoryTableView.delegate = self
         orderHistoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: "OrderCell")

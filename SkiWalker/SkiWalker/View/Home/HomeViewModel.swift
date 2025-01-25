@@ -8,17 +8,22 @@ import SwiftUI
 
 final class HomeViewModel: ObservableObject {
     private let authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol
+    private let browsingHistoryManager: BrowsingHistoryManagerProtocol
     
     @Published var popularProducts: [Product] = []
     @Published var saleProducts: [Product] = []
+    @Published var browsingHistory: [BrowsingHistoryItem] = []
     
     private enum Endpoint: String {
         case popular = "https://api.gargar.dev:8088/Product/popilar"
         case onSale = "https://api.gargar.dev:8088/Product/onSale"
     }
     
-    init(authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler()) {
+    init(authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler(), browsingHistoryManager: BrowsingHistoryManagerProtocol = BrowsingHistoryManager()) {
         self.authenticatedRequestHandler = authenticatedRequestHandler
+        self.browsingHistoryManager = browsingHistoryManager
+        
+        reloadBrowsingHistory()
     }
     
     func fetchPopularProducts() async throws {
@@ -48,6 +53,13 @@ final class HomeViewModel: ObservableObject {
         
         await MainActor.run {
             update(products)
+        }
+    }
+    
+    func reloadBrowsingHistory() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.browsingHistory = self.browsingHistoryManager.getBrowsingHistory()
         }
     }
 }

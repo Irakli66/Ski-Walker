@@ -12,15 +12,8 @@ struct OrderHistoryCellView: View {
     var body: some View {
         HStack(spacing: 12) {
             ZStack(alignment: .center) {
-                Image(systemName: order.products[0].photos[0].url)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 100, height: 100)
-                    .background(Color.gray.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
-                    .clipped()
-                
+                ReusableAsyncImageView(url: order.products[0].photos[0].url)
+        
                 if order.products.count > 1 {
                     RoundedRectangle(cornerRadius: 10)
                         .fill(Color.black.opacity(0.4))
@@ -41,7 +34,7 @@ struct OrderHistoryCellView: View {
                     Text("Order:")
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                    Text(order.id)
+                    Text(order.id.prefix(6))
                         .font(.subheadline)
                         .fontWeight(.semibold)
                 }
@@ -52,7 +45,7 @@ struct OrderHistoryCellView: View {
                     Text("Date:")
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                    Text(order.createdAt)
+                    Text(DateFormatterHelper.formatDate(order.createdAt))
                         .font(.subheadline)
                         .fontWeight(.medium)
                 }
@@ -77,7 +70,7 @@ struct OrderHistoryCellView: View {
                     Text("Total Price:")
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                    Text("$\(order.totalPrice, specifier: "%.2f")")
+                    Text(CurrencyFormatter.formatPriceToGEL(order.totalPrice))
                         .font(.headline)
                         .fontWeight(.bold)
                         .foregroundColor(Color.customPurple)

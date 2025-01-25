@@ -53,9 +53,6 @@
     "+%lld" : {
 
     },
-    "$%.2f" : {
-
-    },
     "0 ₾" : {
       "localizations" : {
         "ka" : {
@@ -632,6 +629,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "გვარი"
+          }
+        }
+      }
+    },
+    "Last seen" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბოლოს ნანახი"
           }
         }
       }
