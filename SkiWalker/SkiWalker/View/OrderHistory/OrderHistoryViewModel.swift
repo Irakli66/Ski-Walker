@@ -22,7 +22,6 @@ final class OrderHistoryViewModel {
             
             if let response = response {
                 orders = response
-                print(response)
             } else {
                 orders = []
             }

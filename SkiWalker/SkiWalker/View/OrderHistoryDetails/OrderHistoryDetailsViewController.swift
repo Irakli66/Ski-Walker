@@ -139,7 +139,7 @@ final class OrderHistoryDetailsViewController: UIViewController {
         
         guard let order else { return }
         let productCount = LabelAndValueView(labelText: "Product (\(order.products.count))", valueText: "\(order.totalPrice) ₾", isVertical: false)
-        let paymentMethod = LabelAndValueView(labelText: "Method \(order.products.count)", valueText: order.paymentMethodId ?? "", isVertical: false)
+        let paymentMethod = LabelAndValueView(labelText: "Method \(order.products.count)", valueText: order.paymentMethodId, isVertical: false)
         let orderTotal = LabelAndValueView(labelText: "Order Total", valueText: "\(order.totalPrice)", isVertical: false)
         
         [productCount, paymentMethod, orderTotal].forEach { orderDescriptionStackView.addArrangedSubview($0) }
