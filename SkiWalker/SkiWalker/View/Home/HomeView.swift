@@ -19,7 +19,10 @@ struct HomeView: View {
         NavigationStack {
             VStack(spacing: 20) {
                 customSearchBar
-                content
+                ScrollView(showsIndicators: false) {
+                    PromotionCarouselView()
+                    content
+                }
             }
             .padding(.horizontal)
             .navigationDestination(isPresented: $navigateToProducts) {
@@ -49,13 +52,14 @@ struct HomeView: View {
                 }
             }
         } else {
-            ScrollView(showsIndicators: false) {
+            VStack {
                 ProductsSlideShowView(title: "Popular products", products: homeViewModel.popularProducts, isSale: false)
                 
                 ProductsSlideShowView(title: "Sale products", products: homeViewModel.saleProducts, isSale: true)
                 
                 browsingHistory
             }
+            .padding(.top, 20)
         }
     }
     
@@ -113,11 +117,6 @@ struct HomeView: View {
     }
 }
 
-
-
 #Preview {
     HomeView()
 }
-
-
-
