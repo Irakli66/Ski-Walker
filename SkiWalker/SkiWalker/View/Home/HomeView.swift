@@ -19,15 +19,7 @@ struct HomeView: View {
         NavigationStack {
             VStack(spacing: 20) {
                 customSearchBar
-                
-                ScrollView(showsIndicators: false) {
-                    ProductsSlideShowView(title: "Popular products", products: homeViewModel.popularProducts, isSale: false)
-                    ProductsSlideShowView(title: "Sale products", products: homeViewModel.saleProducts, isSale: true)
-                    
-                    if !homeViewModel.browsingHistory.isEmpty {
-                        browsingHistory
-                    }
-                }
+                content
             }
             .padding(.horizontal)
             .navigationDestination(isPresented: $navigateToProducts) {
@@ -41,6 +33,28 @@ struct HomeView: View {
                     try await homeViewModel.fetchSaleProducts()
                     homeViewModel.reloadBrowsingHistory()
                 }
+            }
+        }
+    }
+    
+    @ViewBuilder private var content: some View {
+        if homeViewModel.isLoading {
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 20) {
+                    SkeletonView()
+                        .frame(height: 200)
+                    
+                    SkeletonView()
+                        .frame(height: 200)
+                }
+            }
+        } else {
+            ScrollView(showsIndicators: false) {
+                ProductsSlideShowView(title: "Popular products", products: homeViewModel.popularProducts, isSale: false)
+                
+                ProductsSlideShowView(title: "Sale products", products: homeViewModel.saleProducts, isSale: true)
+                
+                browsingHistory
             }
         }
     }
@@ -93,9 +107,13 @@ struct HomeView: View {
     
     @ViewBuilder
     private var browsingHistory: some View {
-        BrowsingHistoryView()
+        if !homeViewModel.browsingHistory.isEmpty {
+            BrowsingHistoryView()
+        }
     }
 }
+
+
 
 #Preview {
     HomeView()

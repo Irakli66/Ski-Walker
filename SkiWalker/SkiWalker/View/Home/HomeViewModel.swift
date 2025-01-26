@@ -13,6 +13,7 @@ final class HomeViewModel: ObservableObject {
     @Published var popularProducts: [Product] = []
     @Published var saleProducts: [Product] = []
     @Published var browsingHistory: [BrowsingHistoryItem] = []
+    @Published var isLoading: Bool = false
     
     private enum Endpoint: String {
         case popular = "https://api.gargar.dev:8088/Product/popilar"
@@ -39,21 +40,36 @@ final class HomeViewModel: ObservableObject {
     }
     
     private func fetchProducts(from endpoint: Endpoint, update: @escaping ([Product]) -> Void) async throws {
-        let response: ProductsResponse? = try await authenticatedRequestHandler.sendRequest(
-            urlString: endpoint.rawValue,
-            method: .get,
-            headers: nil,
-            body: nil,
-            decoder: JSONDecoder()
-        )
-        
-        guard let products = response?.collection else {
-            throw ProductFetchError.noData
-        }
-        
         await MainActor.run {
-            update(products)
+            isLoading = true
         }
+        
+        do {
+            let response: ProductsResponse? = try await authenticatedRequestHandler.sendRequest(
+                urlString: endpoint.rawValue,
+                method: .get,
+                headers: nil,
+                body: nil,
+                decoder: JSONDecoder()
+            )
+            
+            guard let products = response?.collection else {
+                throw ProductFetchError.noData
+            }
+            
+            await MainActor.run {
+                update(products)
+                
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){ [weak self] in
+                self?.isLoading = false
+            }
+            
+        } catch {
+            print(error.localizedDescription)
+        }
+
     }
     
     func reloadBrowsingHistory() {
