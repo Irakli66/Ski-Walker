@@ -13,6 +13,7 @@ final class ProductDetailsViewModel: ObservableObject {
     private let favoritesManager: FavoritesManagerProtocol
     private let browsingHistoryManager: BrowsingHistoryManagerProtocol
     @Published var product: Product?
+    @Published var vendor: User?
     
     init(authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler(), cartManager: CartManagerProtocol = CartManager(), favoritesManager: FavoritesManagerProtocol = FAvoritesManager(), browsingHistoryManager: BrowsingHistoryManagerProtocol = BrowsingHistoryManager()) {
         self.authenticatedRequestHandler = authenticatedRequestHandler
@@ -21,14 +22,34 @@ final class ProductDetailsViewModel: ObservableObject {
         self.browsingHistoryManager = browsingHistoryManager
     }
     
-    func fetchProduct(with id: String) async throws {
+    func fetchProduct(with id: String) async {
         let url = "https://api.gargar.dev:8088/Product/\(id)"
         
-        let response: Product? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
+        do {
+            let response: Product? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
+            
+            await MainActor.run { [weak self] in
+                self?.product = response
+                self?.addToBrowsingHistory(with: self?.product)
+            }
+            
+//            guard let product else { return }
+//            await fetchVendor(with: product.vendorId)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func fetchVendor(with id: String) async {
+        let url = "https://api.gargar.dev:8088/User/\(id)"
         
-        await MainActor.run { [weak self] in
-            self?.product = response
-            self?.addToBrowsingHistory(with: self?.product)
+        do {
+            let response: User? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
+            await MainActor.run { [weak self] in
+                self?.vendor = response
+            }
+        } catch {
+            print(error.localizedDescription)
         }
     }
     
