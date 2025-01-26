@@ -58,12 +58,12 @@ struct ProductsSlideShowView: View {
     @ViewBuilder
     private func salePriceView(for product: Product) -> some View {
         HStack {
-            Text(product.finalPrice.formatted(.currency(code: "GEL")))
+            Text(CurrencyFormatter.formatPriceToGEL(product.finalPrice))
                 .foregroundColor(Color.customBlack)
                 .fontWeight(.bold)
                 .font(.system(size: 14))
             
-            Text(product.price.formatted(.currency(code: "GEL")))
+            Text(CurrencyFormatter.formatPriceToGEL(product.price))
                 .strikethrough()
                 .foregroundColor(Color.customGrey)
                 .font(.system(size: 12))
@@ -81,7 +81,7 @@ struct ProductsSlideShowView: View {
     
     @ViewBuilder
     private func regularPriceView(for product: Product) -> some View {
-        Text(product.price.formatted(.currency(code: "GEL")))
+        Text(CurrencyFormatter.formatPriceToGEL(product.price))
             .foregroundColor(.primary)
             .font(.subheadline)
     }

@@ -106,7 +106,7 @@ struct ProductDetailsView: View {
             }
             
             VStack(alignment: .leading, spacing: 5) {
-                Text(productViewModel.product?.finalPrice.formatted(.currency(code: "GEL")) ?? "")
+                Text(CurrencyFormatter.formatPriceToGEL(productViewModel.product?.finalPrice ?? 0))
                     .font(.system(size: 20, weight: .bold))
                 Text("Best Price Guarantee")
                     .font(.system(size: 12, weight: .regular))

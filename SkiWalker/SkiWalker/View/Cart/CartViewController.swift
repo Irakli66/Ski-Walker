@@ -46,8 +46,8 @@ final class CartViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var numberOfProducts = LabelAndValueView(labelText: "Number of products", valueText: "2", isVertical: false)
-    private lazy var totalPrice = LabelAndValueView(labelText: "Total Price", valueText: "260 ₾", isVertical: false)
+    private lazy var numberOfProducts = LabelAndValueView(labelText: "Number of products", valueText: "", isVertical: false)
+    private lazy var totalPrice = LabelAndValueView(labelText: "Total Price", valueText: "", isVertical: false)
     private lazy var checkoutButton = CustomButton(buttonText: "Checkout")
     
     private let orderLabel: UILabel = {

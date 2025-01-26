@@ -21,7 +21,7 @@ struct ProductRow: View {
                         .font(.headline)
                         .foregroundColor(Color.customBlack)
 
-                    Text("\(product.price.formatted(.currency(code: "GEL")))")
+                    Text(CurrencyFormatter.formatPriceToGEL(product.price))
                         .font(.subheadline)
                         .foregroundColor(Color.customGrey)
 
