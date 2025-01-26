@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		CBA173FE2D302D380076FF00 /* NetworkPackage in Frameworks */ = {isa = PBXBuildFile; productRef = CBA173FD2D302D380076FF00 /* NetworkPackage */; };
-		CBA174012D302E330076FF00 /* SimpleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = CBA174002D302E330076FF00 /* SimpleKeychain */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +27,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CBA174012D302E330076FF00 /* SimpleKeychain in Frameworks */,
 				CBA173FE2D302D380076FF00 /* NetworkPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,7 +71,6 @@
 			name = SkiWalker;
 			packageProductDependencies = (
 				CBA173FD2D302D380076FF00 /* NetworkPackage */,
-				CBA174002D302E330076FF00 /* SimpleKeychain */,
 			);
 			productName = SkiWalker;
 			productReference = CBA173E22D3023310076FF00 /* SkiWalker.app */;
@@ -106,7 +103,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				CBA173FC2D302D380076FF00 /* XCRemoteSwiftPackageReference "NetworkPackage" */,
-				CBA173FF2D302E330076FF00 /* XCRemoteSwiftPackageReference "SimpleKeychain" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CBA173E32D3023310076FF00 /* Products */;
@@ -352,14 +348,6 @@
 				kind = branch;
 			};
 		};
-		CBA173FF2D302E330076FF00 /* XCRemoteSwiftPackageReference "SimpleKeychain" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/auth0/SimpleKeychain.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -367,11 +355,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CBA173FC2D302D380076FF00 /* XCRemoteSwiftPackageReference "NetworkPackage" */;
 			productName = NetworkPackage;
-		};
-		CBA174002D302E330076FF00 /* SimpleKeychain */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CBA173FF2D302E330076FF00 /* XCRemoteSwiftPackageReference "SimpleKeychain" */;
-			productName = SimpleKeychain;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
