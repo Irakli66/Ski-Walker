@@ -173,11 +173,15 @@ final class OrderHistoryDetailsViewController: UIViewController {
     private func setupOrderProductsTableView() {
         contentView.addSubview(orderProductsTableView)
         
+        let productCount = order?.products.count ?? 0
+        let rowHeight: CGFloat = 120
+        let tableViewHeight = min(CGFloat(productCount) * rowHeight, 350)
+        
         NSLayoutConstraint.activate([
             orderProductsTableView.topAnchor.constraint(equalTo: orderDetailsContainerView.bottomAnchor, constant: 20),
             orderProductsTableView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
             orderProductsTableView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
-            orderProductsTableView.heightAnchor.constraint(equalToConstant: 350)
+            orderProductsTableView.heightAnchor.constraint(equalToConstant: tableViewHeight)
         ])
         
         orderProductsTableView.showsVerticalScrollIndicator = false
