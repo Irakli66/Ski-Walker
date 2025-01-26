@@ -33,7 +33,7 @@ struct ProductDetailsView: View {
             .navigationBarBackButtonHidden(true)
             .onAppear() {
                 Task {
-                    try await productViewModel.fetchProduct(with: productId)
+                    await productViewModel.fetchProduct(with: productId)
                 }
             }
             .toast(isPresented: $showToast, message: "Added to cart successfully!", type: .success)
@@ -53,14 +53,7 @@ struct ProductDetailsView: View {
             }
             Spacer()
             Button(action: {
-                Task {
-                    if productViewModel.product?.favorite ?? false {
-                        await productViewModel.deleteFromFavorites(with: productId)
-                    } else {
-                        await productViewModel.addToFavorites(with: productId)
-                    }
-                    try await productViewModel.fetchProduct(with: productId)
-                }
+                handleFavorites()
             }) {
                 Image(systemName: productViewModel.product?.favorite ?? false ?  "heart.fill" : "heart")
                     .resizable()
@@ -99,7 +92,7 @@ struct ProductDetailsView: View {
                 Text("Seller:")
                     .font(.system(size: 14, weight: .regular))
                     .foregroundStyle(Color.customGrey)
-                Text(productViewModel.product?.vendorId ?? "")
+                Text(productViewModel.vendor?.companyName ?? "")
                     .foregroundStyle(Color.customPurple)
                     .font(.system(size: 14, weight: .medium))
                 Spacer()
@@ -154,6 +147,17 @@ struct ProductDetailsView: View {
                 .font(.system(size: 14, weight: .regular))
                 .multilineTextAlignment(.leading)
                 .lineLimit(nil)
+        }
+    }
+    
+    private func handleFavorites() {
+        Task {
+            if productViewModel.product?.favorite ?? false {
+                await productViewModel.deleteFromFavorites(with: productId)
+            } else {
+                await productViewModel.addToFavorites(with: productId)
+            }
+            await productViewModel.fetchProduct(with: productId)
         }
     }
 }
