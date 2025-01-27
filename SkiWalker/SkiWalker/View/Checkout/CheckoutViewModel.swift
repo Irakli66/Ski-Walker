@@ -171,23 +171,19 @@ final class CheckoutViewModel: ObservableObject {
         dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         let formattedDate = dateFormatter.string(from: selectedDate)
         
-        let requestBody: [String: String] = [
+        let requestBody: [String: Any] = [
             "productId": productId,
             "date": formattedDate,
             "shippingId": address.id,
             "paymentId": paymentMethod.id,
-            "quantity": "\(quantity)",
+            "quantity": quantity,
         ]
         
-        let bodyData = try? JSONEncoder().encode(requestBody)
+        let bodyData = try? JSONSerialization.data(withJSONObject: requestBody, options: [])
         
-        do {
-            let _: OrderResponse? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .post, headers: nil, body: bodyData, decoder: JSONDecoder())
-            await MainActor.run {
-                cartItems = []
-            }
-        } catch {
-            print(error.localizedDescription)
+        let _: OrderResponse? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .post, headers: nil, body: bodyData, decoder: JSONDecoder())
+        await MainActor.run {
+            cartItems = []
         }
     }
 }

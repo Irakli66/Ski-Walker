@@ -161,7 +161,7 @@ struct CheckoutView: View {
             } catch {
                 print(error.localizedDescription)
                 
-                AlertManager.showAlert(title: "Payment Failed", message: "check you credit card")
+                AlertManager.showAlert(title: "Payment Failed", message: "check your funds")
             }
         }
     }
