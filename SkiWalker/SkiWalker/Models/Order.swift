@@ -10,7 +10,7 @@ struct OrderResponse: Codable {
     let id: String
     let status: OrderStatus
     let createdAt: String
-    let products: [CartProduct]
+    let products: [CartItem]
     let totalPrice: Double
     let lastUpdatedAt: String
     let shippingAddress: Address

@@ -83,11 +83,11 @@ final class OrderHistoryDetailsTableViewCell: UITableViewCell {
         ])
     }
     
-    func configureCell(with product: CartProduct) {
-        productImageView.imageFrom(url: URL(string: product.photos[0].url)!)
-        productNameLabel.text = product.name
+    func configureCell(with product: CartItem) {
+        productImageView.imageFrom(url: URL(string: product.product.photos[0].url)!)
+        productNameLabel.text = product.product.name
         productStatus.updateValue("In Progress")
-        productQuantity.updateValue("1")
-        productPrice.updateValue("\(CurrencyFormatter.formatPriceToGEL(product.finalPrice))")
+        productQuantity.updateValue("\(product.count)")
+        productPrice.updateValue("\(CurrencyFormatter.formatPriceToGEL(product.product.finalPrice))")
     }
 }

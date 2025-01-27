@@ -12,7 +12,7 @@ struct OrderHistoryCellView: View {
     var body: some View {
         HStack(spacing: 12) {
             ZStack(alignment: .center) {
-                ReusableAsyncImageView(url: order.products[0].photos[0].url)
+                ReusableAsyncImageView(url: order.products[0].product.photos[0].url)
         
                 if order.products.count > 1 {
                     RoundedRectangle(cornerRadius: 10)

@@ -150,13 +150,9 @@ final class CheckoutViewModel: ObservableObject {
         
         let bodyData = try? JSONEncoder().encode(requestBody)
         
-        do {
-            let _: OrderResponse? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .post, headers: nil, body: bodyData, decoder: JSONDecoder())
-            await MainActor.run {
-                cartItems = []
-            }
-        } catch {
-            print(error.localizedDescription)
+        let _: OrderResponse? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .post, headers: nil, body: bodyData, decoder: JSONDecoder())
+        await MainActor.run {
+            cartItems = []
         }
     }
     
