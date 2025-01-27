@@ -44,11 +44,7 @@ struct ProfileSettingsView: View {
             ZStack(alignment: .bottomTrailing) {
                 if let selectedProfileImage = profileSettingsViewModel.selectedProfileImage {
                     Image(uiImage: selectedProfileImage)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 125, height: 125)
-                        .clipShape(Circle())
-                        .shadow(radius: 2)
+                        .profileImageModifier(foregroundColor: .clear)
                 } else if let profileImageURL = profileSettingsViewModel.profileImage,
                           let url = URL(string: profileImageURL) {
                     AsyncImage(url: url) { phase in
@@ -59,47 +55,23 @@ struct ProfileSettingsView: View {
                                 .clipShape(Circle())
                         case .success(let image):
                             image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 125, height: 125)
-                                .clipShape(Circle())
-                                .shadow(radius: 2)
+                                .profileImageModifier(foregroundColor: .clear)
                         case .failure:
                             Image(systemName: "person.crop.circle.fill")
-                                .resizable()
-                                .scaledToFill()
-                                .foregroundStyle(Color.customPurple)
-                                .frame(width: 125, height: 125)
-                                .clipShape(Circle())
-                                .shadow(radius: 2)
+                                .profileImageModifier(foregroundColor: .customPurple)
                         @unknown default:
                             Image(systemName: "exclamationmark.triangle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 50)
-                                .foregroundColor(.red)
-                                .clipShape(Circle())
-                                .overlay(
-                                    Circle().stroke(Color.red, lineWidth: 2)
-                                )
+                                .profileImageModifier(size: 50)
                         }
                     }
                 } else {
                     Image(systemName: "person.crop.circle.fill")
-                        .resizable()
-                        .scaledToFill()
-                        .foregroundStyle(Color.customPurple)
-                        .frame(width: 125, height: 125)
-                        .clipShape(Circle())
-                        .shadow(radius: 2)
+                        .profileImageModifier(foregroundColor: .customPurple)
                 }
                 
                 PhotosPicker(selection: $avatarItem, matching: .images) {
                     Image(systemName: "camera.circle.fill")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(.customWhite)
-                        .background(Color.customPurple.clipShape(Circle()))
+                        .profileImageModifier(size: 40, foregroundColor: .customWhite)
                         .overlay(
                             Circle().stroke(Color.gray.opacity(0.5), lineWidth: 1)
                         )
