@@ -10,7 +10,6 @@ import PhotosUI
 struct ProfileSettingsView: View {
     @StateObject private var profileSettingsViewModel = ProfileSettingsViewModel()
     @State private var avatarItem: PhotosPickerItem?
-    @State private var avatarImage: Image?
     
     var body: some View {
         VStack {
@@ -21,6 +20,11 @@ struct ProfileSettingsView: View {
         }
         .padding()
         .background(Color.customBackground)
+        .onAppear {
+            Task {
+                try await profileSettingsViewModel.getCurrentUser()
+            }
+        }
     }
     
     private var profileSettingsHeader: some View {
@@ -34,19 +38,61 @@ struct ProfileSettingsView: View {
         }
     }
     
+    @ViewBuilder
     private var changeAvatarSection: some View {
         VStack {
             ZStack(alignment: .bottomTrailing) {
-                (avatarImage ?? Image(systemName: "person.crop.circle.fill"))
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 125, height: 125)
-                    .foregroundStyle(Color.customPurple)
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle().stroke(Color.gray, lineWidth: 2)
-                    )
-                    .shadow(radius: 5)
+                if let selectedProfileImage = profileSettingsViewModel.selectedProfileImage {
+                    Image(uiImage: selectedProfileImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 125, height: 125)
+                        .clipShape(Circle())
+                        .shadow(radius: 2)
+                } else if let profileImageURL = profileSettingsViewModel.profileImage,
+                          let url = URL(string: profileImageURL) {
+                    AsyncImage(url: url) { phase in
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                                .frame(width: 125, height: 125)
+                                .clipShape(Circle())
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 125, height: 125)
+                                .clipShape(Circle())
+                                .shadow(radius: 2)
+                        case .failure:
+                            Image(systemName: "person.crop.circle.fill")
+                                .resizable()
+                                .scaledToFill()
+                                .foregroundStyle(Color.customPurple)
+                                .frame(width: 125, height: 125)
+                                .clipShape(Circle())
+                                .shadow(radius: 2)
+                        @unknown default:
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                                .foregroundColor(.red)
+                                .clipShape(Circle())
+                                .overlay(
+                                    Circle().stroke(Color.red, lineWidth: 2)
+                                )
+                        }
+                    }
+                } else {
+                    Image(systemName: "person.crop.circle.fill")
+                        .resizable()
+                        .scaledToFill()
+                        .foregroundStyle(Color.customPurple)
+                        .frame(width: 125, height: 125)
+                        .clipShape(Circle())
+                        .shadow(radius: 2)
+                }
                 
                 PhotosPicker(selection: $avatarItem, matching: .images) {
                     Image(systemName: "camera.circle.fill")
@@ -63,37 +109,41 @@ struct ProfileSettingsView: View {
             .padding()
         }
         .onChange(of: avatarItem) { newItem in
-            if let newItem = newItem {
-                Task {
-                    if let data = try? await newItem.loadTransferable(type: Data.self),
-                       let uiImage = UIImage(data: data) {
-                        avatarImage = Image(uiImage: uiImage)
-                        profileSettingsViewModel.profileImage = Image(uiImage: uiImage)
-                    } else {
-                        print("Failed to load image.")
-                    }
-                }
-            }
+            changeAvatar(item: newItem)
         }
     }
     
     private var changeUserDataSection: some View {
         VStack(spacing: 20) {
-            LabeledTextFieldView(label: "Email", placeholder: "", text: $profileSettingsViewModel.email)
+            LabeledTextFieldView(label: "First name", placeholder: "", text: $profileSettingsViewModel.firstname)
+            LabeledTextFieldView(label: "Last name", placeholder: "", text: $profileSettingsViewModel.lastname)
             
             Button(action: {
-                profileSettingsViewModel.updateProfile()
+                Task {
+                    profileSettingsViewModel.updateProfile()
+                }
             }) {
                 Text("Update profile")
-                    .frame(maxWidth: .infinity)
-                    .foregroundStyle(.white)
-                    .padding()
-                    .background(Color.customPurple)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .buttonModifier()
+            }
+        }
+    }
+    
+    private func changeAvatar(item: PhotosPickerItem?) {
+        if let item = item {
+            Task {
+                if let data = try? await item.loadTransferable(type: Data.self),
+                   let uiImage = UIImage(data: data) {
+                    profileSettingsViewModel.selectedProfileImage = uiImage
+                    await profileSettingsViewModel.updateProfileImage()
+                } else {
+                    print("Failed to load image.")
+                }
             }
         }
     }
 }
+
 
 #Preview {
     ProfileSettingsView()
