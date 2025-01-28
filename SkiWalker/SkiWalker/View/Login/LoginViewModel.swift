@@ -11,7 +11,7 @@ final class LoginViewModel {
     private let sessionManager: SessionManagerProtocol
     private let networkService: NetworkServiceProtocol
     
-    init(networkService: NetworkServiceProtocol = NetworkService(), sessionManager: SessionManagerProtocol = SessionManager()) {
+    init(networkService: NetworkServiceProtocol = NetworkService(), sessionManager: SessionManagerProtocol) {
         self.networkService = networkService
         self.sessionManager = sessionManager
     }
@@ -47,9 +47,9 @@ final class LoginViewModel {
             guard let response else {
                 throw LoginError.invalidCredentials
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
-                self?.sessionManager.login(refreshToken: response.refreshToken, accessToken: response.accessToken)
-            })
+            
+           await sessionManager.login(refreshToken: response.refreshToken, accessToken: response.accessToken)
+            
         } catch {
             throw error
         }

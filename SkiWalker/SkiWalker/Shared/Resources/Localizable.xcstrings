@@ -534,6 +534,7 @@
       }
     },
     "Favorites" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -1104,9 +1105,6 @@
           }
         }
       }
-    },
-    "ფავორიტები" : {
-
     },
     "ქართული" : {
 

@@ -7,8 +7,7 @@
 import SwiftUI
 
 final class LoginViewController: UIViewController {
-    private let viewModel = LoginViewModel()
-    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
+    private let viewModel: LoginViewModel
     
     private let pageWrapperStakView: UIStackView = {
         let stackView = UIStackView()
@@ -124,6 +123,15 @@ final class LoginViewController: UIViewController {
         return button
     }()
     
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -233,13 +241,17 @@ final class LoginViewController: UIViewController {
 
 
 struct LoginView: UIViewControllerRepresentable {
+    @EnvironmentObject var sessionManager: SessionManager
+    
     func makeUIViewController(context: Context) -> UINavigationController {
-        let loginVC = LoginViewController()
+        let loginViewModel = LoginViewModel(sessionManager: sessionManager)
+        
+        let loginVC = LoginViewController(viewModel: loginViewModel)
         return UINavigationController(rootViewController: loginVC)
     }
     
     func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
-        // Empty for now
+
     }
 }
 

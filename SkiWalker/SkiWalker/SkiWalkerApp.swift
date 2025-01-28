@@ -10,14 +10,13 @@ import SwiftUI
 @main
 struct SkiWalkerApp: App {
     @StateObject private var sessionManager = SessionManager()
-    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
     @AppStorage("selectedLanguage") private var selectedLanguage: String = "en"
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
     
     var body: some Scene {
         WindowGroup {
             Group {
-                if isLoggedIn {
+                if sessionManager.isLoggedIn {
                     TabBarView()
                 } else {
                     LoginView()

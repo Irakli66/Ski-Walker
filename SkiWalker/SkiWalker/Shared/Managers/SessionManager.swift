@@ -9,11 +9,11 @@ import SwiftUI
 protocol SessionManagerProtocol {
     func checkLoginStatus()
     func logout()
-    func login(refreshToken: String, accessToken: String)
+    func login(refreshToken: String, accessToken: String) async
 }
 
 final class SessionManager: ObservableObject, SessionManagerProtocol {
-    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
+    @Published var isLoggedIn: Bool = false
 
     private let keychainManager: KeyChainManagerProtocol
 
@@ -35,8 +35,10 @@ final class SessionManager: ObservableObject, SessionManagerProtocol {
         isLoggedIn = false
     }
 
-    func login(refreshToken: String, accessToken: String) {
+    func login(refreshToken: String, accessToken: String) async {
         try? keychainManager.storeTokens(accessToken: accessToken, refreshToken: refreshToken)
-        isLoggedIn = true
+        await MainActor.run {
+            isLoggedIn = true
+        }
     }
 }
