@@ -11,37 +11,36 @@ struct PaymentMethodsView: View {
     @State private var isSheetPresented = false
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                paymentsHeader
-                
-                if !paymentMethodsViewModel.paymentMethods.isEmpty {
-                    List(paymentMethodsViewModel.paymentMethods, id: \.id) { card in
-                        CreditCardView(card: card)
-                            .listRowInsets(EdgeInsets())
-                            .padding(.vertical, 10)
-                            .background(Color.customBackground)
-                    }
-                    .listStyle(PlainListStyle())
-                } else {
-                    Spacer()
-                    Image("emptyCard")
-                        .resizable()
-                        .frame(width: 200, height: 230)
+        VStack {
+            paymentsHeader
+            
+            if !paymentMethodsViewModel.paymentMethods.isEmpty {
+                List(paymentMethodsViewModel.paymentMethods, id: \.id) { card in
+                    CreditCardView(card: card)
+                        .listRowInsets(EdgeInsets())
+                        .padding(.vertical, 10)
+                        .background(Color.customBackground)
                 }
-                
+                .scrollBounceBehavior(.basedOnSize)
+                .listStyle(PlainListStyle())
+            } else {
                 Spacer()
+                Image("emptyCard")
+                    .resizable()
+                    .frame(width: 200, height: 230)
             }
-            .padding()
-            .background(Color.customBackground)
-            .navigationBarBackButtonHidden(true)
-            .sheet(isPresented: $isSheetPresented) {
-                AddCreditCardView()
-                    .presentationDetents([.height(430)])
-                    .background(Color.customBackground)
-            }
-            .environmentObject(paymentMethodsViewModel)
+            
+            Spacer()
         }
+        .padding()
+        .background(Color.customBackground)
+        .navigationBarBackButtonHidden(true)
+        .sheet(isPresented: $isSheetPresented) {
+            AddCreditCardView()
+                .presentationDetents([.height(430)])
+                .background(Color.customBackground)
+        }
+        .environmentObject(paymentMethodsViewModel)
     }
     
     private var paymentsHeader: some View {

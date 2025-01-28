@@ -53,21 +53,21 @@ struct TabContentView: View {
     var body: some View {
         switch selectedTab {
         case .home:
-            NavigationView {
+            NavigationStack {
                 HomeView()
             }
         case .favorites:
-            NavigationView {
+            NavigationStack {
                 FavoritesView()
                     .background(Color.customBackground)
             }
         case .cart:
-            NavigationView {
+            NavigationStack {
                 CartView()
                     .background(Color.customBackground)
             }
         case .profile:
-            NavigationView {
+            NavigationStack {
                 ProfileView()
             }
         }

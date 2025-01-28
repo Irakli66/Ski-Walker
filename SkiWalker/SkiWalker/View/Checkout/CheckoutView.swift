@@ -15,43 +15,41 @@ struct CheckoutView: View {
     
     
     var body: some View {
-        NavigationStack {
-            VStack(alignment: .leading, spacing: 30) {
-                ZStack {
-                    HStack {
-                        Button(action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Image(systemName: "chevron.backward")
-                                .imageScale(.large)
-                                .foregroundColor(.primary)
-                        }
-                        Spacer()
+        VStack(alignment: .leading, spacing: 30) {
+            ZStack {
+                HStack {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "chevron.backward")
+                            .imageScale(.large)
+                            .foregroundColor(.primary)
                     }
-                    
-                    Text("Checkout")
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(Color.customPurple)
+                    Spacer()
                 }
-                ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: 30) {
-                        DeliveryAddressView()
-                        deliveryDateSection
-                        Divider()
-                        productsSection
-                        OrderPaymentsView()
-                        Spacer()
-                        orderDetailsSection
-                    }
+                
+                Text("Checkout")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(Color.customPurple)
+            }
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 30) {
+                    DeliveryAddressView()
+                    deliveryDateSection
+                    Divider()
+                    productsSection
+                    OrderPaymentsView()
+                    Spacer()
+                    orderDetailsSection
                 }
             }
-            .padding(.horizontal)
-            .background(Color.customBackground)
-            .onAppear() {
-                getCheckoutData()
-            }
-            .environmentObject(checkoutViewModel)
         }
+        .padding(.horizontal)
+        .background(Color.customBackground)
+        .onAppear() {
+            getCheckoutData()
+        }
+        .environmentObject(checkoutViewModel)
     }
     
     private var deliveryDateSection: some View {

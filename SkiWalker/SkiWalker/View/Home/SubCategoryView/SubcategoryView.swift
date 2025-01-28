@@ -11,38 +11,36 @@ struct SubcategoryView: View {
     let category: ProductCategory
     
     var body: some View {
-        NavigationStack {
-            VStack(alignment: .leading, spacing: 25) {
-                ZStack {
-                    HStack {
-                        Button(action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Image(systemName: "chevron.backward")
-                                .imageScale(.large)
-                                .foregroundColor(.primary)
-                        }
-                        Spacer()
+        VStack(alignment: .leading, spacing: 25) {
+            ZStack {
+                HStack {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "chevron.backward")
+                            .imageScale(.large)
+                            .foregroundColor(.primary)
                     }
-                    
-                    Text(LocalizedStringKey(category.rawValue))
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.customBlack)
+                    Spacer()
                 }
                 
-                NavigationLink {
-                    ProductsView(searchQuery: "", category: category.rawValue, subCategory: "")
-                } label: {
-                    Text("See All")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundStyle(.customBlack)
-                }
-                categoriesSection
+                Text(LocalizedStringKey(category.rawValue))
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.customBlack)
             }
-            .padding()
-            .background(Color.customBackground)
-            .navigationBarBackButtonHidden(true)
+            
+            NavigationLink {
+                ProductsView(searchQuery: "", category: category.rawValue, subCategory: "")
+            } label: {
+                Text("See All")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundStyle(.customBlack)
+            }
+            categoriesSection
         }
+        .padding()
+        .background(Color.customBackground)
+        .navigationBarBackButtonHidden(true)
     }
     
     private var categoriesSection: some View {

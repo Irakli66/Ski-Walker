@@ -21,37 +21,35 @@ struct ProfileView: View {
     ]
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    profileHeader
-                    balanceSection
-                    languageToggle
-                    themeToggle
-                    tabNavigationList
-                    
-                    Button(action: {
-                        showToast = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            showToast = false
-                            sessionManager.logout()
-                        }
-                    }) {
-                        Text("Log out")
-                            .frame(maxWidth: .infinity)
-                            .foregroundStyle(.white)
-                            .padding()
-                            .background(Color.red)
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                profileHeader
+                balanceSection
+                languageToggle
+                themeToggle
+                tabNavigationList
+                
+                Button(action: {
+                    showToast = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        showToast = false
+                        sessionManager.logout()
                     }
+                }) {
+                    Text("Log out")
+                        .frame(maxWidth: .infinity)
+                        .foregroundStyle(.white)
+                        .padding()
+                        .background(Color.red)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
-                .padding(20)
             }
-            .background(Color.customBackground)
-            .navigationTitle("Profile")
-            .navigationBarTitleDisplayMode(.inline)
-            .toast(isPresented: $showToast, message: "Logged Out Successfully!", type: .success)
+            .padding(20)
         }
+        .background(Color.customBackground)
+        .navigationTitle("Profile")
+        .navigationBarTitleDisplayMode(.inline)
+        .toast(isPresented: $showToast, message: "Logged Out Successfully!", type: .success)
     }
     
     private var profileHeader: some View {

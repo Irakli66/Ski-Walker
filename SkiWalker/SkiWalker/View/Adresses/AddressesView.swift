@@ -24,6 +24,7 @@ struct AddressesView: View {
                 ScrollView {
                     addressesContent
                 }
+                .scrollBounceBehavior(.basedOnSize)
             }
         }
         .padding()

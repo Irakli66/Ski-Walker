@@ -15,30 +15,28 @@ struct ProductDetailsView: View {
     @State private var quantity: Int = 1
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                productDetailsHeader
-                ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: 20) {
-                        productImageCarousel
-                        productDetails
-                        productQuantity
-                        productActionButtons
-                        productDescription
-                    }
+        VStack {
+            productDetailsHeader
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 20) {
+                    productImageCarousel
+                    productDetails
+                    productQuantity
+                    productActionButtons
+                    productDescription
                 }
             }
-            .padding(.horizontal)
-            .background(Color.customBackground)
-            .navigationBarBackButtonHidden(true)
-            .onAppear() {
-                Task {
-                    await productViewModel.fetchProduct(with: productId)
-                }
+        }
+        .padding(.horizontal)
+        .background(Color.customBackground)
+        .navigationBarBackButtonHidden(true)
+        .onAppear() {
+            Task {
+                await productViewModel.fetchProduct(with: productId)
             }
-            .toast(isPresented: $showToast, message: "Added to cart successfully!", type: .success)
         }
         .navigationBarBackButtonHidden(true)
+        .toast(isPresented: $showToast, message: "Added to cart successfully!", type: .success)
     }
     
     @ViewBuilder

@@ -16,26 +16,25 @@ struct HomeView: View {
     private var products = ["person", "photo.stack.fill", "simcard.fill"]
     
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 20) {
-                customSearchBar
-                ScrollView(showsIndicators: false) {
-                    PromotionCarouselView()
-                    content
-                }
+        VStack(spacing: 20) {
+            customSearchBar
+            ScrollView(showsIndicators: false) {
+                PromotionCarouselView()
+                content
             }
-            .padding(.horizontal)
-            .navigationDestination(isPresented: $navigateToProducts) {
-                ProductsView(searchQuery: searchText, category: "", subCategory: "")
-            }
-            .background(Color.customBackground)
-            .environmentObject(homeViewModel)
-            .onAppear() {
-                Task {
-                    try await homeViewModel.fetchPopularProducts()
-                    try await homeViewModel.fetchSaleProducts()
-                    homeViewModel.reloadBrowsingHistory()
-                }
+            .scrollBounceBehavior(.basedOnSize)
+        }
+        .padding(.horizontal)
+        .navigationDestination(isPresented: $navigateToProducts) {
+            ProductsView(searchQuery: searchText, category: "", subCategory: "")
+        }
+        .background(Color.customBackground)
+        .environmentObject(homeViewModel)
+        .onAppear() {
+            Task {
+                try await homeViewModel.fetchPopularProducts()
+                try await homeViewModel.fetchSaleProducts()
+                homeViewModel.reloadBrowsingHistory()
             }
         }
     }
