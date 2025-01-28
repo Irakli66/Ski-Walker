@@ -533,6 +533,16 @@
         }
       }
     },
+    "Favorites" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფავორიტები"
+          }
+        }
+      }
+    },
     "First Name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1094,6 +1104,9 @@
           }
         }
       }
+    },
+    "ფავორიტები" : {
+
     },
     "ქართული" : {
 
