@@ -47,7 +47,7 @@ final class ProfileSettingsViewModel: ObservableObject {
             return
         }
         
-        guard let imageData = selectedProfileImage.jpegData(compressionQuality: 0.8) else {
+        guard let imageData = selectedProfileImage.jpegData(compressionQuality: 0.3) else {
             print("Failed to convert image to data.")
             return
         }
