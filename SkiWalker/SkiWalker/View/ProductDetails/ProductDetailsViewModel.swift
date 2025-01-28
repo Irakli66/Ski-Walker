@@ -33,8 +33,8 @@ final class ProductDetailsViewModel: ObservableObject {
                 self?.addToBrowsingHistory(with: self?.product)
             }
             
-//            guard let product else { return }
-//            await fetchVendor(with: product.vendorId)
+            guard let product else { return }
+            await fetchVendor(with: product.vendorId)
         } catch {
             print(error.localizedDescription)
         }
