@@ -24,7 +24,7 @@ final class FavoritesViewController: UIViewController {
         label.textColor = .customPurple
         label.font = .systemFont(ofSize: 24, weight: .bold)
         label.textAlignment = .center
-        label.text = "Favorites"
+        label.text = String(localized: "Favorites")
         return label
     }()
     
@@ -165,6 +165,6 @@ struct FavoritesView: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: FavoritesViewController, context: Context) {
-        // empty for now
+
     }
 }
