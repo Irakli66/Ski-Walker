@@ -8,7 +8,6 @@ import SwiftUI
 
 final class ProfileSettingsViewModel: ObservableObject {
     private let authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol
-    @Published var user: User?
     @Published var selectedProfileImage: UIImage?
     @Published var firstname: String = ""
     @Published var lastname: String = ""
@@ -16,14 +15,6 @@ final class ProfileSettingsViewModel: ObservableObject {
     
     init(authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler()) {
         self.authenticatedRequestHandler = authenticatedRequestHandler
-        
-        Task {
-            do {
-                try await self.getCurrentUser()
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
     }
     
     func getCurrentUser() async throws {
@@ -33,30 +24,62 @@ final class ProfileSettingsViewModel: ObservableObject {
         guard let currentUser = response else {
             fatalError("Could not fetch current user")
         }
-        
+        print(currentUser)
         await MainActor.run { [weak self] in
-            self?.user = currentUser
             self?.firstname = currentUser.firstname ?? ""
             self?.lastname = currentUser.lastname ?? ""
+            self?.profileImage = currentUser.photo.url
         }
     }
     
-    func updateProfileImage() async {
-        guard let selectedProfileImage = selectedProfileImage else {
+    func updateProfileImage() async throws {
+        let urlString = "https://api.gargar.dev:8088/Photo"
+
+        guard let selectedProfileImage = selectedProfileImage,
+              let imageData = selectedProfileImage.jpegData(compressionQuality: 0.3) else {
             print("No profile image available to upload.")
             return
         }
+
+        let boundary = UUID().uuidString
+        let headers: [String: String] = [
+            "Content-Type": "multipart/form-data; boundary=\(boundary)"
+        ]
+
+        var body = Data()
         
-        guard let imageData = selectedProfileImage.jpegData(compressionQuality: 0.3) else {
-            print("Failed to convert image to data.")
-            return
-        }
-        
-        print(imageData)
+        let filename = "profile.jpg"
+        let mimeType = "image/jpeg"
+
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"photo\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
+        body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+        body.append(imageData)
+        body.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+
+        let _: User? = try await authenticatedRequestHandler.sendRequest(
+            urlString: urlString,
+            method: .post,
+            headers: headers,
+            body: body,
+            decoder: JSONDecoder()
+        )
+
+        print("Profile image upload complete.")
     }
     
-    func updateProfile() {
+    func updateProfile() async throws {
+        let url = "https://api.gargar.dev:8088/User"
         
         print(firstname, "\n", lastname)
+        
+        let requestBody: [String: String] = [
+            "firstname": firstname,
+            "lastname": lastname,
+        ]
+        
+        let bodyData = try? JSONEncoder().encode(requestBody)
+        
+        let _: User? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .post, headers: nil, body: bodyData, decoder: JSONDecoder())
     }
 }

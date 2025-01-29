@@ -45,8 +45,7 @@ struct ProfileSettingsView: View {
                 if let selectedProfileImage = profileSettingsViewModel.selectedProfileImage {
                     Image(uiImage: selectedProfileImage)
                         .profileImageModifier(foregroundColor: .clear)
-                } else if let profileImageURL = profileSettingsViewModel.profileImage,
-                          let url = URL(string: profileImageURL) {
+                } else if let profileImageURL = profileSettingsViewModel.profileImage, let url = URL(string: profileImageURL) {
                     AsyncImage(url: url) { phase in
                         switch phase {
                         case .empty:
@@ -92,7 +91,13 @@ struct ProfileSettingsView: View {
             
             Button(action: {
                 Task {
-                    profileSettingsViewModel.updateProfile()
+                    do {
+                       try await profileSettingsViewModel.updateProfile()
+                        try await profileSettingsViewModel.getCurrentUser()
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                    
                 }
             }) {
                 Text("Update profile")
@@ -107,7 +112,12 @@ struct ProfileSettingsView: View {
                 if let data = try? await item.loadTransferable(type: Data.self),
                    let uiImage = UIImage(data: data) {
                     profileSettingsViewModel.selectedProfileImage = uiImage
-                    await profileSettingsViewModel.updateProfileImage()
+                    do {
+                        try await profileSettingsViewModel.updateProfileImage()
+                        try await profileSettingsViewModel.getCurrentUser()
+                    } catch {
+                        print(error.localizedDescription)
+                    }
                 } else {
                     print("Failed to load image.")
                 }

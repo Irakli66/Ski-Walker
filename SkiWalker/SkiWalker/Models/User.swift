@@ -14,6 +14,7 @@ struct User: Codable {
     let companyId: String?
     let email: String
     let role: UserRole
+    let photo: Photo
 }
 
 enum UserRole: String, Codable, Hashable {
