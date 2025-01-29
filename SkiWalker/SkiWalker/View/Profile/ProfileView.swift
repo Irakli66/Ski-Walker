@@ -13,17 +13,11 @@ struct ProfileView: View {
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
     @State private var showToast = false
     
-    private let tabs: [ProfileTabItem] = [
-        ProfileTabItem(icon: "list.bullet.rectangle.portrait", title: "Order History", destination: AnyView(OrderHistoryView().background(.customBackground))),
-        ProfileTabItem(icon: "creditcard.fill", title: "Payment Methods", destination: AnyView(PaymentMethodsView())),
-        ProfileTabItem(icon: "mappin.circle", title: "Addresses", destination: AnyView(AddressesView())),
-        ProfileTabItem(icon: "gearshape.fill", title: "Settings", destination: AnyView(ProfileSettingsView()))
-    ]
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                profileHeader
+                ProfileHeaderView()
                 balanceSection
                 languageToggle
                 themeToggle
@@ -49,26 +43,6 @@ struct ProfileView: View {
         .background(Color.customBackground)
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.inline)
-        .toast(isPresented: $showToast, message: "Logged Out Successfully!", type: .success)
-    }
-    
-    private var profileHeader: some View {
-        HStack(spacing: 15) {
-            Image(systemName: "person.circle.fill")
-                .resizable()
-                .frame(width: 80, height: 80)
-                .foregroundStyle(.customPurple)
-                .shadow(radius: 4)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text("\(profileViewModel.user?.firstname ?? "") \(profileViewModel.user?.lastname ?? "")")
-                    .font(.system(size: 22, weight: .bold))
-                Text(profileViewModel.user?.email ?? "")
-                    .font(.system(size: 14))
-                    .foregroundStyle(.customGrey)
-            }
-            Spacer()
-        }
         .onAppear() {
             Task {
                 do {
@@ -78,6 +52,8 @@ struct ProfileView: View {
                 }
             }
         }
+        .environmentObject(profileViewModel)
+        .toast(isPresented: $showToast, message: "Logged Out Successfully!", type: .success)
     }
     
     private var balanceSection: some View {
@@ -141,7 +117,7 @@ struct ProfileView: View {
     
     private var tabNavigationList: some View {
         VStack(spacing: 1) {
-            ForEach(tabs) { tab in
+            ForEach(profileViewModel.tabs) { tab in
                 NavigationLink(destination: tab.destination .navigationBarHidden(true)) {
                     HStack {
                         Image(systemName: tab.icon)

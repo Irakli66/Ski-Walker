@@ -24,7 +24,6 @@ final class ProfileSettingsViewModel: ObservableObject {
         guard let currentUser = response else {
             fatalError("Could not fetch current user")
         }
-        print(currentUser)
         await MainActor.run { [weak self] in
             self?.firstname = currentUser.firstname ?? ""
             self?.lastname = currentUser.lastname ?? ""
@@ -64,15 +63,11 @@ final class ProfileSettingsViewModel: ObservableObject {
             body: body,
             decoder: JSONDecoder()
         )
-
-        print("Profile image upload complete.")
     }
     
     func updateProfile() async throws {
         let url = "https://api.gargar.dev:8088/User"
-        
-        print(firstname, "\n", lastname)
-        
+                
         let requestBody: [String: String] = [
             "firstname": firstname,
             "lastname": lastname,

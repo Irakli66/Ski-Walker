@@ -10,6 +10,7 @@ import PhotosUI
 struct ProfileSettingsView: View {
     @StateObject private var profileSettingsViewModel = ProfileSettingsViewModel()
     @State private var avatarItem: PhotosPickerItem?
+    @State private var showToast: Bool = false
     
     var body: some View {
         VStack {
@@ -25,6 +26,7 @@ struct ProfileSettingsView: View {
                 try await profileSettingsViewModel.getCurrentUser()
             }
         }
+        .toast(isPresented: $showToast, message: "Update successful", type: .success)
     }
     
     private var profileSettingsHeader: some View {
@@ -94,6 +96,7 @@ struct ProfileSettingsView: View {
                     do {
                        try await profileSettingsViewModel.updateProfile()
                         try await profileSettingsViewModel.getCurrentUser()
+                        showToast = true
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -115,6 +118,7 @@ struct ProfileSettingsView: View {
                     do {
                         try await profileSettingsViewModel.updateProfileImage()
                         try await profileSettingsViewModel.getCurrentUser()
+                        showToast = true
                     } catch {
                         print(error.localizedDescription)
                     }

@@ -8,7 +8,14 @@ import SwiftUI
 
 final class ProfileViewModel: ObservableObject {
     private let authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol
+    @Published var tabs: [ProfileTabItem] = [
+        ProfileTabItem(icon: "list.bullet.rectangle.portrait", title: "Order History", destination: AnyView(OrderHistoryView().background(.customBackground))),
+        ProfileTabItem(icon: "creditcard.fill", title: "Payment Methods", destination: AnyView(PaymentMethodsView())),
+        ProfileTabItem(icon: "mappin.circle", title: "Addresses", destination: AnyView(AddressesView())),
+        ProfileTabItem(icon: "gearshape.fill", title: "Settings", destination: AnyView(ProfileSettingsView()))
+    ]
     @Published var user: User?
+    @Published var porfileImage: String = ""
     
     init(authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler()) {
         self.authenticatedRequestHandler = authenticatedRequestHandler
@@ -30,8 +37,9 @@ final class ProfileViewModel: ObservableObject {
             fatalError("Could not fetch current user")
         }
         
-        DispatchQueue.main.async { [weak self] in
+        await MainActor.run { [weak self] in
             self?.user = currentUser
+            self?.porfileImage = currentUser.photo.url
         }
     }
 }
