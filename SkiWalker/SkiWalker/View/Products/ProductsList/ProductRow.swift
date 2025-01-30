@@ -24,37 +24,38 @@ struct ProductRow: View {
                     Text(CurrencyFormatter.formatPriceToGEL(product.price))
                         .font(.subheadline)
                         .foregroundColor(Color.customGrey)
-
-                    HStack {
-                        Spacer()
-
-                        Button(action: toggleFavorite) {
-                            Image(systemName: product.favorite ? "heart.fill" : "heart")
-                                .resizable()
-                                .foregroundStyle(Color.customGrey)
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-
-                        Button(action: addToCart) {
-                            HStack(spacing: 5) {
-                                Image("cart")
-                                    .resizable()
-                                    .frame(width: 16, height: 16)
-                                Text("Add")
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                            }
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 20)
-                            .background(Color.customPurple)
-                            .foregroundColor(Color.customWhite)
-                            .cornerRadius(8)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
                 }
+                Spacer()
+                VStack (alignment: .trailing) {
+                    Button(action: toggleFavorite) {
+                        Image(systemName: product.favorite ? "heart.fill" : "heart")
+                            .resizable()
+                            .foregroundStyle(Color.customGrey)
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+
+                    Spacer()
+                    
+                    Button(action: addToCart) {
+                        HStack(spacing: 5) {
+                            Image("cart")
+                                .resizable()
+                                .frame(width: 16, height: 16)
+                            Text("Add")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                        }
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 20)
+                        .background(Color.customPurple)
+                        .foregroundColor(Color.customWhite)
+                        .cornerRadius(8)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+                .padding(.trailing, 10)
             }
             .background(Color.clear)
             .cornerRadius(12)
