@@ -84,23 +84,32 @@ final class LoginViewController: UIViewController {
     private let loginButton = CustomButton(buttonText: NSLocalizedString("Log in", comment: ""))
     
     private let googleButton: UIButton = {
-        var configuration = UIButton.Configuration.filled()
-        configuration.image = UIImage(named: "google")
-        configuration.title = NSLocalizedString("Continue with Google", comment: "")
-        configuration.baseBackgroundColor = .customWhite
-        configuration.baseForegroundColor = .label
-        configuration.imagePadding = 10
-        configuration.cornerStyle = .medium
-        
-        let button = UIButton(configuration: configuration)
+        let button = UIButton()
+        button.setImage(UIImage(named: "google"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 10
-        
+        button.backgroundColor = .customWhite
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.2
         button.layer.shadowOffset = CGSize(width: 0, height: 4)
         button.layer.shadowRadius = 6
         button.layer.masksToBounds = false
+        
+        return button
+    }()
+    
+    private let appleButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "applelogo"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 10
+        button.backgroundColor = .black
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.2
+        button.layer.shadowOffset = CGSize(width: 0, height: 4)
+        button.layer.shadowRadius = 6
+        button.layer.masksToBounds = false
+        button.tintColor = .white
         
         return button
     }()
@@ -191,13 +200,23 @@ final class LoginViewController: UIViewController {
         dontHaveAccountStackView.axis = .horizontal
         dontHaveAccountStackView.distribution = .equalSpacing
         
+        let googleAppleSigninStackView = UIStackView()
+        googleAppleSigninStackView.axis = .horizontal
+        googleAppleSigninStackView.alignment = .center
+        googleAppleSigninStackView.distribution = .fillEqually
+        googleAppleSigninStackView.spacing = 10
+        
+        googleAppleSigninStackView.addArrangedSubview(googleButton)
+        googleAppleSigninStackView.addArrangedSubview(appleButton)
+        
         [dontHaveAccountLabel, signUpButton].forEach { dontHaveAccountStackView.addArrangedSubview($0) }
-        [loginButton, googleButton, dontHaveAccountStackView].forEach { contentStackView.addArrangedSubview($0) }
+        [loginButton, googleAppleSigninStackView, dontHaveAccountStackView].forEach { contentStackView.addArrangedSubview($0) }
         
         NSLayoutConstraint.activate([
             footerStackView.leftAnchor.constraint(equalTo: pageWrapperStakView.leftAnchor),
             footerStackView.rightAnchor.constraint(equalTo: pageWrapperStakView.rightAnchor),
             googleButton.heightAnchor.constraint(equalToConstant: 50),
+            appleButton.heightAnchor.constraint(equalToConstant: 50),
         ])
         
         loginButton.addAction(UIAction(handler: { [weak self] action in
@@ -251,7 +270,7 @@ struct LoginView: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
-
+        
     }
 }
 
