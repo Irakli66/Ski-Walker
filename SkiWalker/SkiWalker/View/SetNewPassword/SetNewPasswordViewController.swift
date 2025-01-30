@@ -7,7 +7,7 @@
 import UIKit
 
 final class SetNewPasswordViewController: UIViewController {
-    private let forgotPasswordViewModel = ForgotPasswordViewModel()
+    private let setNewPasswordViewModel = SetNewPasswordViewModel()
     var email: String?
     private let pageWrapperStackView: UIStackView = {
         let stackView = UIStackView()
@@ -84,7 +84,7 @@ final class SetNewPasswordViewController: UIViewController {
     private func updatePassword() {
         Task {
             do {
-                let _ = try await forgotPasswordViewModel.updatePassword(email: email ?? "", mailCode: mailCodeField.getText(), password: passwordField.getText(), confirmPassword: confirmPasswordField.getText())
+                let _ = try await setNewPasswordViewModel.updatePassword(email: email ?? "", mailCode: mailCodeField.getText(), password: passwordField.getText(), confirmPassword: confirmPasswordField.getText())
             } catch {
                 AlertManager.showAlert(message: error.localizedDescription)
             }
