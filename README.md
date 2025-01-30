@@ -60,6 +60,9 @@ The app includes key e-commerce features such as product browsing, searching, a 
 - View detailed product information.
 - Add products to **cart** or **favorites**.
 
+### Screenshots:
+![Home Page](https://ibb.co/9HjKwkcX)
+
 ## 🔧 Installation
 1. Clone the repository:
    ```sh
