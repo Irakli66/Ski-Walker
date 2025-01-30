@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TabBarView: View {
     @State private var selectedTab: Tab = .home
+    @AppStorage("cartCount") private var cartCount: Int = 0
     
     private let tabs: [(icon: String, activeIcon: String, tab: Tab)] = [
         ("home",      "homeActive",      .home),
@@ -24,11 +25,20 @@ struct TabBarView: View {
             HStack {
                 ForEach(tabs, id: \.tab) { item in
                     Spacer()
-                    VStack {
+                    ZStack {
                         Image(selectedTab == item.tab ? item.activeIcon : item.icon)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 24, height: 24)
+                        if item.tab == .cart {
+                            Text("\(cartCount)")
+                                .font(.system(size: 12))
+                                .padding(5)
+                                .background(.red)
+                                .foregroundStyle(.white)
+                                .clipShape(Circle())
+                                .offset(x: 13, y: -10)
+                        }
                     }
                     .padding(15)
                     .background(selectedTab == item.tab ? Color.customBlue : Color.customWhite)

@@ -4,7 +4,7 @@
 //
 //  Created by irakli kharshiladze on 18.01.25.
 //
-import Foundation
+import SwiftUI
 
 protocol CartManagerProtocol {
     func fetchCartItems() async throws -> [CartItem]
@@ -14,6 +14,7 @@ protocol CartManagerProtocol {
 
 final class CartManager: CartManagerProtocol {
     private let authenticatedRequestHanlder: AuthenticatedRequestHandlerProtocol
+    @AppStorage("cartCount") private var cartCount: Int = 0
     
     init(authenticatedRequestHanlder: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler()) {
         self.authenticatedRequestHanlder = authenticatedRequestHanlder
@@ -27,6 +28,8 @@ final class CartManager: CartManagerProtocol {
         guard let response else {
             return []
         }
+        
+        cartCount = response.productInCarts.count
         return response.productInCarts
     }
     
@@ -35,11 +38,15 @@ final class CartManager: CartManagerProtocol {
 
         let _: CartItem? = try await authenticatedRequestHanlder.sendRequest(urlString: url, method: .post, headers: nil, body: nil, decoder: JSONDecoder())
         
+        cartCount = try await fetchCartItems().count
+        
     }
     
     func deleteProductFromCart(productId: String) async throws {
         let url = "https://api.gargar.dev:8088/Cart/\(productId)"
                 
         let _: Cart? = try await authenticatedRequestHanlder.sendRequest(urlString: url, method: .delete, headers: nil, body: nil, decoder: JSONDecoder())
+        
+        cartCount = try await fetchCartItems().count
     }
 }
