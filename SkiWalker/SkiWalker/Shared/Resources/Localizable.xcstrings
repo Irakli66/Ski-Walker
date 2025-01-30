@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -876,6 +879,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "გაიმეორე პაროლი"
+          }
+        }
+      }
+    },
+    "Sale products" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფასდაკლება"
           }
         }
       }

@@ -6,8 +6,6 @@
 //
 import SwiftUI
 
-import SwiftUI
-
 struct HomeView: View {
     @StateObject private var homeViewModel = HomeViewModel()
     @State private var searchText: String = ""
@@ -77,23 +75,45 @@ struct HomeView: View {
             
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(.customWhite)
+                    .fill(.white)
                     .frame(maxWidth: .infinity, maxHeight: 43)
                 Image("searchBarBackground")
                     .resizable()
                     .frame(maxWidth: .infinity, maxHeight: 43)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
-                TextField("Search skis, boards, gear...", text: $searchText, onCommit: {
-                    if !searchText.isEmpty {
-                        searchHistory.append(searchText)
+                
+                if searchText.isEmpty {
+                    Text("Search skis, boards, gear...")
+                        .foregroundColor(.black)
+                        .padding(.leading, 12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                
+                HStack {
+                    TextField("", text: $searchText, onCommit: {
+                        if !searchText.isEmpty {
+                            searchHistory.append(searchText)
+                            navigateToProducts = true
+                        }
+                    })
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .padding(10)
+                    .background(.clear)
+                    .foregroundStyle(.black)
+                    .cornerRadius(10)
+                    .submitLabel(.search)
+                    
+                    Spacer()
+                    
+                    Button(action: {
                         navigateToProducts = true
+                    }){
+                        Image(systemName: "magnifyingglass.circle")
+                            .foregroundStyle(.white)
+                            .font(.system(size: 24))
                     }
-                })
-                .textFieldStyle(PlainTextFieldStyle())
-                .padding(10)
-                .background(.clear)
-                .cornerRadius(10)
-                .submitLabel(.search)
+                }
+                
             }
             
             if !searchText.isEmpty {
