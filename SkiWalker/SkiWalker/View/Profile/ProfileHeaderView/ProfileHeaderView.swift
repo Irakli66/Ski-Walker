@@ -11,7 +11,7 @@ struct ProfileHeaderView: View {
     @EnvironmentObject var viewModel: ProfileViewModel
     var body: some View {
         HStack(spacing: 15) {
-            AsyncImage(url: URL(string: viewModel.user?.photo.url ?? "")) { phase in
+            AsyncImage(url: URL(string: viewModel.user?.photo?.url ?? "")) { phase in
                 switch phase {
                 case .empty:
                     ProgressView()

@@ -27,7 +27,7 @@ final class ProfileSettingsViewModel: ObservableObject {
         await MainActor.run { [weak self] in
             self?.firstname = currentUser.firstname ?? ""
             self?.lastname = currentUser.lastname ?? ""
-            self?.profileImage = currentUser.photo.url
+            self?.profileImage = currentUser.photo?.url ?? ""
         }
     }
     

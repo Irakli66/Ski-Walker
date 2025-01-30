@@ -39,7 +39,7 @@ final class ProfileViewModel: ObservableObject {
         
         await MainActor.run { [weak self] in
             self?.user = currentUser
-            self?.porfileImage = currentUser.photo.url
+            self?.porfileImage = currentUser.photo?.url ?? ""
         }
     }
 }
