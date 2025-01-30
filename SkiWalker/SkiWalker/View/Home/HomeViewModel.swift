@@ -62,14 +62,14 @@ final class HomeViewModel: ObservableObject {
                 
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){ [weak self] in
-                self?.isLoading = false
+            await MainActor.run {
+                isLoading = false
             }
             
         } catch {
             print(error.localizedDescription)
         }
-
+        
     }
     
     func reloadBrowsingHistory() {

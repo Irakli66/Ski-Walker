@@ -39,14 +39,12 @@ struct HomeView: View {
     
     @ViewBuilder private var content: some View {
         if homeViewModel.isLoading {
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 20) {
-                    SkeletonView()
-                        .frame(height: 200)
-                    
-                    SkeletonView()
-                        .frame(height: 200)
-                }
+            VStack(spacing: 20) {
+                SkeletonView()
+                    .frame(height: 200)
+                
+                SkeletonView()
+                    .frame(height: 200)
             }
         } else {
             VStack {
