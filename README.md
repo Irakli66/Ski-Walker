@@ -60,6 +60,12 @@ The app includes key e-commerce features such as product browsing, searching, a 
 - View detailed product information.
 - Add products to **cart** or **favorites**.
 
+## 🔧 Installation
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/Irakli66/Ski-Walker.git
+
+
 ### Screenshots:
 ![Sign in](https://i.imgur.com/Nj7AORX.png)
 ![Sign up](https://i.imgur.com/Gr2Rd46.png)
@@ -74,8 +80,3 @@ The app includes key e-commerce features such as product browsing, searching, a 
 ![Settings](https://i.imgur.com/uQMq8de.png)
 ![Checkout](https://i.imgur.com/EpmIWN7.png)
 ![Categories](https://i.imgur.com/Zldwksp.png)
-
-## 🔧 Installation
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/Irakli66/Ski-Walker.git
