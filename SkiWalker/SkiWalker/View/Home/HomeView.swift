@@ -38,13 +38,21 @@ struct HomeView: View {
     
     @ViewBuilder private var content: some View {
         if homeViewModel.isLoading {
-            VStack(spacing: 20) {
+            VStack(alignment: .leading, spacing: 10) {
                 SkeletonView()
-                    .frame(height: 200)
-                
+                    .cornerRadius(5)
+                    .frame(width: 125, height: 25)
                 SkeletonView()
-                    .frame(height: 200)
+                    .cornerRadius(5)
+                    .frame(height: 150)
+                SkeletonView()
+                    .cornerRadius(5)
+                    .frame(width: 150, height: 25)
+                SkeletonView()
+                    .cornerRadius(5)
+                    .frame(height: 125)
             }
+            .padding(.top, 20)
         } else {
             VStack {
                 ProductsSlideShowView(title: "Popular products", products: homeViewModel.popularProducts)

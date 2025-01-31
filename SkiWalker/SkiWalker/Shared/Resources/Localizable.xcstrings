@@ -68,7 +68,7 @@
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "დამატება"
+            "value" : "კალათა"
           }
         }
       }
@@ -216,12 +216,32 @@
         }
       }
     },
+    "Check your funds and try again" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეამოწმე ბალანსი და ცადე ხელახლა"
+          }
+        }
+      }
+    },
     "Check your mail for a code" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "შეამოწმე კოდი მეილზე"
+          }
+        }
+      }
+    },
+    "Check your orders here!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეკვეთების ისგორია"
           }
         }
       }
@@ -778,6 +798,16 @@
         }
       }
     },
+    "Payment Failed! ❌" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადახდა წარუმატებელია ❌"
+          }
+        }
+      }
+    },
     "Payment Methods" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -785,6 +815,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "გადახდის მეთოდები"
+          }
+        }
+      }
+    },
+    "Payment Successful! 🎉" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადახდა წარმატებულია 🎉"
           }
         }
       }
@@ -1054,6 +1094,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ქუჩა"
+          }
+        }
+      }
+    },
+    "Thanks for purchase" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მადლობა შეძენისთვის"
           }
         }
       }

@@ -10,22 +10,23 @@ import SwiftUI
 struct ProductRow: View {
     @EnvironmentObject var productsViewModel: ProductsViewModel
     let product: Product
-
+    
     var body: some View {
         NavigationLink(destination: ProductDetailsView(productId: product.id)) {
-            HStack(alignment: .top, spacing: 15) {
+            HStack(alignment: .top, spacing: 10) {
                 ReusableAsyncImageView(url: product.photos[0].url)
-
+                
                 VStack(alignment: .leading, spacing: 8) {
                     Text(product.name)
-                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(Color.customBlack)
-
+                    
                     Text(CurrencyFormatter.formatPriceToGEL(product.price))
                         .font(.subheadline)
                         .foregroundColor(Color.customGrey)
                 }
-                Spacer()
+                .frame(maxWidth: .infinity)
                 VStack (alignment: .trailing) {
                     Button(action: toggleFavorite) {
                         Image(systemName: product.favorite ? "heart.fill" : "heart")
@@ -35,7 +36,7 @@ struct ProductRow: View {
                             .frame(width: 20, height: 20)
                     }
                     .buttonStyle(PlainButtonStyle())
-
+                    
                     Spacer()
                     
                     Button(action: addToCart) {
@@ -44,11 +45,11 @@ struct ProductRow: View {
                                 .resizable()
                                 .frame(width: 16, height: 16)
                             Text("Add")
-                                .font(.subheadline)
+                                .font(.system(size: 12))
                                 .fontWeight(.semibold)
                         }
                         .padding(.vertical, 8)
-                        .padding(.horizontal, 20)
+                        .padding(.horizontal, 10)
                         .background(Color.customPurple)
                         .foregroundColor(Color.customWhite)
                         .cornerRadius(8)
@@ -64,7 +65,7 @@ struct ProductRow: View {
             .padding(.horizontal)
         }
     }
-
+    
     private func addToCart() {
         Task {
             do {
@@ -74,7 +75,7 @@ struct ProductRow: View {
             }
         }
     }
-
+    
     private func toggleFavorite() {
         Task {
             if product.favorite {

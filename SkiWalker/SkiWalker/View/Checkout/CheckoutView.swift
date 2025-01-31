@@ -10,9 +10,11 @@ import SwiftUI
 struct CheckoutView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var checkoutViewModel = CheckoutViewModel()
+    
     let productId: String?
     let quantity: Int?
-    
+    @State private var navigateToCheckoutStatus = false
+    @State private var paymentStatus: PaymentStatus = .failed
     
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
@@ -35,7 +37,7 @@ struct CheckoutView: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 30) {
                     DeliveryAddressView()
-                    deliveryDateSection
+                    DeliveryDateView()
                     Divider()
                     productsSection
                     OrderPaymentsView()
@@ -50,32 +52,8 @@ struct CheckoutView: View {
             getCheckoutData()
         }
         .environmentObject(checkoutViewModel)
-    }
-    
-    private var deliveryDateSection: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            Text("Pick delivery date:")
-                .font(.system(size: 13, weight: .regular))
-            HStack {
-                ForEach(checkoutViewModel.deliveryDates, id: \.self) { date in
-                    VStack {
-                        Text(checkoutViewModel.formatDateToDayAndMonth(date))
-                            .foregroundStyle(date == checkoutViewModel.selectedDate ? Color.customWhite : Color.customPurple)
-                            .font(.system(size: 13, weight: .regular))
-                        Text("FREE")
-                            .foregroundStyle(Color.green)
-                            .font(.system(size: 13, weight: .regular))
-                    }
-                    .padding(.vertical, 5)
-                    .padding(.horizontal, 15)
-                    .background(date == checkoutViewModel.selectedDate ? Color.customPurple : Color.customWhite)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                    .onTapGesture {
-                        checkoutViewModel.selectedDate = date
-                    }
-                }
-                Spacer()
-            }
+        .navigationDestination(isPresented: $navigateToCheckoutStatus) {
+            CheckoutStatusView(paymentStatus: paymentStatus).navigationBarBackButtonHidden(true)
         }
     }
     
@@ -153,13 +131,13 @@ struct CheckoutView: View {
                 } else {
                     try await checkoutViewModel.cartPayment()
                 }
-                AlertManager.showAlertWithActions(title: "Payment Succesful", message: "Navigate back", actions: [UIAlertAction(title: "OK", style: .default) { _ in
-                    presentationMode.wrappedValue.dismiss()
-                }])
+                paymentStatus = .success
+                navigateToCheckoutStatus = true
             } catch {
                 print(error.localizedDescription)
                 
-                AlertManager.showAlert(title: "Payment Failed", message: "check your funds")
+                paymentStatus = .failed
+                navigateToCheckoutStatus = true
             }
         }
     }
