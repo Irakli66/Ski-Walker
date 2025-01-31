@@ -67,16 +67,16 @@ The app includes key e-commerce features such as product browsing, searching, a 
 
 
 ### Screenshots:
-![Sign in](https://i.imgur.com/Nj7AORX.png)
-![Sign up](https://i.imgur.com/Gr2Rd46.png)
-![Home](https://i.imgur.com/aG9YGYs.png)
-![Favorites](https://i.imgur.com/P7IvLhZ.png)
-![Cart](https://i.imgur.com/vRwyYir.png)
-![Profile](https://i.imgur.com/eK9jW9O.png)
-![Product](https://i.imgur.com/TFdVfJE.png)
-![Order History](https://i.imgur.com/7tph0F7.png)
-![Payment Methods](https://i.imgur.com/qc42PqE.png)
-![Address](https://i.imgur.com/DorxnZL.png)
-![Settings](https://i.imgur.com/uQMq8de.png)
-![Checkout](https://i.imgur.com/EpmIWN7.png)
-![Categories](https://i.imgur.com/Zldwksp.png)
+<img src="https://i.imgur.com/Nj7AORX.png" height="300">
+<img src="https://i.imgur.com/Gr2Rd46.png" height="300">
+<img src="https://i.imgur.com/aG9YGYs.png" height="300">
+<img src="https://i.imgur.com/P7IvLhZ.png" height="300">
+<img src="https://i.imgur.com/vRwyYir.png" height="300">
+<img src="https://i.imgur.com/eK9jW9O.png" height="300">
+<img src="https://i.imgur.com/TFdVfJE.png" height="300">
+<img src="https://i.imgur.com/7tph0F7.png" height="300">
+<img src="https://i.imgur.com/qc42PqE.png" height="300">
+<img src="https://i.imgur.com/DorxnZL.png" height="300">
+<img src="https://i.imgur.com/uQMq8de.png" height="300">
+<img src="https://i.imgur.com/EpmIWN7.png" height="300">
+<img src="https://i.imgur.com/Zldwksp.png" height="300">
