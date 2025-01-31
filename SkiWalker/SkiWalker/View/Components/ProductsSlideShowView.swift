@@ -9,7 +9,6 @@ import SwiftUI
 struct ProductsSlideShowView: View {
     let title: String
     let products: [Product]
-    let isSale: Bool
     
     var body: some View {
         NavigationStack {
@@ -39,7 +38,7 @@ struct ProductsSlideShowView: View {
                     Text(product.name)
                         .font(.system(size: 16, weight: .semibold))
                     
-                    if isSale {
+                    if product.discount ?? 0 > 0 {
                         salePriceView(for: product)
                     } else {
                         regularPriceView(for: product)
@@ -81,7 +80,7 @@ struct ProductsSlideShowView: View {
     
     @ViewBuilder
     private func regularPriceView(for product: Product) -> some View {
-        Text(CurrencyFormatter.formatPriceToGEL(product.price))
+        Text(CurrencyFormatter.formatPriceToGEL(product.finalPrice))
             .foregroundColor(.primary)
             .font(.subheadline)
     }

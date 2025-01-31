@@ -38,7 +38,7 @@ struct BrowsingHistoryView: View {
                     Text(product.name)
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundStyle(Color.customBlack)
-                    Text(product.finalPrice.formatted(.currency(code: "GEL")))
+                    Text(CurrencyFormatter.formatPriceToGEL(product.finalPrice))
                         .foregroundColor(.primary)
                         .font(.subheadline)
                 }

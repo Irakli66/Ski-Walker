@@ -20,7 +20,7 @@ struct ProductDetailsView: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 20) {
                     productImageCarousel
-                    productDetails
+                    ProductInfo()
                     productQuantity
                     productActionButtons
                     productDescription
@@ -30,6 +30,7 @@ struct ProductDetailsView: View {
         .padding(.horizontal)
         .background(Color.customBackground)
         .navigationBarBackButtonHidden(true)
+        .environmentObject(productViewModel)
         .onAppear() {
             Task {
                 await productViewModel.fetchProduct(with: productId)
@@ -79,30 +80,6 @@ struct ProductDetailsView: View {
         .frame(height: 270)
         .tabViewStyle(.page)
         
-    }
-    
-    private var productDetails: some View {
-        VStack(alignment: .leading, spacing: 25) {
-            Text(productViewModel.product?.name ?? "")
-                .font(.system(size: 16, weight: .bold))
-            
-            HStack(spacing: 5) {
-                Text("Seller:")
-                    .font(.system(size: 14, weight: .regular))
-                    .foregroundStyle(Color.customGrey)
-                Text(productViewModel.vendor?.companyName ?? "")
-                    .foregroundStyle(Color.customPurple)
-                    .font(.system(size: 14, weight: .medium))
-                Spacer()
-            }
-            
-            VStack(alignment: .leading, spacing: 5) {
-                Text(CurrencyFormatter.formatPriceToGEL(productViewModel.product?.finalPrice ?? 0))
-                    .font(.system(size: 20, weight: .bold))
-                Text("Best Price Guarantee")
-                    .font(.system(size: 12, weight: .regular))
-            }
-        }
     }
     
     private var productQuantity: some View {

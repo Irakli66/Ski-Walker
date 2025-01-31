@@ -11,7 +11,6 @@ struct HomeView: View {
     @State private var searchText: String = ""
     @State private var navigateToProducts: Bool = false
     @State private var searchHistory: [String] = []
-    private var products = ["person", "photo.stack.fill", "simcard.fill"]
     
     var body: some View {
         VStack(spacing: 20) {
@@ -48,9 +47,9 @@ struct HomeView: View {
             }
         } else {
             VStack {
-                ProductsSlideShowView(title: "Popular products", products: homeViewModel.popularProducts, isSale: false)
+                ProductsSlideShowView(title: "Popular products", products: homeViewModel.popularProducts)
                 
-                ProductsSlideShowView(title: "Sale products", products: homeViewModel.saleProducts, isSale: true)
+                ProductsSlideShowView(title: "Sale products", products: homeViewModel.saleProducts)
                 
                 browsingHistory
             }
