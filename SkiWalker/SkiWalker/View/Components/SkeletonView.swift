@@ -6,33 +6,19 @@
 //
 import SwiftUI
 
+
 struct SkeletonView: View {
-    @State private var isAnimating = false
+    @State private var startPoint: UnitPoint = .init(x: -1.8, y: -1.2)
+    @State private var endPoint: UnitPoint = .init(x: 0, y: -0.2)
+    
+    private var gradientColors = [Color.gray.opacity(0.2), Color.white.opacity(0.2), Color.gray.opacity(0.2)]
     
     var body: some View {
-        RoundedRectangle(cornerRadius: 10)
-            .fill(Color.gray.opacity(0.2))
-            .overlay(
-                GeometryReader { geometry in
-                    LinearGradient(
-                        gradient: Gradient(colors: [
-                            Color.clear,
-                            Color.gray.opacity(0.3),
-                            Color.clear
-                        ]),
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                    .offset(x: isAnimating ? geometry.size.width : -geometry.size.width)
-                }
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+        LinearGradient(colors: gradientColors, startPoint: startPoint, endPoint: endPoint)
             .onAppear {
-                withAnimation(
-                    .linear(duration: 1)
-                    .repeatForever(autoreverses: false)
-                ) {
-                    isAnimating = true
+                withAnimation(.easeInOut(duration: 1).repeatForever(autoreverses: false)) {
+                    startPoint = .init(x: 1, y: 1)
+                    endPoint = .init(x: 2.2, y: 2.2)
                 }
             }
     }
