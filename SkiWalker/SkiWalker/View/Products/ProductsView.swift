@@ -60,20 +60,16 @@ struct ProductsView: View {
             
             if !searchQuery.isEmpty {
                 Text(searchQuery)
-                    .font(.system(size: 20, weight: .medium))
-                    .foregroundColor(Color.customBlack)
+                    .categoryTitleModifier()
             } else if searchQuery.isEmpty, subCategory.isEmpty, category.isEmpty {
                 Text("Everything")
-                    .font(.system(size: 20, weight: .medium))
-                    .foregroundColor(Color.customBlack)
+                    .categoryTitleModifier()
             } else if subCategory.isEmpty {
                 Text(category)
-                    .font(.system(size: 20, weight: .medium))
-                    .foregroundColor(Color.customBlack)
+                    .categoryTitleModifier()
             } else {
                 Text(subCategory)
-                    .font(.system(size: 20, weight: .medium))
-                    .foregroundColor(Color.customBlack)
+                    .categoryTitleModifier()
             }
         }
         .padding()
