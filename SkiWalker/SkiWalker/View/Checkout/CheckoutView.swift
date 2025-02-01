@@ -17,43 +17,45 @@ struct CheckoutView: View {
     @State private var paymentStatus: PaymentStatus = .failed
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 30) {
-            ZStack {
-                HStack {
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Image(systemName: "chevron.backward")
-                            .imageScale(.large)
-                            .foregroundColor(.primary)
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 30) {
+                ZStack {
+                    HStack {
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Image(systemName: "chevron.backward")
+                                .imageScale(.large)
+                                .foregroundColor(.primary)
+                        }
+                        Spacer()
                     }
-                    Spacer()
+                    
+                    Text("Checkout")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(Color.customPurple)
                 }
-                
-                Text("Checkout")
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(Color.customPurple)
-            }
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 30) {
-                    DeliveryAddressView()
-                    DeliveryDateView()
-                    Divider()
-                    productsSection
-                    OrderPaymentsView()
-                    Spacer()
-                    orderDetailsSection
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 30) {
+                        DeliveryAddressView()
+                        DeliveryDateView()
+                        Divider()
+                        productsSection
+                        OrderPaymentsView()
+                        Spacer()
+                        orderDetailsSection
+                    }
                 }
             }
-        }
-        .padding(.horizontal)
-        .background(Color.customBackground)
-        .onAppear() {
-            getCheckoutData()
-        }
-        .environmentObject(checkoutViewModel)
-        .navigationDestination(isPresented: $navigateToCheckoutStatus) {
-            CheckoutStatusView(paymentStatus: paymentStatus).navigationBarBackButtonHidden(true)
+            .padding(.horizontal)
+            .background(Color.customBackground)
+            .onAppear() {
+                getCheckoutData()
+            }
+            .environmentObject(checkoutViewModel)
+            .navigationDestination(isPresented: $navigateToCheckoutStatus) {
+                CheckoutStatusView(paymentStatus: paymentStatus).navigationBarBackButtonHidden(true)
+            }
         }
     }
     
