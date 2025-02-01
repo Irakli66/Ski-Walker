@@ -30,11 +30,22 @@ struct ProfileHeaderView: View {
             }
             
             VStack(alignment: .leading, spacing: 4) {
-                Text("\(viewModel.user?.firstname ?? "") \(viewModel.user?.lastname ?? "")")
-                    .font(.system(size: 22, weight: .bold))
-                Text(viewModel.user?.email ?? "")
-                    .font(.system(size: 14))
-                    .foregroundStyle(.customGrey)
+                if viewModel.user?.role == .customer {
+                    Text("\(viewModel.user?.firstname ?? "") \(viewModel.user?.lastname ?? "")")
+                        .font(.system(size: 22, weight: .bold))
+                    Text(viewModel.user?.email ?? "")
+                        .font(.system(size: 14))
+                        .foregroundStyle(.customGrey)
+                } else {
+                    Text(viewModel.user?.companyName ?? "")
+                        .font(.system(size: 22, weight: .bold))
+                    Text(viewModel.user?.companyId ?? "")
+                        .font(.system(size: 14))
+                        .foregroundStyle(.customGrey)
+                    Text(viewModel.user?.email ?? "")
+                        .font(.system(size: 14))
+                        .foregroundStyle(.customGrey)
+                }
             }
             Spacer()
         }

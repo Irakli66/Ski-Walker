@@ -69,12 +69,14 @@ final class SignupViewModel {
     }
     
     private func validateEmail(_ email: String) throws {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
         let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        
         if !emailPredicate.evaluate(with: email) {
             throw SignupErrors.invalidEmail
         }
     }
+    
     
     private func validatePassword(_ password: String) throws {
         let passwordRegex = "^(?=.*[A-Z])(?=.*[!@#$&*])[A-Za-z\\d!@#$&*]{6,}$"
