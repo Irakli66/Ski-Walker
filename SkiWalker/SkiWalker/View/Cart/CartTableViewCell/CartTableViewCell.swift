@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol CartTableViewCellDelegate: AnyObject {
     func didChangeStepperValue(cell: CartTableViewCell, adjustedStepValue: Int)
@@ -17,13 +18,13 @@ final class CartTableViewCell: UITableViewCell {
     weak var delegate: CartTableViewCellDelegate?
     private var lastStepperValue: Double = 1
     
-    private let productImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        return imageView
+    private let productImageContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
+    
+    private var hostingController: UIHostingController<ReusableAsyncImageView>?
     
     private let productDetailsStackView: UIStackView = {
         let stackView = UIStackView()
@@ -97,7 +98,6 @@ final class CartTableViewCell: UITableViewCell {
     private let favoritesButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-//        button.setImage(UIImage(systemName: "heart"), for: .normal)
         button.tintColor = .customGrey
         return button
     }()
@@ -109,7 +109,6 @@ final class CartTableViewCell: UITableViewCell {
         button.tintColor = .red
         return button
     }()
-    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -123,10 +122,6 @@ final class CartTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
     private func setupUI() {
         setupProductImageView()
         setupProductDetailsStackView()
@@ -135,13 +130,13 @@ final class CartTableViewCell: UITableViewCell {
     }
     
     private func setupProductImageView() {
-        contentView.addSubview(productImageView)
+        contentView.addSubview(productImageContainer)
         
         NSLayoutConstraint.activate([
-            productImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            productImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            productImageView.heightAnchor.constraint(equalToConstant: 100),
-            productImageView.widthAnchor.constraint(equalTo: productImageView.heightAnchor),
+            productImageContainer.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            productImageContainer.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            productImageContainer.heightAnchor.constraint(equalToConstant: 100),
+            productImageContainer.widthAnchor.constraint(equalTo: productImageContainer.heightAnchor),
         ])
     }
     
@@ -149,7 +144,7 @@ final class CartTableViewCell: UITableViewCell {
         contentView.addSubview(productDetailsStackView)
         
         NSLayoutConstraint.activate([
-            productDetailsStackView.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 20),
+            productDetailsStackView.leadingAnchor.constraint(equalTo: productImageContainer.trailingAnchor, constant: 20),
             productDetailsStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
             productDetailsStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             productDetailsStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
@@ -158,10 +153,8 @@ final class CartTableViewCell: UITableViewCell {
     
     private func setupProductNameAndPriceStackView() {
         productDetailsStackView.addArrangedSubview(productNameAndPriceStackView)
-        
         productNameAndPriceStackView.addArrangedSubview(productNameLabel)
         productNameAndPriceStackView.addArrangedSubview(productPriceLabel)
-        
     }
     
     private func setupActionButtonsStackView() {
@@ -202,7 +195,6 @@ final class CartTableViewCell: UITableViewCell {
     }
     
     func configureCell(with cartItem: CartItem) {
-        productImageView.imageFrom(url:  URL(string: cartItem.product.photos[0].url)!)
         productNameLabel.text = cartItem.product.name
         productPriceLabel.text = CurrencyFormatter.formatPriceToGEL(cartItem.product.finalPrice)
         quantityStepper.value = Double(cartItem.count)
@@ -210,5 +202,26 @@ final class CartTableViewCell: UITableViewCell {
         quantityLabel.text = "\(cartItem.count)"
         quantityStepper.maximumValue = Double(cartItem.product.stock)
         favoritesButton.setImage(UIImage(systemName: cartItem.product.favorite ? "heart.fill" : "heart"), for: .normal)
+        setupSwiftUIImage(url: cartItem.product.photos[0].url)
+    }
+    
+    private func setupSwiftUIImage(url: String) {
+        hostingController?.view.removeFromSuperview()
+        hostingController = nil
+        
+        let swiftUIImage = ReusableAsyncImageView(url: url, width: 100, height: 100, cornerRadius: 10)
+        let hostingController = UIHostingController(rootView: swiftUIImage)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostingController.view.backgroundColor = .clear
+        
+        productImageContainer.addSubview(hostingController.view)
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: productImageContainer.topAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: productImageContainer.bottomAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: productImageContainer.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: productImageContainer.trailingAnchor),
+        ])
+        
+        self.hostingController = hostingController
     }
 }

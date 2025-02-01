@@ -6,17 +6,18 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class OrderHistoryDetailsTableViewCell: UITableViewCell {
     static let identifier = "OrderHistoryDetailsTableViewCell"
     
-    private let productImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        return imageView
+    private let productImageContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
+    
+    private var hostingController: UIHostingController<ReusableAsyncImageView>?
     
     private let productNameLabel: UILabel = {
         let label = UILabel()
@@ -50,23 +51,19 @@ final class OrderHistoryDetailsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
     private func setupUI() {
         setupProductImageView()
         setupProductDetails()
     }
     
     private func setupProductImageView() {
-        contentView.addSubview(productImageView)
+        contentView.addSubview(productImageContainer)
         
         NSLayoutConstraint.activate([
-            productImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            productImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            productImageView.widthAnchor.constraint(equalToConstant: 100),
-            productImageView.heightAnchor.constraint(equalToConstant: 100)
+            productImageContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            productImageContainer.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            productImageContainer.widthAnchor.constraint(equalToConstant: 100),
+            productImageContainer.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
     
@@ -76,18 +73,38 @@ final class OrderHistoryDetailsTableViewCell: UITableViewCell {
         [productNameLabel, productStatus, productQuantity, productPrice].forEach { productDetailsStackView.addArrangedSubview($0) }
         
         NSLayoutConstraint.activate([
-            productDetailsStackView.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 10),
+            productDetailsStackView.leadingAnchor.constraint(equalTo: productImageContainer.trailingAnchor, constant: 10),
             productDetailsStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             productDetailsStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
-            productDetailsStackView.widthAnchor.constraint(equalToConstant: 170),
+            productDetailsStackView.widthAnchor.constraint(equalToConstant: 200),
         ])
     }
     
     func configureCell(with product: CartItem) {
-        productImageView.imageFrom(url: URL(string: product.product.photos[0].url)!)
         productNameLabel.text = product.product.name
         productStatus.updateValue("In Progress")
         productQuantity.updateValue("\(product.count)")
         productPrice.updateValue("\(CurrencyFormatter.formatPriceToGEL(product.product.finalPrice))")
+        setupSwiftUIImage(url: product.product.photos[0].url)
+    }
+    
+    private func setupSwiftUIImage(url: String) {
+        hostingController?.view.removeFromSuperview()
+        hostingController = nil
+        
+        let swiftUIImage = ReusableAsyncImageView(url: url, width: 100, height: 100, cornerRadius: 10)
+        let hostingController = UIHostingController(rootView: swiftUIImage)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostingController.view.backgroundColor = .clear
+        
+        productImageContainer.addSubview(hostingController.view)
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: productImageContainer.topAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: productImageContainer.bottomAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: productImageContainer.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: productImageContainer.trailingAnchor),
+        ])
+        
+        self.hostingController = hostingController
     }
 }

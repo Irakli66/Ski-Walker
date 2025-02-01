@@ -6,29 +6,6 @@
 //
 import UIKit
 
-enum ToastType {
-    case success
-    case error
-    
-    var backgroundColor: UIColor {
-        switch self {
-        case .success:
-            return UIColor.systemGreen
-        case .error:
-            return UIColor.systemRed
-        }
-    }
-    
-    var icon: UIImage? {
-        switch self {
-        case .success:
-            return UIImage(systemName: "checkmark.circle")
-        case .error:
-            return UIImage(systemName: "xmark.octagon")
-        }
-    }
-}
-
 final class ToastView: UIView {
     
     private let messageLabel = UILabel()
@@ -90,13 +67,36 @@ final class ToastView: UIView {
         UIView.animate(withDuration: 0.5, animations: {
             self.transform = CGAffineTransform(translationX: 0, y: 50)
         }) { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
                 UIView.animate(withDuration: 0.5, animations: {
-                    self.transform = .identity
+                    self?.transform = .identity
                 }) { _ in
-                    self.removeFromSuperview()
+                    self?.removeFromSuperview()
                 }
             }
+        }
+    }
+}
+
+enum ToastType {
+    case success
+    case error
+    
+    var backgroundColor: UIColor {
+        switch self {
+        case .success:
+            return UIColor.systemGreen
+        case .error:
+            return UIColor.systemRed
+        }
+    }
+    
+    var icon: UIImage? {
+        switch self {
+        case .success:
+            return UIImage(systemName: "checkmark.circle")
+        case .error:
+            return UIImage(systemName: "xmark.octagon")
         }
     }
 }

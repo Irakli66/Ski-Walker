@@ -11,7 +11,7 @@ struct ToastModifier: ViewModifier {
     let message: String
     let type: ToastType
     let duration: TimeInterval
-
+    
     func body(content: Content) -> some View {
         ZStack {
             content
