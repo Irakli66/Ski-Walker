@@ -5,8 +5,15 @@
 //  Created by irakli kharshiladze on 30.01.25.
 //
 import Foundation
+import NetworkPackage
 
 final class SetNewPasswordViewModel {
+    private let netoworkService: NetworkServiceProtocol
+    
+    init(netoworkService: NetworkServiceProtocol = NetworkService()) {
+        self.netoworkService = netoworkService
+    }
+    
     func updatePassword(email: String, mailCode: String, password: String, confirmPassword: String) async throws {
         guard !mailCode.isEmpty else {
             throw RecoverPasswordError.invalidMailCode
@@ -15,7 +22,17 @@ final class SetNewPasswordViewModel {
         try validatePassword(password)
         try validatePasswordMatch(password, confirmPassword)
         
-        print(email, mailCode, password)
+        let requestBody: [String: String] = [
+            "email": email,
+            "resetCode": mailCode,
+            "newPassword": password
+        ]
+        
+        guard let bodyData = try? JSONEncoder().encode(requestBody) else {
+            throw LoginError.invalidCredentials
+        }
+        
+        let _: User? = try await netoworkService.request(urlString: APIEndpoints.Auth.resetPassword, method: .post, headers: nil, body: bodyData, decoder: JSONDecoder())
     }
     
     private func validateEmail(_ email: String) throws {
