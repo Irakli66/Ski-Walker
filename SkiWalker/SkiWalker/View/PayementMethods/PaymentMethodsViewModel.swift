@@ -14,7 +14,6 @@ final class PaymentMethodsViewModel: ObservableObject {
     @Published var cardNumber: String = ""
     @Published var cvc: String = ""
     @Published var validThru: String = ""
-    private let url = "https://api.gargar.dev:8088/Payment"
     
     init(authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler()) {
         self.authenticatedRequestHandler = authenticatedRequestHandler
@@ -22,7 +21,7 @@ final class PaymentMethodsViewModel: ObservableObject {
     
     func fetchPaymentMethods() async throws {
         let response: [CreditCard]? = try await authenticatedRequestHandler.sendRequest(
-            urlString: url,
+            urlString: APIEndpoints.Payment.fetch,
             method: .get,
             headers: nil,
             body: nil,
@@ -54,7 +53,7 @@ final class PaymentMethodsViewModel: ObservableObject {
         }
         
         let _: CreditCard? = try await authenticatedRequestHandler.sendRequest(
-            urlString: url,
+            urlString: APIEndpoints.Payment.add,
             method: .post,
             headers: nil,
             body: bodyData,
@@ -70,7 +69,7 @@ final class PaymentMethodsViewModel: ObservableObject {
     }
     
     func removeCreditCard(with id: String) async throws {
-        let urlString = "https://api.gargar.dev:8088/Payment/\(id)"
+        let urlString = APIEndpoints.Payment.remove(cardId: id)
         
         let _: CreditCard? = try await authenticatedRequestHandler.sendRequest(urlString: urlString, method: .delete, headers: nil, body: nil, decoder: JSONDecoder())
     }

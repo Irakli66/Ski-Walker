@@ -45,7 +45,7 @@ final class CheckoutViewModel: ObservableObject {
     }
     
     func fetchSingleProduct(with id: String) async {
-        let url = "https://api.gargar.dev:8088/Product/\(id)"
+        let url = APIEndpoints.Product.details(for: id)
         
         do {
             let response: CartProduct? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
@@ -68,10 +68,8 @@ final class CheckoutViewModel: ObservableObject {
     }
     
     func fetchAddresses() async {
-        let url = "https://api.gargar.dev:8088/Shipping"
-        
         do {
-            let response: [Address]? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
+            let response: [Address]? = try await authenticatedRequestHandler.sendRequest(urlString: APIEndpoints.Shipping.fetch, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
             
             guard let addressesResponse = response else {
                 fatalError("Failed to fetch payment methods: No data received.")
@@ -89,11 +87,9 @@ final class CheckoutViewModel: ObservableObject {
     }
     
     func fetchPaymentMethods() async {
-        let url = "https://api.gargar.dev:8088/Payment"
-        
         do {
             let response: [CreditCard]? = try await authenticatedRequestHandler.sendRequest(
-                urlString: url,
+                urlString: APIEndpoints.Payment.fetch,
                 method: .get,
                 headers: nil,
                 body: nil,
@@ -136,7 +132,7 @@ final class CheckoutViewModel: ObservableObject {
             return
         }
         
-        let url = "https://api.gargar.dev:8088/Order/Checkout/Cart"
+        let url = APIEndpoints.Order.checkoutCart
         
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
@@ -161,7 +157,7 @@ final class CheckoutViewModel: ObservableObject {
             return
         }
         
-        let url = "https://api.gargar.dev:8088/Order/Checkout"
+        let url = APIEndpoints.Order.checkoutBuyNow
         
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]

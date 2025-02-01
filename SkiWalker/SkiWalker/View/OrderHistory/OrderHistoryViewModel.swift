@@ -15,7 +15,7 @@ final class OrderHistoryViewModel {
     }
     
     func fetchOrders() async  {
-        let url = "https://api.gargar.dev:8088/Order"
+        let url = APIEndpoints.Order.history
         
         do {
             let response: [OrderResponse]? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())

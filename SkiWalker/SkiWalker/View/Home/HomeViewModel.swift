@@ -15,11 +15,6 @@ final class HomeViewModel: ObservableObject {
     @Published var browsingHistory: [BrowsingHistoryItem] = []
     @Published var isLoading: Bool = false
     
-    private enum Endpoint: String {
-        case popular = "https://api.gargar.dev:8088/Product/popilar"
-        case onSale = "https://api.gargar.dev:8088/Product/onSale"
-    }
-    
     init(authenticatedRequestHandler: AuthenticatedRequestHandlerProtocol = AuthenticatedRequestHandler(), browsingHistoryManager: BrowsingHistoryManagerProtocol = BrowsingHistoryManager()) {
         self.authenticatedRequestHandler = authenticatedRequestHandler
         self.browsingHistoryManager = browsingHistoryManager
@@ -28,25 +23,25 @@ final class HomeViewModel: ObservableObject {
     }
     
     func fetchPopularProducts() async throws {
-        try await fetchProducts(from: .popular) { [weak self] products in
+        try await fetchProducts(from: APIEndpoints.Product.popular) { [weak self] products in
             self?.popularProducts = products
         }
     }
     
     func fetchSaleProducts() async throws {
-        try await fetchProducts(from: .onSale) { [weak self] products in
+        try await fetchProducts(from: APIEndpoints.Product.onSale) { [weak self] products in
             self?.saleProducts = products
         }
     }
     
-    private func fetchProducts(from endpoint: Endpoint, update: @escaping ([Product]) -> Void) async throws {
+    private func fetchProducts(from urlString: String, update: @escaping ([Product]) -> Void) async throws {
         await MainActor.run {
             isLoading = true
         }
         
         do {
             let response: ProductsResponse? = try await authenticatedRequestHandler.sendRequest(
-                urlString: endpoint.rawValue,
+                urlString: urlString,
                 method: .get,
                 headers: nil,
                 body: nil,
@@ -59,17 +54,12 @@ final class HomeViewModel: ObservableObject {
             
             await MainActor.run {
                 update(products)
-                
-            }
-            
-            await MainActor.run {
                 isLoading = false
             }
             
         } catch {
             print(error.localizedDescription)
         }
-        
     }
     
     func reloadBrowsingHistory() {

@@ -15,9 +15,14 @@ struct ProfileSettingsView: View {
     var body: some View {
         VStack {
             profileSettingsHeader
-            changeAvatarSection
-            changeUserDataSection
-            Spacer()
+            ScrollView(showsIndicators: false) {
+                VStack {
+                    changeAvatarSection
+                    changeUserDataSection
+                    Spacer()
+                }
+            }
+            .scrollBounceBehavior(.basedOnSize)
         }
         .padding()
         .background(Color.customBackground)
@@ -94,7 +99,7 @@ struct ProfileSettingsView: View {
             Button(action: {
                 Task {
                     do {
-                       try await profileSettingsViewModel.updateProfile()
+                        try await profileSettingsViewModel.updateProfile()
                         try await profileSettingsViewModel.getCurrentUser()
                         showToast = true
                     } catch {

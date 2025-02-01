@@ -53,6 +53,7 @@ struct TabBarView: View {
             .padding(.vertical, 10)
             .background(Color.customWhite)
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 

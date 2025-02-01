@@ -21,7 +21,7 @@ final class FAvoritesManager: FavoritesManagerProtocol {
     }
     
     func fetchFavorites() async throws -> [Product] {
-        let url = "https://api.gargar.dev:8088/Product/favorites"
+        let url = APIEndpoints.Product.favorites
         
         let response: [Product]? = try await authenticatedRequestHanlder.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
         
@@ -34,13 +34,13 @@ final class FAvoritesManager: FavoritesManagerProtocol {
     }
     
     func addToFavorites(with productId: String) async throws {
-        let url = "https://api.gargar.dev:8088/Product/\(productId)/favorites"
+        let url = APIEndpoints.Product.addToFavorites(productId: productId)
         
         let _: [Product]? = try await authenticatedRequestHanlder.sendRequest(urlString: url, method: .post, headers: nil, body: nil, decoder: JSONDecoder())
     }
     
     func deleteFromFavorites(with productId: String) async throws {
-        let url = "https://api.gargar.dev:8088/Product/\(productId)/favorites"
+        let url = APIEndpoints.Product.deleteFromFavorites(productId: productId)
         
         let _: [Product]? = try await authenticatedRequestHanlder.sendRequest(urlString: url, method: .delete, headers: nil, body: nil, decoder: JSONDecoder())
     }

@@ -27,7 +27,7 @@ final class ProductsViewModel: ObservableObject {
     func fetchProducts(queryText: String?, category: String?, subCategory: String?, page: Int = 1, pageSize: Int = 10) async {
         guard !isFetchingMore else { return }
         
-        let baseURL = "https://api.gargar.dev:8088/Product"
+        let baseURL = APIEndpoints.Product.all
         
         var urlComponents = URLComponents(string: baseURL)
         var queryItems: [URLQueryItem] = []

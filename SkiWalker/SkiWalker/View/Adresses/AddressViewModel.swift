@@ -20,9 +20,7 @@ final class AddressViewModel: ObservableObject {
     }
     
     func fetchAddresses() async throws {
-        let url = "https://api.gargar.dev:8088/Shipping"
-        
-        let response: [Address]? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
+        let response: [Address]? = try await authenticatedRequestHandler.sendRequest(urlString: APIEndpoints.Shipping.fetch, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
         
         guard let addressesResponse = response else {
             fatalError("Failed to fetch payment methods: No data received.")
@@ -34,8 +32,6 @@ final class AddressViewModel: ObservableObject {
     }
     
     func addAddress() async throws {
-        let url = "https://api.gargar.dev:8088/Shipping"
-        
         try validateAddress()
         
         let requestBody: [String: String] = [
@@ -50,7 +46,7 @@ final class AddressViewModel: ObservableObject {
             throw AddressValidationError.invalidRequestData
         }
         
-        let _: Address? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .post, headers: nil, body: bodyData, decoder: JSONDecoder())
+        let _: Address? = try await authenticatedRequestHandler.sendRequest(urlString: APIEndpoints.Shipping.add, method: .post, headers: nil, body: bodyData, decoder: JSONDecoder())
         
         await MainActor.run() {
             fullname = ""
@@ -62,7 +58,7 @@ final class AddressViewModel: ObservableObject {
     }
     
     func removeAddress(with id: String) async throws {
-        let url = "https://api.gargar.dev:8088/Shipping/\(id)"
+        let url = APIEndpoints.Shipping.remove(addressId: id)
         
         let _: Address? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .delete, headers: nil, body: nil, decoder: JSONDecoder())
         

@@ -18,7 +18,7 @@ final class ProfileSettingsViewModel: ObservableObject {
     }
     
     func getCurrentUser() async throws {
-        let urlString = "https://api.gargar.dev:8088/User/current"
+        let urlString = APIEndpoints.User.currentUser
         let response: User? = try await authenticatedRequestHandler.sendRequest(urlString: urlString, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
         
         guard let currentUser = response else {
@@ -32,7 +32,7 @@ final class ProfileSettingsViewModel: ObservableObject {
     }
     
     func updateProfileImage() async throws {
-        let urlString = "https://api.gargar.dev:8088/Photo"
+        let urlString = APIEndpoints.User.updateProfileImage
 
         guard let selectedProfileImage = selectedProfileImage,
               let imageData = selectedProfileImage.jpegData(compressionQuality: 0.3) else {
@@ -66,7 +66,7 @@ final class ProfileSettingsViewModel: ObservableObject {
     }
     
     func updateProfile() async throws {
-        let url = "https://api.gargar.dev:8088/User"
+        let url = APIEndpoints.User.updateProfile
                 
         let requestBody: [String: String] = [
             "firstname": firstname,

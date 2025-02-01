@@ -30,7 +30,7 @@ final class ProfileViewModel: ObservableObject {
     }
     
     func getCurrentUser() async throws {
-        let urlString = "https://api.gargar.dev:8088/User/current"
+        let urlString = APIEndpoints.User.currentUser
         let response: User? = try await authenticatedRequestHandler.sendRequest(urlString: urlString, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
         
         guard let currentUser = response else {

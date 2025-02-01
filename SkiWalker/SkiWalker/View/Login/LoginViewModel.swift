@@ -17,7 +17,7 @@ final class LoginViewModel {
     }
     
     func login(email: String, password: String) async throws {
-        let url = "https://api.gargar.dev:8088/login"
+        let url = APIEndpoints.Auth.login
         
         guard !email.isEmpty && email.contains("@") else {
             throw LoginError.invalidEmail

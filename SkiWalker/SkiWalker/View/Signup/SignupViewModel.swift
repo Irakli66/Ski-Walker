@@ -32,14 +32,14 @@ final class SignupViewModel {
         let (url, requestBody): (String, [String: String]) = {
             switch userRole {
             case .customer:
-                return ("https://api.gargar.dev:8088/Auth/registerUser", [
+                return (APIEndpoints.Auth.registerUser, [
                     "firstName": firstName,
                     "lastName": lastName,
                     "email": email,
                     "password": password
                 ])
             case .vendor:
-                return ("https://api.gargar.dev:8088/Auth/registerVendor", [
+                return (APIEndpoints.Auth.registerVendor, [
                     "companyName": companyName,
                     "companyId": companyID,
                     "email": email,

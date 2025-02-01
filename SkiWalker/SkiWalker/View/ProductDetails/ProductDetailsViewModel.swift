@@ -23,7 +23,7 @@ final class ProductDetailsViewModel: ObservableObject {
     }
     
     func fetchProduct(with id: String) async {
-        let url = "https://api.gargar.dev:8088/Product/\(id)"
+        let url = APIEndpoints.Product.details(for: id)
         
         do {
             let response: Product? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
@@ -41,7 +41,7 @@ final class ProductDetailsViewModel: ObservableObject {
     }
     
     func fetchVendor(with id: String) async {
-        let url = "https://api.gargar.dev:8088/User/\(id)"
+        let url = APIEndpoints.User.details(for: id)
         
         do {
             let response: User? = try await authenticatedRequestHandler.sendRequest(urlString: url, method: .get, headers: nil, body: nil, decoder: JSONDecoder())
