@@ -129,8 +129,8 @@ final class LabeledTextField: UIView, UITextFieldDelegate {
     }
     
     @objc private func keyboardWillHide(_ notification: Notification) {
-        UIView.animate(withDuration: 0.3) {
-            self.parentView?.transform = .identity
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.parentView?.transform = .identity
         }
     }
     
