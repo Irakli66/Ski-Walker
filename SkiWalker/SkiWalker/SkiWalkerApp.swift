@@ -9,9 +9,23 @@ import SwiftUI
 
 @main
 struct SkiWalkerApp: App {
+    @StateObject private var sessionManager = SessionManager()
+    @AppStorage("selectedLanguage") private var selectedLanguage: String = "en"
+    @AppStorage("isDarkMode") private var isDarkMode: Bool = false
+    
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            Group {
+                if sessionManager.isLoggedIn {
+                    TabBarView()
+                } else {
+                    LoginView()
+                        .background(.customBackground)
+                }
+            }
+            .preferredColorScheme(isDarkMode ? .dark : .light)
+            .environment(\.locale, Locale(identifier: selectedLanguage))
+            .environmentObject(sessionManager)
         }
     }
 }
