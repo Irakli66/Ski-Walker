@@ -63,6 +63,7 @@ struct AddAddressView: View {
                     }
                     Spacer()
                 }
+                .padding(.horizontal, 5)
             }
         }
         .padding()
