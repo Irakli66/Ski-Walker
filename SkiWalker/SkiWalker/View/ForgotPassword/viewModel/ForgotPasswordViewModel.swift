@@ -5,12 +5,29 @@
 //  Created by irakli kharshiladze on 10.01.25.
 //
 import Foundation
+import NetworkPackage
 
 final class ForgotPasswordViewModel {
+    private let networkService: NetworkServiceProtocol
+    
+    init(networkService: NetworkServiceProtocol = NetworkService()) {
+        self.networkService = networkService
+    }
     
     func sendMailCode(with email: String) async throws {
         try validateEmail(email)
-        print(email)
+        
+        let requestBody: [String: String] = [
+            "email": email,
+        ]
+        
+        guard let bodyData = try? JSONEncoder().encode(requestBody) else {
+            throw LoginError.invalidCredentials
+        }
+        
+        
+        let _:User? = try await networkService.request(urlString: APIEndpoints.Auth.forgotPassword, method: .post, headers: nil, body: bodyData, decoder: JSONDecoder())
+        
     }
     
     private func validateEmail(_ email: String) throws {

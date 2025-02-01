@@ -14,6 +14,8 @@ enum APIEndpoints {
         static let login = "\(APIEndpoints.baseURL)/login"
         static let registerUser = "\(APIEndpoints.baseURL)/Auth/registerUser"
         static let registerVendor = "\(APIEndpoints.baseURL)/Auth/registerVendor"
+        static let forgotPassword = "\(APIEndpoints.baseURL)/forgotPassword"
+        static let resetPassword = "\(APIEndpoints.baseURL)/resetPassword"
     }
     
     enum Product {
