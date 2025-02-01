@@ -15,7 +15,7 @@ struct ValidThruTextField: View {
         VStack(alignment: .leading, spacing: 5) {
             Text(LocalizedStringKey(label))
                 .font(.subheadline)
-                .foregroundColor(.customWhite)
+                .foregroundColor(.customPurple)
             
             TextField(LocalizedStringKey(placeholder), text: $text)
                 .keyboardType(.numberPad)
