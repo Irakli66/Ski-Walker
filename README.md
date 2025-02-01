@@ -65,11 +65,13 @@ The app includes key e-commerce features such as product browsing, searching, a 
    ```sh
    git clone https://github.com/Irakli66/Ski-Walker.git
 
+## To add products as a vendor, login here:  
+[Login to Gargar CMS](https://gargar-cms-front.vercel.app/)
 
 ### Screenshots:
-<img src="https://i.imgur.com/Nj7AORX.png" height="300"> <img src="https://i.imgur.com/Gr2Rd46.png" height="300"> <img src="https://i.imgur.com/aG9YGYs.png" height="300">
-<img src="https://i.imgur.com/FzdsZwe.png" height="300">
+<img src="https://i.imgur.com/Nj7AORX.png" height="300"> <img src="https://i.imgur.com/Gr2Rd46.png" height="300"> <img src="https://i.imgur.com/FzdsZwe.png" height="300">
 <img src="https://i.imgur.com/SRUhBfu.png" height="300">
+<img src="https://i.imgur.com/aG9YGYs.png" height="300">
 <img src="https://i.imgur.com/P7IvLhZ.png" height="300">
 <img src="https://i.imgur.com/vRwyYir.png" height="300">
 <img src="https://i.imgur.com/eK9jW9O.png" height="300">
