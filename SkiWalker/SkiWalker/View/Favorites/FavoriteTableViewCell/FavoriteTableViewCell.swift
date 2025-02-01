@@ -8,11 +8,6 @@
 import UIKit
 import SwiftUI
 
-protocol FavoritesTableViewCellDelegate: AnyObject {
-    func addToCartButtonTapped(cell: FavoriteTableViewCell)
-    func deleteButtonTapped(cell: FavoriteTableViewCell)
-}
-
 final class FavoriteTableViewCell: UITableViewCell {
     weak var delegate: FavoritesTableViewCellDelegate?
     

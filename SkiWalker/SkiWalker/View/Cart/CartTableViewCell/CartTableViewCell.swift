@@ -8,12 +8,6 @@
 import UIKit
 import SwiftUI
 
-protocol CartTableViewCellDelegate: AnyObject {
-    func didChangeStepperValue(cell: CartTableViewCell, adjustedStepValue: Int)
-    func didTapDelete(cell: CartTableViewCell)
-    func didTapFavorite(cell: CartTableViewCell)
-}
-
 final class CartTableViewCell: UITableViewCell {
     weak var delegate: CartTableViewCellDelegate?
     private var lastStepperValue: Double = 1

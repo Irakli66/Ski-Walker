@@ -6,6 +6,12 @@
 //
 import Foundation
 
+protocol CartTableViewCellDelegate: AnyObject {
+    func didChangeStepperValue(cell: CartTableViewCell, adjustedStepValue: Int)
+    func didTapDelete(cell: CartTableViewCell)
+    func didTapFavorite(cell: CartTableViewCell)
+}
+
 final class CartViewModel {
     private let cartManager: CartManagerProtocol
     private let favoritesManager: FavoritesManagerProtocol

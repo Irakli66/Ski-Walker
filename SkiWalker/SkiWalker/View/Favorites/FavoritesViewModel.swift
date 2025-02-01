@@ -6,6 +6,11 @@
 //
 import Foundation
 
+protocol FavoritesTableViewCellDelegate: AnyObject {
+    func addToCartButtonTapped(cell: FavoriteTableViewCell)
+    func deleteButtonTapped(cell: FavoriteTableViewCell)
+}
+
 final class FavoritesViewModel {
     private let favoritesManager: FavoritesManagerProtocol
     private let cartManager: CartManagerProtocol
