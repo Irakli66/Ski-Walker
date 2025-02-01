@@ -16,7 +16,7 @@ struct AddressesView: View {
             addressesHeader
             if addressesViewModel.addresses.isEmpty {
                 Spacer()
-                Image("emptyAddress")
+                Image(AppImages.emptyAddressBook.rawValue)
                     .resizable()
                     .frame(width: 200, height: 230)
                 Spacer()

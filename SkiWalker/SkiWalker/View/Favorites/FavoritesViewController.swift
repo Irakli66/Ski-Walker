@@ -12,7 +12,7 @@ final class FavoritesViewController: UIViewController {
     private let emptyFavoritesImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "emptyCart")
+        imageView.image = UIImage(named: AppImages.emptyCart.rawValue)
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         return imageView

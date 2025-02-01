@@ -9,9 +9,9 @@ import SwiftUI
 
 struct PromotionCarouselView: View {
     private let promos: [(image: String, category: ProductCategory)] = [
-        ("skiPromo", .ski),
-        ("snowboardPromo", .snowboard),
-        ("clothingPromo", .clothing)
+        (AppImages.skiPromo.rawValue, .ski),
+        (AppImages.snowboardPromo.rawValue, .snowboard),
+        (AppImages.clothingPromo.rawValue, .clothing)
     ]
     
     var body: some View {

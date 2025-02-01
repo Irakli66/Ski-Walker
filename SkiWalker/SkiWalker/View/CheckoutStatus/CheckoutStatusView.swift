@@ -29,7 +29,7 @@ struct CheckoutStatusView: View {
                 .font(.system(size: 16))
             
             
-            Image("success")
+            Image(AppImages.paymentSuccess.rawValue)
                 .resizable()
                 .frame(width: 200, height: 200)
             
@@ -67,7 +67,7 @@ struct CheckoutStatusView: View {
             Text("Check your funds and try again")
                 .font(.system(size: 14))
             
-            Image("failed")
+            Image(AppImages.paymentFailed.rawValue)
                 .resizable()
                 .frame(width: 200, height: 200)
             Spacer()
@@ -81,7 +81,3 @@ enum PaymentStatus: String {
     case success = "Success"
     case failed = "Failed"
 }
-
-//#Preview {
-//    CheckoutStatusView()
-//}

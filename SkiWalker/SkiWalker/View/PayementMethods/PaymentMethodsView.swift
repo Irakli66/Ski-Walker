@@ -25,7 +25,7 @@ struct PaymentMethodsView: View {
                 .listStyle(PlainListStyle())
             } else {
                 Spacer()
-                Image("emptyCard")
+                Image(AppImages.emptyCreditCard.rawValue)
                     .resizable()
                     .frame(width: 200, height: 230)
             }

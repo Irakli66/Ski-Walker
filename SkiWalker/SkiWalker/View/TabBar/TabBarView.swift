@@ -12,10 +12,10 @@ struct TabBarView: View {
     @AppStorage("cartCount") private var cartCount: Int = 0
     
     private let tabs: [(icon: String, activeIcon: String, tab: Tab)] = [
-        ("home",      "homeActive",      .home),
-        ("favorites", "favoritesActive", .favorites),
-        ("cart",      "cartActive",      .cart),
-        ("profile",   "profileActive",   .profile),
+        (AppIcons.home.rawValue,      AppIcons.homeActive.rawValue,      .home),
+        (AppIcons.favorites.rawValue, AppIcons.favoritesActive.rawValue, .favorites),
+        (AppIcons.cart.rawValue,      AppIcons.cartActive.rawValue,      .cart),
+        (AppIcons.profile.rawValue,   AppIcons.profileActive.rawValue,   .profile),
     ]
     
     var body: some View {
